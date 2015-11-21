@@ -8,8 +8,14 @@ class User {
 	String password
 	String confirm
 	String role
+	String userPhoto
+	static hasMany = [reviews:Review]
 	// transients
 	static transients = ['confirm']
+	
+	static mapping ={
+		userPhoto	defaultValue:"nan.jpg"
+	}
 	
     static constraints = {
         name 			blank:false, size:5..50

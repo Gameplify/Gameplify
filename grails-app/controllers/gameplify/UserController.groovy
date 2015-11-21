@@ -4,6 +4,11 @@ class UserController {
 			redirect(action:"login")
 		}
 		
+		def showUserAuthentication(){
+			log.println("urrasdaasfakjsnfgkjasgnkjasgnkjsf")
+			render(template: '../userAuthentication')
+		}
+		
 	   def register = {
 		   
 		   // new user posts his registration details
@@ -26,7 +31,7 @@ class UserController {
 				   session.user = u
 				   log.error "You have successfully registered."
 				   u.errors.allErrors.each {log.error it.defaultMessage}
-				   redirect(controller:'user')
+				   redirect(controller:"game", action: "index")
 				  
 				   
 			   }
@@ -34,7 +39,7 @@ class UserController {
 			   // don't allow registration while user is logged in
 				   log.error "There was an error in registration process. Please try again later."
 				   u.errors.allErrors.each {log.error it.defaultMessage}
-		   		   redirect(controller:'user')
+		   		   redirect(controller:"game", action: "index")
 		   }
 	   }
 	
@@ -43,7 +48,7 @@ class UserController {
 			   User user = User.find{username==params.username}
 			   if (!user) {
 				  flash.message = "Username does not exist."
-				  redirect(action:'login')
+				  redirect(controller:"game", action: "index")
 				  return
 			   }
 			   User us = User.find{
@@ -53,17 +58,17 @@ class UserController {
 			   //user = User.findByUsernameAndPasswordHashed(params.username, passwordHashed)
 			   if (!us) {
 				  flash.message = "Invalid input."
-				  redirect(action:'login')
+				  redirect(controller:"game", action: "index")
 				  return
 			   }
 			   
 			   
 			   if(user.role=="User"){
 				   session.user = user
-				   redirect( action:'login')
+				   redirect( controller:"game", action: "index")
 			   }else{
 			   	   session.user = user
-			   	   redirect( action:'admin')
+			   	   redirect(controller:"game", action: "index")
 			   }
 		   }
 	   }
@@ -74,7 +79,7 @@ class UserController {
 	   
 	   def logout = {
 		   session.invalidate()
-		   redirect(action:'login')
+		   redirect(controller:"game", action: "index")
 	   }
    }
 

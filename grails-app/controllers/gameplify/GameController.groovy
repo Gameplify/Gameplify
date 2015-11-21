@@ -21,7 +21,15 @@ class GameController {
 		render(template: '../navbar', model:[categories:categories])
 	}
 	
-	def gameProfile(){
+	def addReview(){
+		log.println("NI SUD SA CONTROLLER")
+		log.println(session.user.id)
+		def gameTitle = params.gameTitle
+		gameService.addReview(params.review,  params.gameId, session.user.id)
+		redirect(action: "gameProfile", params: [gameTitle: gameTitle] )
+	}
+	
+	def gameProfile(){	
 		def game = gameService.listGameInfo(params.gameTitle)
 		def reviews = gameService.listReview(params.gameTitle)
 		[game:game, reviews:reviews]
@@ -29,7 +37,6 @@ class GameController {
    
   
 	def listGame(){
-	 
 	def platforms = gameService.listPlatform()
     def currentCategory = params.categoryName
     def max = params.max ?: 10
@@ -40,90 +47,5 @@ class GameController {
   }
   
 
-    def show(Game gameInstance) {
-        respond gameInstance
-    }
-
-    def create() {
-        respond new Game(params)
-    }
-
-    @Transactional
-    def save(Game gameInstance) {
-        if (gameInstance == null) {
-            notFound()
-            return
-        }
-
-        if (gameInstance.hasErrors()) {
-            respond gameInstance.errors, view:'create'
-            return
-        }
-
-        gameInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'game.label', default: 'Game'), gameInstance.id])
-                redirect gameInstance
-            }
-            '*' { respond gameInstance, [status: CREATED] }
-        }
-    }
-
-    def edit(Game gameInstance) {
-        respond gameInstance
-    }
-
-    @Transactional
-    def update(Game gameInstance) {
-        if (gameInstance == null) {
-            notFound()
-            return
-        }
-
-        if (gameInstance.hasErrors()) {
-            respond gameInstance.errors, view:'edit'
-            return
-        }
-
-        gameInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Game.label', default: 'Game'), gameInstance.id])
-                redirect gameInstance
-            }
-            '*'{ respond gameInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(Game gameInstance) {
-
-        if (gameInstance == null) {
-            notFound()
-            return
-        }
-
-        gameInstance.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Game.label', default: 'Game'), gameInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'game.label', default: 'Game'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+    
 }
