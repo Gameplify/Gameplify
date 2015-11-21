@@ -4,6 +4,13 @@ body {
     padding-right: 100px !important;
     padding-top: 30px !important;
   }
+
+.editDelete{
+  position:absoslute;
+  top:0px;
+  right:auto;
+}
+
   #currentImg{
     width: 590px;
     height: 350px;

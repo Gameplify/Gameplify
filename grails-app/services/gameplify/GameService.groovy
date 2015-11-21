@@ -1,5 +1,7 @@
 package gameplify
 
+import javax.websocket.Session;
+
 import grails.transaction.Transactional
 
 @Transactional
@@ -18,6 +20,30 @@ class GameService {
 			}.list(max: max, offset: offset)
 		}
 		return games
+	}
+	
+	def addReview(review, gameId, userId){
+		log.println("NI SUD SA SERVICE")
+		log.println(userId)
+		User user = User.get(userId)
+		Game game = Game.get(gameId)
+		def num = game.numberOfReviews
+		num = num+1
+		Date date = new Date()
+		Review rev = new Review(
+			review:review,
+			date:date,
+			user:user,
+			game:game,
+			status:"okay"
+		)
+		game.numberOfReviews = num
+		log.println(game.numberOfReviews)
+		rev.save()
+		user.addToReviews(rev)	
+		game.addToReviews(rev)
+		user.save()
+		game.save(flush:true)
 	}
 	
 	def listPlatform(){

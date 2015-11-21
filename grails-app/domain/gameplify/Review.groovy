@@ -5,7 +5,13 @@ class Review {
 	Date date
 	int numberOfComments
 	String status
-	static belongsTo = [user:User, game:Game]
+	static belongsTo = [game:Game, user:User]
+	
+	static mapping ={
+		numberOfComments	defaultValue: "0"
+
+	}
+	
     static constraints = {
     }
 }
