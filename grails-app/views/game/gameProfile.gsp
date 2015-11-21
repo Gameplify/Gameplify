@@ -42,11 +42,9 @@
                        <div class="ui two row stackable grid">
                           <div class="column">
                                   <div class="row">
-                                        <div class="ui segment" style=" height: 120px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top:0px;">
-                                                                <img class="ui tiny left floated image" src="${resource(dir: 'images', file: 'nan.jpg')}">
-                                                                <span>User</span>
-                                                                <Button class="ui primary button" style=" margin-top: 10px; margin-right: 0px; width: 140px;">Logout</Button>
-                                        </div> 
+                                       
+                                                 <g:include controller="user" action="showUserAuthentication"/>
+                                     
                                   </div> 
                                   <div class="ui segment" style="margin-left: 40px;margin-top: 20px; height: 344px;width: 272px;">
                                         <div class="column" style="width: 270px; height: 330px;" > 
@@ -84,17 +82,20 @@
         <div class="row">
           <div class="ui segment"  style="width: 800px;">
                       <div class="ui minimal comments"  style="width: 800px;">
-                                <h3 class="ui dividing header"   style="width: 770px;"> Number of Reviews</h3>
+                                <h3 class="ui dividing header"   style="width: 770px;"> Number of Reviews : ${game.numberOfReviews }</h3>
                                 <div class="ui segment"  style="width: 770px;">
                                 	<h4>Write a Review</h4>
-                                	  <form class="ui reply form">
-                                                    <div class="field">
-                                                      <textarea></textarea>
-                                                    </div>
-                                                    <div class="ui blue labeled submit icon button">
-                                                      <i class="icon edit"></i> Add Review
-                                                    </div>
-                                                </form>
+                                	  <g:form class="ui reply form">
+                                                    <div  class="field">
+                                                      <g:textArea name="review"/>
+                                                      	<input name="gameId" value="${game.id}" type="hidden" />
+														<input name="gameTitle" value="${game.gameTitle}" type="hidden" />
+                                                    </div>                                                    
+	                                                    <g:actionSubmit action="addReview"  value="Add Review" class="ui blue labeled submit icon button">
+	                                                      <i class="icon edit"></i> Add Review
+	                                             
+	                                                </g:actionSubmit>
+                                       </g:form>
                                 	<g:each in="${reviews}" status="i" var="review">                                                    
                                       <div class="comment">
                                         <a class="avatar">
@@ -112,8 +113,10 @@
                                              </p>
                                            </div>
                                           <div class="actions">
-                                                  <a class="Comment">Report</a>
-                                          </div>
+											edit
+											
+											
+										   delete
                                         </div>
                                         <div class="comments">
                                           <div class="comment">
