@@ -29,10 +29,19 @@ class GameController {
 		redirect(action: "gameProfile", params: [gameTitle: gameTitle] )
 	}
 	
+	def addComment(){
+		def gameTitle = params.gameTitle
+		gameService.addComment(params.comment,  params.gameId, session.user.id, params.reviewId)
+		redirect(action: "gameProfile", params: [gameTitle: gameTitle] )
+	}
+	
 	def gameProfile(){	
 		def game = gameService.listGameInfo(params.gameTitle)
 		def reviews = gameService.listReview(params.gameTitle)
-		[game:game, reviews:reviews]
+		
+		log.println(params.reviewId)
+		def comments= gameService.listComment(params.gameTitle, params.reviewId)
+		[game:game, reviews:reviews, comments:comments]
 	}
    
   
