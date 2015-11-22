@@ -14,7 +14,7 @@
   <script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
  
 </head>
-<body>"C:/Users/Red Viper/Documents/GitHub/grailstwitter-master/grails-app/controllers/org/grails/twitter/PersonController.groovy"
+<body>
 <div class="ui fixed inverted menu">
       <g:include action="showNavbar"/>
  </div>

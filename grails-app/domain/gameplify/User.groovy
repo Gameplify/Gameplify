@@ -9,12 +9,12 @@ class User {
 	String confirm
 	String role
 	String userPhoto
-	static hasMany = [reviews:Review]
+	static hasMany = [reviews:Review, comment:Comment]
 	// transients
 	static transients = ['confirm']
 	
 	static mapping ={
-		userPhoto	defaultValue:"nan.jpg"
+		userPhoto	defaultValue:"'nan.jpg'"
 	}
 	
     static constraints = {
@@ -22,7 +22,7 @@ class User {
         emailAddress  	blank:false, email:true, unique:true, size:5..50
         username  		blank:false, size:5..50, matches:/[\S]+/, unique:true
         password  		blank:false, size:5..50, matches:/[\S]+/
-	 	
+		userPhoto		nullable:true
 		
 	}
 }

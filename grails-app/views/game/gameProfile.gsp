@@ -82,7 +82,7 @@
         <div class="row">
           <div class="ui segment"  style="width: 800px;">
                       <div class="ui minimal comments"  style="width: 800px;">
-                                <h3 class="ui dividing header"   style="width: 770px;"> Number of Reviews : ${game.numberOfReviews }</h3>
+                                <h3 class="ui dividing header"   style="width: 770px;">  ${game.numberOfReviews } reviews</h3>
                                 <div class="ui segment"  style="width: 770px;">
                                 	<h4>Write a Review</h4>
                                 	  <g:form class="ui reply form">
@@ -113,37 +113,46 @@
                                              </p>
                                            </div>
                                           <div class="actions">
-											edit
-											
-											
-										   delete
+											Report
                                         </div>
-                                        <div class="comments">
+                                        <g:each in="${review.comment.sort{it.date}.reverse(true)}" status="k" var="comment"> 
                                           <div class="comment">
                                             <a class="avatar">
-                                              <img src="${resource(dir: 'images', file: 'nan.jpg')}">
+                                              <img src="${resource(dir: 'images', file: "${comment.user.userPhoto}")}">
                                             </a>
                                             <div class="content">
-                                              <a class="author">Jenny Hess</a>
+                                              <a class="author">${comment.user.name }
+                                             </a>
                                               <div class="metadata">
-                                                <span class="date">Today at 5:00 PM</span>
+                                                <span class="date">${comment.date }
+                                            	</span>
                                               </div>
                                               <div class="text">
-                                                Elliot you are always so right :)
+                                              		${comment.comment }
                                               </div>
                                                <div class="actions">
                                                   <a class="Comment">Report</a>
                                                </div>
-                                               <form class="ui comment form">
-                                                    <div class="field">
-                                                      <textarea></textarea>
-                                                    </div>
-                                                    <div class="ui blue labeled submit icon button">
-                                                      <i class="icon edit"></i> Add Comment
-                                                    </div>
-                                                </form>
+                                             
                                             </div>
                                           </div>
+                                              </g:each>
+                                        
+                                            <g:form class="ui comment form">
+                                                    <div  class="field">
+                                                      <g:textArea name="comment" required=""/>
+                                                      	<g:hiddenField  name="gameId" value="${game.id}"  />
+														<g:hiddenField  name="gameTitle" value="${game.gameTitle}" />
+														<g:hiddenField  name="reviewId" value="${review.id}"  />
+                                                    </div>                                                    
+	                                                    <g:actionSubmit action="addComment"  value="Add Comment" class="ui blue labeled submit icon button">
+	                                                      <i class="icon edit"></i> Add Comment
+	                                             
+	                                                </g:actionSubmit>
+                                       			</g:form>
+                                             
+                                        
+                                        
                                         </div>
                                       </div>
                                       </g:each>
