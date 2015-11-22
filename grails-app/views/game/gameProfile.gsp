@@ -115,8 +115,9 @@
                                           <div class="actions">
 											Report
                                         </div>
+                                        <ul id="myList">
                                         <g:each in="${review.comment.sort{it.date}.reverse(true)}" status="k" var="comment"> 
-                                          <div class="comment">
+                                          <li class="comment" style="display:none;">
                                             <a class="avatar">
                                               <img src="${resource(dir: 'images', file: "${comment.user.userPhoto}")}">
                                             </a>
@@ -135,9 +136,13 @@
                                                </div>
                                              
                                             </div>
-                                          </div>
+                                          </li>
                                               </g:each>
-                                        
+                                        </ul>
+                                          <g:if test="${ review.comment.size() > 0}">
+                                        <div id="loadMore" style="text-align:center;">Load more</div>
+                                        </g:if>
+                                     
                                             <g:form class="ui comment form">
                                                     <div  class="field">
                                                       <g:textArea name="comment" required=""/>
@@ -162,6 +167,17 @@
       </div>
 </div>
 <script>
+$(document).ready(function () {
+    size_li = $("#myList li").size();
+    x=3;
+    $('#myList li:lt('+x+')').show();
+    $('#loadMore').click(function () {
+        x= (x+5 <= size_li) ? x+5 : size_li;
+        $('#myList li:lt('+x+')').show();
+    });
+    
+});
+
  function showImage(imgName) {
        var curImage = document.getElementById('currentImg');
        var thePath = 'images/';
