@@ -479,6 +479,10 @@ $.site.settings = {
 
 };
 
+ $('.ui.rating')
+    .rating()
+  ;
+
 // allows for selection of elements with data attributes
 $.extend($.expr[ ":" ], {
   data: ($.expr.createPseudo)

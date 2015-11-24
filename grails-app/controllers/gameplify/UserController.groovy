@@ -1,11 +1,25 @@
 package gameplify
 class UserController {
+	def userService
 		def index={
 			redirect(action:"login")
 		}
 		
+		def userProfile(){
+			def user = userService.findUser(params.userId)
+			if (user.role == "Admin"){
+				redirect(action:"adminProfile" ,parameters:[admin:user])
+			}
+			[user:user]
+		}
+		
+		def adminProfile(){
+			def admin = params.admin
+			def admins = userService.listAdmins()
+			[admin:admin, admins:admins]
+		}
+		
 		def showUserAuthentication(){
-			log.println("urrasdaasfakjsnfgkjasgnkjasgnkjsf")
 			render(template: '../userAuthentication')
 		}
 		

@@ -9,12 +9,14 @@ class User {
 	String confirm
 	String role
 	String userPhoto
+	int totalNumberOfReviews
 	static hasMany = [reviews:Review, comment:Comment]
 	// transients
 	static transients = ['confirm']
 	
 	static mapping ={
 		userPhoto	defaultValue:"'nan.jpg'"
+		totalNumberOfReviews	defaultValue: "0"
 	}
 	
     static constraints = {
