@@ -22,8 +22,6 @@ class GameController {
 	}
 	
 	def addReview(){
-		log.println("NI SUD SA CONTROLLER")
-		log.println(session.user.id)
 		def gameTitle = params.gameTitle
 		gameService.addReview(params.review,  params.gameId, session.user.id)
 		redirect(action: "gameProfile", params: [gameTitle: gameTitle] )
@@ -38,8 +36,6 @@ class GameController {
 	def gameProfile(){	
 		def game = gameService.listGameInfo(params.gameTitle)
 		def reviews = gameService.listReview(params.gameTitle)
-		
-		log.println(params.reviewId)
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
 		[game:game, reviews:reviews, comments:comments]
 	}

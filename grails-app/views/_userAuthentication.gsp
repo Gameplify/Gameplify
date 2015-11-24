@@ -19,11 +19,11 @@
                           <div class="column">
                                   <div class="row">
                                         <div class="ui segment" style=" height: 120px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top:0px;">
-                                                                <img class="ui tiny left floated image" src="${resource(dir: 'images', file: 'nan.jpg')}">
-                                                               
-															        <span>${session?.user?.name}</span>
+                                        	<g:link controller = "user" action = "userProfile" params="${[userId:"${session?.user?.id}"]}">                        
+                                                                <img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${session?.user?.userPhoto}")}">
+															    <span>${session?.user?.name}</span>
 															        <g:link class="ui primary button" style=" margin-top: 10px; margin-right: 0px; width: 140px;" controller="user" action="logout">Logout</g:link>
-
+											</g:link>
 															   
                                                               	 </div> 
                                   </div> 

@@ -6,7 +6,10 @@
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
  <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
 
-  <script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
+ <link rel="stylesheet" type="text/css" href="${resource(dir:'dist/components', file:'rating.min.css')}">
+
+  <script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
+   <script src="${resource(dir:'dist/components', file:'rating.min.js')}"></script>
 
 </head>
 
@@ -49,12 +52,12 @@
                                   <div class="ui segment" style="margin-left: 40px;margin-top: 20px; height: 344px;width: 272px;">
                                         <div class="column" style="width: 270px; height: 330px;" > 
                                                      <a class="ui red ribbon label">${game.rating }</a>
-                                                    <img class="ui tiny centered image" style="width: 120px;margin-right: 87px; margin-top:10px;" src="${resource(dir: 'images', file: "$game.gameLogo")}">
+                                                    <img class="ui tiny centered image" style="width: 120px;" src="${resource(dir: 'images', file: "$game.gameLogo")}">
                                                     <div class="center aligned column">
                                                         <h4 class="title">${game.gameTitle }</h4>
                                                         <h5 class="price">$ ${game.gamePrice }</h5>
                                                     </div>
-                                                  <div class="ui star rating">
+                                                  <div class="ui star rating" data-rating="3">
                                                       <i class="icon"></i>
                                                       <i class="icon"></i>
                                                       <i class="icon"></i>
@@ -102,7 +105,7 @@
                                           <img src="${resource(dir: 'images', file: "${review.user.userPhoto}")}">                   
                                         </a>
                                         <div class="content">
-                                          <a class="author">${review.user.name }</a>
+                                         	<g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${review.user.id}"]}"> ${review.user.name } </g:link>
                                           <div class="metadata">
                                             <span class="date">${review.date }</span>
                                           </div>
@@ -122,7 +125,7 @@
                                               <img src="${resource(dir: 'images', file: "${comment.user.userPhoto}")}">
                                             </a>
                                             <div class="content">
-                                              <a class="author">${comment.user.name }
+                                              <g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${comment.user.id}"]}">${comment.user.name } </g:link>
                                              </a>
                                               <div class="metadata">
                                                 <span class="date">${comment.date }
@@ -177,6 +180,10 @@ $(document).ready(function () {
     });
     
 });
+
+$('.ui.rating')
+.rating()
+;
 
  function showImage(imgName) {
        var curImage = document.getElementById('currentImg');
