@@ -21,6 +21,14 @@
 	                </div>
 	               </g:link>
               </div>
+              <g:if test="${session?.user?.role == "Admin"}">
+		              <div class = "header item">
+		              	Game
+		              </div>
+		              <div class = "header item">
+		              	User
+		              </div>
+	          </g:if>
                 <div class="ui search">
                       <div class="ui icon input">
                         <input class="prompt" type="text" placeholder="Search games...">

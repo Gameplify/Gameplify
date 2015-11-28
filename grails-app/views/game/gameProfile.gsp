@@ -6,7 +6,10 @@
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
  <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
 
-  <script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
+ <link rel="stylesheet" type="text/css" href="${resource(dir:'dist/components', file:'rating.min.css')}">
+
+  <script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
+   <script src="${resource(dir:'dist/components', file:'rating.min.js')}"></script>
 
 </head>
 
@@ -42,21 +45,19 @@
                        <div class="ui two row stackable grid">
                           <div class="column">
                                   <div class="row">
-                                        <div class="ui segment" style=" height: 120px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top:0px;">
-                                                                <img class="ui tiny left floated image" src="${resource(dir: 'images', file: 'nan.jpg')}">
-                                                                <span>User</span>
-                                                                <Button class="ui primary button" style=" margin-top: 10px; margin-right: 0px; width: 140px;">Logout</Button>
-                                        </div> 
+                                       
+                                                 <g:include controller="user" action="showUserAuthentication"/>
+                                     
                                   </div> 
                                   <div class="ui segment" style="margin-left: 40px;margin-top: 20px; height: 344px;width: 272px;">
                                         <div class="column" style="width: 270px; height: 330px;" > 
                                                      <a class="ui red ribbon label">${game.rating }</a>
-                                                    <img class="ui tiny centered image" style="width: 120px;margin-right: 87px; margin-top:10px;" src="${resource(dir: 'images', file: "$game.gameLogo")}">
+                                                    <img class="ui tiny centered image" style="width: 120px;" src="${resource(dir: 'images', file: "$game.gameLogo")}">
                                                     <div class="center aligned column">
                                                         <h4 class="title">${game.gameTitle }</h4>
                                                         <h5 class="price">$ ${game.gamePrice }</h5>
                                                     </div>
-                                                  <div class="ui star rating">
+                                                  <div class="ui star rating" data-rating="3">
                                                       <i class="icon"></i>
                                                       <i class="icon"></i>
                                                       <i class="icon"></i>
@@ -84,24 +85,27 @@
         <div class="row">
           <div class="ui segment"  style="width: 800px;">
                       <div class="ui minimal comments"  style="width: 800px;">
-                                <h3 class="ui dividing header"   style="width: 770px;"> Number of Reviews</h3>
+                                <h3 class="ui dividing header"   style="width: 770px;">  ${game.numberOfReviews } reviews</h3>
                                 <div class="ui segment"  style="width: 770px;">
                                 	<h4>Write a Review</h4>
-                                	  <form class="ui reply form">
-                                                    <div class="field">
-                                                      <textarea></textarea>
-                                                    </div>
-                                                    <div class="ui blue labeled submit icon button">
-                                                      <i class="icon edit"></i> Add Review
-                                                    </div>
-                                                </form>
+                                	  <g:form class="ui reply form">
+                                                    <div  class="field">
+                                                      <g:textArea name="review"/>
+                                                      	<input name="gameId" value="${game.id}" type="hidden" />
+														<input name="gameTitle" value="${game.gameTitle}" type="hidden" />
+                                                    </div>                                                    
+	                                                    <g:actionSubmit action="addReview"  value="Add Review" class="ui blue labeled submit icon button">
+	                                                      <i class="icon edit"></i> Add Review
+	                                             
+	                                                </g:actionSubmit>
+                                       </g:form>
                                 	<g:each in="${reviews}" status="i" var="review">                                                    
                                       <div class="comment">
                                         <a class="avatar">
                                           <img src="${resource(dir: 'images', file: "${review.user.userPhoto}")}">                   
                                         </a>
                                         <div class="content">
-                                          <a class="author">${review.user.name }</a>
+                                         	<g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${review.user.id}"]}"> ${review.user.name } </g:link>
                                           <div class="metadata">
                                             <span class="date">${review.date }</span>
                                           </div>
@@ -112,35 +116,51 @@
                                              </p>
                                            </div>
                                           <div class="actions">
-                                                  <a class="Comment">Report</a>
-                                          </div>
+											Report
                                         </div>
-                                        <div class="comments">
-                                          <div class="comment">
+                                        <ul id="myList">
+                                        <g:each in="${review.comment.sort{it.date}.reverse(true)}" status="k" var="comment"> 
+                                          <li class="comment" style="display:none;">
                                             <a class="avatar">
-                                              <img src="${resource(dir: 'images', file: 'nan.jpg')}">
+                                              <img src="${resource(dir: 'images', file: "${comment.user.userPhoto}")}">
                                             </a>
                                             <div class="content">
-                                              <a class="author">Jenny Hess</a>
+                                              <g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${comment.user.id}"]}">${comment.user.name } </g:link>
+                                             </a>
                                               <div class="metadata">
-                                                <span class="date">Today at 5:00 PM</span>
+                                                <span class="date">${comment.date }
+                                            	</span>
                                               </div>
                                               <div class="text">
-                                                Elliot you are always so right :)
+                                              		${comment.comment }
                                               </div>
                                                <div class="actions">
                                                   <a class="Comment">Report</a>
                                                </div>
-                                               <form class="ui comment form">
-                                                    <div class="field">
-                                                      <textarea></textarea>
-                                                    </div>
-                                                    <div class="ui blue labeled submit icon button">
-                                                      <i class="icon edit"></i> Add Comment
-                                                    </div>
-                                                </form>
+                                             
                                             </div>
-                                          </div>
+                                          </li>
+                                              </g:each>
+                                        </ul>
+                                          <g:if test="${ review.comment.size() > 0}">
+                                        <div id="loadMore" style="text-align:center;">Load more</div>
+                                        </g:if>
+                                     
+                                            <g:form class="ui comment form">
+                                                    <div  class="field">
+                                                      <g:textArea name="comment" required=""/>
+                                                      	<g:hiddenField  name="gameId" value="${game.id}"  />
+														<g:hiddenField  name="gameTitle" value="${game.gameTitle}" />
+														<g:hiddenField  name="reviewId" value="${review.id}"  />
+                                                    </div>                                                    
+	                                                    <g:actionSubmit action="addComment"  value="Add Comment" class="ui blue labeled submit icon button">
+	                                                      <i class="icon edit"></i> Add Comment
+	                                             
+	                                                </g:actionSubmit>
+                                       			</g:form>
+                                             
+                                        
+                                        
                                         </div>
                                       </div>
                                       </g:each>
@@ -150,6 +170,21 @@
       </div>
 </div>
 <script>
+$(document).ready(function () {
+    size_li = $("#myList li").size();
+    x=3;
+    $('#myList li:lt('+x+')').show();
+    $('#loadMore').click(function () {
+        x= (x+5 <= size_li) ? x+5 : size_li;
+        $('#myList li:lt('+x+')').show();
+    });
+    
+});
+
+$('.ui.rating')
+.rating()
+;
+
  function showImage(imgName) {
        var curImage = document.getElementById('currentImg');
        var thePath = 'images/';
