@@ -75,11 +75,28 @@ class GameService {
 		return game
 	}
 	
-	def listReview(title){
-		def reviews = Review.where {
-			game.gameTitle == title
+	def listReview(title,currentUser){
+		def userReviews
+		def otherReviews
+		def allReviews
+		if (currentUser){
+			userReviews = Review.where {
+				user.id == currentUser.id &&
+				game.gameTitle == title
+			}.sort{it.date}.reverse(true)
+				
+			otherReviews = Review.where{
+				user.id != currentUser.id &&
+				game.gameTitle == title
+			}.sort{it.date}.reverse(true)
+			allReviews = userReviews + otherReviews
+		} else {
+			allReviews  = Review.where{
+				game.gameTitle == title
+			}.sort{it.date}.reverse(true)
 		}
-		return reviews
+		
+		return allReviews
 	}
 	
 	def listComment(title, reviewId){

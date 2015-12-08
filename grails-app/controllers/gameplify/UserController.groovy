@@ -62,7 +62,7 @@ class UserController {
 			   User user = User.find{username==params.username}
 			   if (!user) {
 				  flash.message = "Username does not exist."
-				  redirect(controller:"game", action: "index")
+				  redirect(uri: request.getHeader('referer') )
 				  return
 			   }
 			   User us = User.find{
@@ -72,18 +72,13 @@ class UserController {
 			   //user = User.findByUsernameAndPasswordHashed(params.username, passwordHashed)
 			   if (!us) {
 				  flash.message = "Invalid input."
-				  redirect(controller:"game", action: "index")
+				  redirect(uri: request.getHeader('referer') )
 				  return
 			   }
 			   
 			   
-			   if(user.role=="User"){
-				   session.user = user
-				   redirect( controller:"game", action: "index")
-			   }else{
-			   	   session.user = user
-			   	   redirect(controller:"game", action: "index")
-			   }
+			   session.user = user
+			   redirect(uri: request.getHeader('referer') )
 		   }
 	   }
 	
@@ -93,7 +88,7 @@ class UserController {
 	   
 	   def logout = {
 		   session.invalidate()
-		   redirect(controller:"game", action: "index")
+		    redirect(uri: request.getHeader('referer') )
 	   }
    }
 
