@@ -66,6 +66,46 @@ class GameService {
 	
 	}
 	
+	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories){
+		Platform platform = Platform.get(platformId)
+		Game game = new Game(
+			gameTitle:gameTitle,
+			gameLogo:gameLogo,
+			gamePrice:gamePrice,
+			gameDescription:gameDescription,
+			releaseDate:releaseDate,
+			rating:0,
+			numberOfReviews:0,
+			numberOfRaters:0
+			
+		)		
+		game.save()
+//		log.println(game.gameTitle)
+//		log.println(game.gameLogo)
+//		log.println(game.gamePrice)
+//		log.println(game.gameDescription)
+//		log.println(game.releaseDate)
+		platform.addToGame(game)
+		log.println (categories)
+		categories.each {
+			GameCategory gameCategory = GameCategory.get(it.id)
+			log.println(gameCategory.categoryName)
+			gameCategory.addToGames(game)
+			gameCategory.save(flush:true)
+//			log.println ("IN")			
+//			log.println(it.id)
+		}
+		platform.save(flush:true)
+		log.println(platform.platformName)
+	}
+	
+	def deleteGame(gameTitle, gameCategory){		
+		def game = Game.findByGameTitle(gameTitle)
+		def gameCat = GameCategory.findByCategoryName(gameCategory)
+		gameCat.removeFromGameCategory(game)
+		game.delete(flush:true)		
+	}
+	
 	def listPlatform(){
 		return Platform.list()
 	}

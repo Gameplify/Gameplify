@@ -13,7 +13,6 @@
 
 </head>
 
-
 <body>
 <div class="ui fixed inverted menu">
       <g:include action="showNavbar"/>
