@@ -10,6 +10,7 @@ class GameController {
 
 	def gameService
 	def gameCategoryService
+	def userService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index() {
@@ -33,10 +34,15 @@ class GameController {
 		redirect(action: "gameProfile", params: [gameTitle: gameTitle] )
 	}
 	
-	def gameProfile(){	
+	def gameProfile(){
+		def currentUser	
+		if(session.user){
+			currentUser = userService.findUser(session.user.id)
+		}
 		def game = gameService.listGameInfo(params.gameTitle)
-		def reviews = gameService.listReview(params.gameTitle)
+		def reviews = gameService.listReview(params.gameTitle, currentUser)
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
+		
 		[game:game, reviews:reviews, comments:comments]
 	}
    
