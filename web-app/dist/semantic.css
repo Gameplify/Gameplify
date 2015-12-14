@@ -31296,8 +31296,9 @@ a.ui.nag {
 }
 
 .ui.rating {
-  font-size: 1rem;
-  margin-left: 84px;
+  font-size: 1rem;  
+  margin-left: 30%;
+  margin-right: auto;
 }
 
 .ui.large.rating {

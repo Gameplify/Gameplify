@@ -137,24 +137,24 @@ body {
 }
 
     .title{
-      margin-left: 81px !important;
+      text-align : center !important;
       font-style: normal !important;
       font-weight: 900 !important;
       margin-bottom: 0px !important;
     }
     .price{
-      margin-left: 107px !important;
+      text-align : center !important;
       margin-top: 0px !important;
     }
     .rate{
-      margin-left: 107px !important;
+     text-align : center !important;
       margin-top: 0px !important;
       font-size: smaller !important;
       font-weight: 800 !important;
       margin-bottom: 0px !important;
     }
     .published{
-      margin-left: 100px !important;
+      text-align : center !important;
       margin-top: 0px !important;
       font-size: smaller !important;
       font-weight: 600 !important;

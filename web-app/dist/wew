@@ -1,0 +1,9 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="semantic.min.css">
+<script src="semantic.min.js"></script>
+</head>
+<body>
+<div class="ui star rating" data-rating="3"></div>
+</body>
+</html>

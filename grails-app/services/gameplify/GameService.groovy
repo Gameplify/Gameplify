@@ -23,12 +23,8 @@ class GameService {
 	}
 	
 	def addReview(review, gameId, userId){
-		log.println("NI SUD SA SERVICE")
-		log.println(userId)
 		User user = User.get(userId)
 		Game game = Game.get(gameId)
-		def num = game.numberOfReviews
-		num = num+1
 		Date date = new Date()
 		Review rev = new Review(
 			review:review,
@@ -37,13 +33,16 @@ class GameService {
 			game:game,
 			status:"okay"
 		)
-		game.numberOfReviews = num
-		log.println(game.numberOfReviews)
+		log.println(user.totalNumberOfReviews)
+		game.numberOfReviews +=1
+		user.totalNumberOfReviews +=1
+		log.println(user.totalNumberOfReviews)
 		rev.save()
 		user.addToReviews(rev)	
 		game.addToReviews(rev)
-		user.save()
+		
 		game.save(flush:true)
+		user.save(flush:true)
 	}
 	
 	def addComment(comment, gameId, userId, reviewId){
