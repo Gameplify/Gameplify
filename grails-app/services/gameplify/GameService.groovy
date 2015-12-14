@@ -13,9 +13,17 @@ class GameService {
 			games = Game.where {
 				categories.categoryName == currentCategory
 				platform.platformName == chosenPlatform
+				status == "okay"
 			}.list(max: max, offset: offset)
 		} else if(!chosenPlatform){
+<<<<<<< HEAD
 			games = Game.where { categories.categoryName == currentCategory					 }.list(max: max, offset: offset)
+=======
+			games = Game.where {
+				categories.categoryName == currentCategory	
+				status == "okay"
+			}.list(max: max, offset: offset)
+>>>>>>> c640b3876a7f1109827955baa6179cefdf40f507
 		}
 		return games
 	}
@@ -79,6 +87,69 @@ class GameService {
 			review.id == reviewId
 		}.list()
 		return comment
+	}
+	
+	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories){
+		Platform platform = Platform.get(platformId)
+		Game game = new Game(
+			gameTitle:gameTitle,
+			gameLogo:gameLogo,
+			gamePrice:gamePrice,
+			gameDescription:gameDescription,
+			releaseDate:releaseDate,
+			rating:0,
+			numberOfReviews:0,
+			numberOfRaters:0,
+			status:"okay"
+			
+		)		
+		game.save(failOnError: true)
+		platform.addToGame(game)
+		log.println (categories)
+		categories.each {
+			GameCategory gameCategory = GameCategory.get(it.id)
+			log.println(gameCategory.categoryName)
+			gameCategory.addToGames(game)
+			gameCategory.save(flush:true)
+		}
+		platform.save(flush:true)
+		log.println(platform.platformName)
+	}
+	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, removeCat){
+		Platform platform = Platform.get(platformId)
+		Game game = Game.get(gameId)
+		game.gameTitle = gameTitle
+		game.gamePrice = gamePrice.toFloat()
+		game.gameDescription = gameDescription
+		game.releaseDate = releaseDate
+		if(gameLogo){
+			game.gameLogo = gameLogo
+		}
+		game.save(flush: true)
+		platform.addToGame(game)
+		log.println (categories)
+		removeCat.each {
+			GameCategory gameCategory = GameCategory.get(it.id)
+			log.println(gameCategory.categoryName)
+			gameCategory.removeFromGames(game)
+			gameCategory.save(flush:true)
+		}
+		
+		categories.each {
+			GameCategory gameCategory = GameCategory.get(it.id)
+			log.println(gameCategory.categoryName)
+			gameCategory.addToGames(game)
+			gameCategory.save(flush:true)
+			
+		}
+		platform.save(flush:true)
+		log.println(platform.platformName)
+	}
+	
+	def deleteGame(gameTitle, gameCategory){		
+		def game = Game.findByGameTitle(gameTitle)
+		game.status ="deleted"	
+		game.save()
 	}
 	
 	def listPlatform(){

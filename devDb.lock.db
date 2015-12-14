@@ -1,4 +1,9 @@
 #FileLock
+<<<<<<< HEAD
 #Tue Dec 08 11:23:05 CST 2015
 id=1517f9d2b90672f5723650e5f57e73b48354ec7315c
+=======
+#Mon Dec 14 16:19:28 PHT 2015
+id=1519f92a5375b407d6986dac504a24c05764f087ce9
+>>>>>>> c640b3876a7f1109827955baa6179cefdf40f507
 method=file
