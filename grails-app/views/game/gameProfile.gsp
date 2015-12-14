@@ -105,8 +105,14 @@
 	                                                </g:actionSubmit>
 	                                                
                                        </g:form>
+<<<<<<< HEAD
                                        </g:if>
+=======
+                                	   
+                                <ul>
+>>>>>>> 1ce2c1a60c28b3db32f36b971b0067d518851065
                                 	<g:each in="${reviews}" status="i" var="review">                                                    
+                                   <li>
                                       <div class="comment">
                                         <a class="avatar">
                                           <img src="${resource(dir: 'images', file: "${review.user.userPhoto}")}">                   
@@ -125,7 +131,7 @@
                                           <div class="actions">
 											Report
                                         </div>
-                                        <ul id="myList">
+                                         <ul class="myList">
                                         <g:each in="${review.comment.sort{it.date}.reverse(true)}" status="k" var="comment"> 
                                           <li class="comment" style="display:none;">
                                             <a class="avatar">
@@ -142,15 +148,15 @@
                                               		${comment.comment }
                                               </div>
                                                <div class="actions">
-                                                  <a class="Comment">Report</a>
+                                                 <a class="Comment">Report</a>
                                                </div>
                                              
                                             </div>
                                           </li>
                                               </g:each>
-                                        </ul>
-                                          <g:if test="${ review.comment.size() > 0}">
-                                        <div id="loadMore" style="text-align:center;">Load more</div>
+                                    </ul>
+                                          <g:if test="${ review.comment.size() > 3}">
+                                        <div class="loadMore" style="text-align:center;">Load more</div>
                                         </g:if>
                                      	 <g:if test="${session?.user}">
                                             <g:form class="ui comment form">
@@ -171,8 +177,9 @@
                                         
                                         </div>
                                       </div>
+                                   </li>
                                       </g:each>
-                                     
+                                  </ul>
                     </div>
         </div>
       </div>
@@ -230,6 +237,7 @@
 </div>
 <script>
 $(document).ready(function () {
+<<<<<<< HEAD
 	
     size_li = $("#myList li").size();
     x=3;
@@ -252,10 +260,54 @@ $(document).ready(function () {
 	    // read the image file as a data URL.
 	    reader.readAsDataURL(this.files[0]);
 	};
+=======
+	i=0;
+	w=0;
+	x=0;
+	var myArr = new Array();
+	size_li=0;
+		
+	$('.myList').each(function() {
+	    var count = $('> li', this).length;
+	    myArr.push(count);
+	    $('.myList li').slice(w, w+3).show();
+	    w+= myArr[i]; 
+	   	i++;
+	});
+>>>>>>> 1ce2c1a60c28b3db32f36b971b0067d518851065
     
+	
+	  $('.loadMore').click(function () {
+	   val=$('.loadMore').index(this);
+		
+		   val2=val;
+			if(val!=0 && size_li==0){
+				size_li=myArr[val-1];
+			   	while(val>0){
+			   	 val--; 
+		  	   	myArr[val2]+= myArr[val];
+		  	 
+		   }			 
+		   }
+			alert(size_li);  
+			alert(myArr[val2]);
+	       if ( size_li +3 < myArr[val2]) {
+	           size_li= size_li+3;
+	        }else{
+	        	 $('.loadMore').eq($('.loadMore').index(this)).hide();
+		    }
+	      // if ( size_li+3 >= myArr[val2]) {
+	        //   $('.loadMore').eq($('.loadMore').index(this)).hide();
+	       //}
+	       
+	        $('.myList li').slice(size_li, size_li+3).show();
+	        
+	    });
+   
 });
 
 
+<<<<<<< HEAD
 $(document).ready(function()  {
 
 
@@ -293,6 +345,8 @@ $('.ui.rating')
 .rating()
 ;
 
+=======
+>>>>>>> 1ce2c1a60c28b3db32f36b971b0067d518851065
  function showImage(imgName) {
        var curImage = document.getElementById('currentImg');
        var thePath = 'images/';
