@@ -10,6 +10,7 @@
 
   <script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
    <script src="${resource(dir:'dist/components', file:'rating.min.js')}"></script>
+   <script src="${resource(dir:'dist', file:'jquery-2.1.4.min.js')}"></script>
 
 </head>
 
@@ -87,18 +88,22 @@
                       <div class="ui minimal comments"  style="width: 800px;">
                                 <h3 class="ui dividing header"   style="width: 770px;">  ${game.numberOfReviews } reviews</h3>
                                 <div class="ui segment"  style="width: 770px;">
+                                 <g:if test="${session?.user}">
                                 	<h4>Write a Review</h4>
                                 	  <g:form class="ui reply form">
                                                     <div  class="field">
-                                                      <g:textArea name="review"/>
+                                                      <g:textArea id="text" name="review"/>
                                                       	<input name="gameId" value="${game.id}" type="hidden" />
 														<input name="gameTitle" value="${game.gameTitle}" type="hidden" />
-                                                    </div>                                                    
-	                                                    <g:actionSubmit action="addReview"  value="Add Review" class="ui blue labeled submit icon button">
+                                                    </div>    
+                                                    <div  id="counter"></div>                                                
+	                                                    <g:actionSubmit id="reviewButton" action="addReview"  value="Add Review" class="ui blue labeled submit icon button">
 	                                                      <i class="icon edit"></i> Add Review
 	                                             
 	                                                </g:actionSubmit>
+	                                                
                                        </g:form>
+                                       </g:if>
                                 	<g:each in="${reviews}" status="i" var="review">                                                    
                                       <div class="comment">
                                         <a class="avatar">
@@ -145,7 +150,7 @@
                                           <g:if test="${ review.comment.size() > 0}">
                                         <div id="loadMore" style="text-align:center;">Load more</div>
                                         </g:if>
-                                     
+                                     	 <g:if test="${session?.user}">
                                             <g:form class="ui comment form">
                                                     <div  class="field">
                                                       <g:textArea name="comment" required=""/>
@@ -158,7 +163,8 @@
 	                                             
 	                                                </g:actionSubmit>
                                        			</g:form>
-                                             
+                                        </g:if>     
+                                        
                                         
                                         
                                         </div>
@@ -171,6 +177,7 @@
 </div>
 <script>
 $(document).ready(function () {
+	
     size_li = $("#myList li").size();
     x=3;
     $('#myList li:lt('+x+')').show();
@@ -180,6 +187,40 @@ $(document).ready(function () {
     });
     
 });
+
+
+$(document).ready(function()  {
+
+
+	
+	$("#counter").css("color","red");
+    document.getElementById("reviewButton").disabled = true;
+    $("#counter").append("<strong> 0 </strong> characters ");
+    $("#text").keyup(function(){
+ 
+	    var reviewLength = $(this).val().length;
+	    $("#counter").html(" <strong>"+  reviewLength+"</strong> characters");
+	    if(reviewLength < 100){
+	    	document.getElementById("reviewButton").disabled = true;
+	    }
+	    if(reviewLength >= 100){
+	    	document.getElementById("reviewButton").disabled = false;
+	    }
+	    if(reviewLength <= 100)
+	    {
+	        $("#counter").css("color","red");
+	    }
+	    else
+	    {
+	        $("#counter").css("color","black");
+	    }
+    });
+
+    $("#submitButton").click(function(){
+		alert("hsadi");
+	})
+});
+
 
 $('.ui.rating')
 .rating()

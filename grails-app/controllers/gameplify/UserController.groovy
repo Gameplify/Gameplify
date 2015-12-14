@@ -1,6 +1,7 @@
 package gameplify
 class UserController {
 	def userService
+	private static final okcontents = ['image/png', 'image/jpeg', 'image/gif']
 		def index={
 			redirect(action:"login")
 		}
@@ -12,6 +13,46 @@ class UserController {
 			}
 			[user:user]
 		}
+		
+		def avatar_image() {
+			def avatarUser = User.get(params.id)
+			if (!avatarUser || !avatarUser.avatar || !avatarUser.avatarType) {
+			  response.sendError(404)
+			  return
+			}
+			response.contentType = avatarUser.avatarType
+			response.contentLength = avatarUser.avatar.size()
+			OutputStream out = response.outputStream
+			out.write(avatarUser.avatar)
+			out.close()
+		  }
+		
+		def upload_avatar() {
+
+			def f = request.getFile('avatar')
+		  
+			if(f){
+				print "yow"
+			} else {
+				print "you fail fucker"
+			}
+			
+			
+			if (!okcontents.contains(f.getContentType())) {
+			  flash.message = "Avatar must be one of: ${okcontents}"
+			  redirect(uri: request.getHeader('referer') )
+			  return
+			}
+		  
+			
+			if(!userService.uploadAvatar(session.user.id, f)){
+			render(view:'select_avatar', model:[user:user])
+			print "too big"
+			return
+		}
+			
+			redirect(uri: request.getHeader('referer') )
+		  }
 		
 		def adminProfile(){
 			def admin = params.admin
@@ -62,7 +103,7 @@ class UserController {
 			   User user = User.find{username==params.username}
 			   if (!user) {
 				  flash.message = "Username does not exist."
-				  redirect(controller:"game", action: "index")
+				  redirect(uri: request.getHeader('referer') )
 				  return
 			   }
 			   User us = User.find{
@@ -72,18 +113,13 @@ class UserController {
 			   //user = User.findByUsernameAndPasswordHashed(params.username, passwordHashed)
 			   if (!us) {
 				  flash.message = "Invalid input."
-				  redirect(controller:"game", action: "index")
+				  redirect(uri: request.getHeader('referer') )
 				  return
 			   }
 			   
 			   
-			   if(user.role=="User"){
-				   session.user = user
-				   redirect( controller:"game", action: "index")
-			   }else{
-			   	   session.user = user
-			   	   redirect(controller:"game", action: "index")
-			   }
+			   session.user = user
+			   redirect(uri: request.getHeader('referer') )
 		   }
 	   }
 	
@@ -93,7 +129,7 @@ class UserController {
 	   
 	   def logout = {
 		   session.invalidate()
-		   redirect(controller:"game", action: "index")
+		    redirect(uri: request.getHeader('referer') )
 	   }
    }
 
