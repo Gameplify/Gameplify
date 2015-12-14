@@ -10,9 +10,20 @@ body {
   top:0px;
   right:auto;
 }
+<<<<<<< HEAD
 
 
 
+<<<<<<< HEAD
+=======
+=======
+.ui.tiny.image {
+  width: 80px;
+  height: 60px;
+  font-size: 0.85714286rem;
+}
+>>>>>>> c640b3876a7f1109827955baa6179cefdf40f507
+>>>>>>> 5b6ba28baf4dbe0be210cf15032a6a66ce6a9d0d
   #currentImg{
     width: 590px;
     height: 350px;
@@ -161,3 +172,30 @@ body {
       font-size: smaller !important;
       font-weight: 600 !important;
     }
+.ui.modal.addGame {
+  display: none;
+  width: 500;
+  position: fixed;
+  z-index: 1001;
+  top: 50%;
+  left: 66%;
+  text-align: left;
+  background: #ffffff;
+  border: none;
+  box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.2), 1px 3px 15px 2px rgba(0, 0, 0, 0.2);
+  -webkit-transform-origin: 50% 25%;
+  -ms-transform-origin: 50% 25%;
+  transform-origin: 50% 25%;
+  border-radius: 0.28571429rem;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  will-change: top, left, margin, transform, opacity;
+}
+.ui.modal > .actions {
+  background: #f9fafb;
+  padding: .5rem 1rem;
+  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  text-align: center;
+}

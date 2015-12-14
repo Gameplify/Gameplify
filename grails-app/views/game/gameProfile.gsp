@@ -14,7 +14,6 @@
 
 </head>
 
-
 <body>
 <div class="ui fixed inverted menu">
       <g:include action="showNavbar"/>
@@ -68,6 +67,9 @@
                                                   
                                                    <h5 class="rate"> 0 raters</h5>
                                                    <h5 class="published"><g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}"/> </h5> 
+                                                 <g:if test="${session?.user?.role == "Admin"}">
+                                                 <button class="ui blue button" id="editGame" style="margin-left: 92px;">Edit</button> 
+                                                 </g:if>
                                                   <div class="ui two column stackable grid" style="margin-left: 62px;margin-bottom: 0px;margin-right: 0px;">
                                          		  <div class ="row">
                                          		  
@@ -103,8 +105,18 @@
 	                                                </g:actionSubmit>
 	                                                
                                        </g:form>
+<<<<<<< HEAD
                                        </g:if>
+=======
+<<<<<<< HEAD
+                                       </g:if>
+=======
+                                	   
+                                <ul>
+>>>>>>> 1ce2c1a60c28b3db32f36b971b0067d518851065
+>>>>>>> 5b6ba28baf4dbe0be210cf15032a6a66ce6a9d0d
                                 	<g:each in="${reviews}" status="i" var="review">                                                    
+                                   <li>
                                       <div class="comment">
                                         <a class="avatar">
                                           <img src="${resource(dir: 'images', file: "${review.user.userPhoto}")}">                   
@@ -123,7 +135,7 @@
                                           <div class="actions">
 											Report
                                         </div>
-                                        <ul id="myList">
+                                         <ul class="myList">
                                         <g:each in="${review.comment.sort{it.date}.reverse(true)}" status="k" var="comment"> 
                                           <li class="comment" style="display:none;">
                                             <a class="avatar">
@@ -140,15 +152,15 @@
                                               		${comment.comment }
                                               </div>
                                                <div class="actions">
-                                                  <a class="Comment">Report</a>
+                                                 <a class="Comment">Report</a>
                                                </div>
                                              
                                             </div>
                                           </li>
                                               </g:each>
-                                        </ul>
-                                          <g:if test="${ review.comment.size() > 0}">
-                                        <div id="loadMore" style="text-align:center;">Load more</div>
+                                    </ul>
+                                          <g:if test="${ review.comment.size() > 3}">
+                                        <div class="loadMore" style="text-align:center;">Load more</div>
                                         </g:if>
                                      	 <g:if test="${session?.user}">
                                             <g:form class="ui comment form">
@@ -169,14 +181,70 @@
                                         
                                         </div>
                                       </div>
+                                   </li>
                                       </g:each>
-                                     
+                                  </ul>
                     </div>
         </div>
       </div>
 </div>
+<div class="ui modal addGame">
+  <i class="close icon"></i>
+  <g:form class="ui equal width form" id="form" style="padding:10px" controller='game' action='editGame'>
+  	<img class="ui centered small image" id="image" src="${resource(dir: 'images', file: "$game.gameLogo")}" alt="Game Logo">
+  	<g:field type="file" name="gameLogo" accept="image/*" value = "${game.gameLogo}"/>
+  	<div class="field">
+  		<g:hiddenField name="gameId" value="${game.id }"></g:hiddenField>
+      	<g:textField placeholder="Game Title*" name="gameTitle" required="" value = "${game.gameTitle}"/>
+    </div>
+  	<div class="fields">
+    	<div class="field" style="width:200px;">
+      		<label for="releaseDate">Released On*</label>
+      		<g:datePicker name="releaseDate" value ="${game.releaseDate}" precision="day" years="${Calendar.instance.get(Calendar.YEAR)..1950}"/>
+    	</div>
+    	<div class="field">
+      		<label for = "price">Price*</label>
+      		<g:field type="number" name="gamePrice" required="" value = "${game.gamePrice }"/>
+    	</div>
+    	<div class="field">
+			<label for="platform">Platform</label>
+    		<g:select from="${platforms}" class="ui dropdown" name="platformId" optionKey="id" optionValue="platformName"/>
+  		</div>
+  	</div>
+  	<div class="field">
+  		<g:textArea rows="3" name="gameDescription" placeholder="Description*" required="" value = "${game.gameDescription }"/>
+  	</div>
+  	<div class="field">
+  		<label for="category">Category(Select at least one)</label>
+  		<div class="ui grid">
+  			
+			<g:each in="${categories}" status="i" var="cat">
+			<div class = "four wide column" style="padding:0px;margin-left:10px;margin-top:12px;">
+				<div class="ui checkbox">
+				<g:if test="${cat in game.categories}">
+				<g:hiddenField name="formerCategory" value="${cat.id}"/>
+					<g:checkBox name="newCategory" value="${cat.id}" checked="true"/>
+				</g:if>
+				<g:else>
+					<g:checkBox name="newCategory" value="${cat.id}" checked="false"/>
+				</g:else>
+				<label>${cat.categoryName}</label>
+				</div>
+			</div>		
+			</g:each>
+		</div>	
+	</div>	
+  	<div class="actions" style="text-align:center;margin-top:30px;">
+    	<g:submitButton class="ui button" name="addButton" value ="Add Game" style="margin-left: -1.75em;"></g:submitButton>
+  	</div>
+	</g:form>
+</div>
 <script>
 $(document).ready(function () {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 5b6ba28baf4dbe0be210cf15032a6a66ce6a9d0d
 	
     size_li = $("#myList li").size();
     x=3;
@@ -185,10 +253,71 @@ $(document).ready(function () {
         x= (x+5 <= size_li) ? x+5 : size_li;
         $('#myList li:lt('+x+')').show();
     });
+	$('#editGame').click(function(){
+		$('.modal').modal('show');
+	});
+	document.getElementById("gameLogo").onchange = function () {
+	    var reader = new FileReader();
+
+	    reader.onload = function (e) {
+	        // get loaded data and render thumbnail.
+	        document.getElementById("image").src = e.target.result;
+	    };
+
+	    // read the image file as a data URL.
+	    reader.readAsDataURL(this.files[0]);
+	};
+=======
+	i=0;
+	w=0;
+	x=0;
+	var myArr = new Array();
+	size_li=0;
+		
+	$('.myList').each(function() {
+	    var count = $('> li', this).length;
+	    myArr.push(count);
+	    $('.myList li').slice(w, w+3).show();
+	    w+= myArr[i]; 
+	   	i++;
+	});
+>>>>>>> 1ce2c1a60c28b3db32f36b971b0067d518851065
     
+	
+	  $('.loadMore').click(function () {
+	   val=$('.loadMore').index(this);
+		
+		   val2=val;
+			if(val!=0 && size_li==0){
+				size_li=myArr[val-1];
+			   	while(val>0){
+			   	 val--; 
+		  	   	myArr[val2]+= myArr[val];
+		  	 
+		   }			 
+		   }
+			alert(size_li);  
+			alert(myArr[val2]);
+	       if ( size_li +3 < myArr[val2]) {
+	           size_li= size_li+3;
+	        }else{
+	        	 $('.loadMore').eq($('.loadMore').index(this)).hide();
+		    }
+	      // if ( size_li+3 >= myArr[val2]) {
+	        //   $('.loadMore').eq($('.loadMore').index(this)).hide();
+	       //}
+	       
+	        $('.myList li').slice(size_li, size_li+3).show();
+	        
+	    });
+   
 });
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 5b6ba28baf4dbe0be210cf15032a6a66ce6a9d0d
 $(document).ready(function()  {
 
 
@@ -226,6 +355,8 @@ $('.ui.rating')
 .rating()
 ;
 
+=======
+>>>>>>> 1ce2c1a60c28b3db32f36b971b0067d518851065
  function showImage(imgName) {
        var curImage = document.getElementById('currentImg');
        var thePath = 'images/';
