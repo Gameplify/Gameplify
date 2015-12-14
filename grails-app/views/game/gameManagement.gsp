@@ -23,13 +23,16 @@
               <div class="row" style="margin-left: 0px;">
                       <div class="ui segment" style="height: auto">
                                   <div class="ui grid" style="width: 800px; padding: 20px; ">
-                                      <h3 style="width: 770px;  margin-bottom: 0px;"> ${currentCategory } 
+                                      <h3 style="width: 770px;  margin-bottom: 0px;"> ${currentCategory } </h3>
                                                   <div class="ui grid" style="margin-left: 510px; margin-top: -35px;">
-                                                  	<button class="ui icon button" id="addGame" style ="padding:0.2em 0.01em 0.4em 0.01em;">
-                                                  		<i class= "big green add square icon"></i>
+                                                   <g:if test="${flash.message}">
+														<div class="message" style="width: 200px; margin-left: -171px;">${flash.message }</div>
+													</g:if>
+													<button class="ui icon button" id="addGame" style ="height:28px; width:28px; padding:0;">
+                                                  		<i class= "big green add square icon" style ="height:28px; width:28px;"></i>
                                                   	</button>
-                                                  	<button class="ui icon button" id="deleteGame" style ="padding:0.2em 0.01em 0.4em 0.01em; margin-left:30px">
-                                                  		<i class= "big red trash icon"></i>
+                                                  	<button class="ui icon button" id="deleteGame" style ="height:28px; width:28px; margin-left:30px; padding:0;">
+                                                  		<i class= "big red trash icon" style ="height:28px; width:28px;"></i>
                                                   	</button>
                                                   </div>
                                                   
@@ -65,7 +68,7 @@
                                                                       </div>
                                               </div> 
                                            </g:link>
-                                        <g:link action="deleteGame" params="${[gameTitle:"${game.gameTitle}",categoryName:currentCategory, gameCategory:"${game.categories}"] }">
+                                        <g:link action="deleteGame" params="${[gameTitle:"${game.id}",categoryName:currentCategory, gameCategory:"${game.categories}"] }">
 											<button class="ui icon button delete" id="delete" style ="display:none;padding:0;margin-top:4px;margin-left: -267px;">
               									<i class= "small red delete icon"></i>
 											</button>
@@ -96,7 +99,7 @@
   	<div class="fields">
     	<div class="field" style="width:200px;">
       		<label for="releaseDate">Released On*</label>
-      		<g:datePicker name="relaseDate" value="${new Date()}" noSelection="['':'-Choose-']" precision="day" years="${Calendar.instance.get(Calendar.YEAR)..1950}"/>
+      		<g:datePicker name="releaseDate" value="${new Date()}" precision="day" years="${Calendar.instance.get(Calendar.YEAR)..1950}"/>
     	</div>
     	<div class="field">
       		<label for = "price">Price*</label>

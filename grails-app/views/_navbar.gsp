@@ -23,11 +23,13 @@
               </div>
               <g:if test="${session?.user?.role == "Admin"}">
 		      		<div class = "header item">
-		        		<div id="demo_box">
+		        		<div id="demo_admin">
            					<span class="pop_ctrl">Game</span>
-	           					<ul id="demo_ul" style="margin-top:22px; margin-left:-845px;">	            	
+	           					<ul id="demo_ul" style="margin-top:22px; margin-left:-815px;">	            	
 									<g:each in="${categories}" status="i" var="cat">				 	
-		                				<li class="demo_li"><g:link action="gameManagement" params="${[categoryName: cat.categoryName]}"><img id= "icon" src="${resource(dir: 'icons', file: "${cat.icon}")}"><div>${cat.categoryName}</div></g:link></li>                	
+		                				<li class="demo_li">
+		                				<g:link action="gameManagement" params="${[categoryName: cat.categoryName]}">
+		                				<img id= "icon" src="${resource(dir: 'icons', file: "${cat.icon}")}"><div>${cat.categoryName}</div></g:link></li>                	
 	                				</g:each>
 	            				</ul>
 	        			</div>
@@ -61,7 +63,8 @@
     <script>
         $(function(){
             $('#demo_box').popmenu();
-        })
+            $('#demo_admin').popadminmenu();
+        });
     </script>
        
 </body>

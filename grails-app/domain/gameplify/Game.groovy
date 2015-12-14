@@ -9,6 +9,7 @@ class Game {
 	float rating
 	int numberOfRaters
 	int numberOfReviews
+	String status
 	String toString(){
 		"${gameTitle}"
 	}

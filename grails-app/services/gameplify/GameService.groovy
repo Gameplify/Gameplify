@@ -13,10 +13,12 @@ class GameService {
 			games = Game.where {
 				categories.categoryName == currentCategory
 				platform.platformName == chosenPlatform
+				status == "okay"
 			}.list(max: max, offset: offset)
 		} else if(!chosenPlatform){
 			games = Game.where {
-				categories.categoryName == currentCategory					
+				categories.categoryName == currentCategory	
+				status == "okay"
 			}.list(max: max, offset: offset)
 		}
 		return games
@@ -76,15 +78,11 @@ class GameService {
 			releaseDate:releaseDate,
 			rating:0,
 			numberOfReviews:0,
-			numberOfRaters:0
+			numberOfRaters:0,
+			status:"okay"
 			
 		)		
-		game.save()
-//		log.println(game.gameTitle)
-//		log.println(game.gameLogo)
-//		log.println(game.gamePrice)
-//		log.println(game.gameDescription)
-//		log.println(game.releaseDate)
+		game.save(failOnError: true)
 		platform.addToGame(game)
 		log.println (categories)
 		categories.each {
@@ -92,8 +90,36 @@ class GameService {
 			log.println(gameCategory.categoryName)
 			gameCategory.addToGames(game)
 			gameCategory.save(flush:true)
-//			log.println ("IN")			
-//			log.println(it.id)
+		}
+		platform.save(flush:true)
+		log.println(platform.platformName)
+	}
+	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, removeCat){
+		Platform platform = Platform.get(platformId)
+		Game game = Game.get(gameId)
+		game.gameTitle = gameTitle
+		game.gamePrice = gamePrice.toFloat()
+		game.gameDescription = gameDescription
+		game.releaseDate = releaseDate
+		if(gameLogo){
+			game.gameLogo = gameLogo
+		}
+		game.save(flush: true)
+		platform.addToGame(game)
+		log.println (categories)
+		removeCat.each {
+			GameCategory gameCategory = GameCategory.get(it.id)
+			log.println(gameCategory.categoryName)
+			gameCategory.removeFromGames(game)
+			gameCategory.save(flush:true)
+		}
+		
+		categories.each {
+			GameCategory gameCategory = GameCategory.get(it.id)
+			log.println(gameCategory.categoryName)
+			gameCategory.addToGames(game)
+			gameCategory.save(flush:true)
+			
 		}
 		platform.save(flush:true)
 		log.println(platform.platformName)
@@ -101,9 +127,8 @@ class GameService {
 	
 	def deleteGame(gameTitle, gameCategory){		
 		def game = Game.findByGameTitle(gameTitle)
-		def gameCat = GameCategory.findByCategoryName(gameCategory)
-		gameCat.removeFromGameCategory(game)
-		game.delete(flush:true)		
+		game.status ="deleted"	
+		game.save()
 	}
 	
 	def listPlatform(){

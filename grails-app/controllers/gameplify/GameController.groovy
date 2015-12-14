@@ -37,15 +37,38 @@ class GameController {
 		def game = gameService.listGameInfo(params.gameTitle)
 		def reviews = gameService.listReview(params.gameTitle)
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
-		[game:game, reviews:reviews, comments:comments]
+		def platforms = gameService.listPlatform()
+		def categories = gameCategoryService.listGame()
+		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories]
 	}
 	
 	def addGame(){
 		def checkedCategory = params.list('category')
 		def categories = GameCategory.getAll(checkedCategory)
-		log.println(params.platformId)
-		gameService.addGame(params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories)	
+		def checkGame = gameService.listGameInfo(params.gameTitle)
+		if(checkGame != null && checkGame.status != "deleted"){
+			flash.message = "Game already exist"
+//		} else if(checkGame.status == "deleted"){
+//			gameService.editGame()
+		}
+		else if(categories.isEmpty()) {
+			flash.message = "You must select at least one category"
+		} else {
+			gameService.addGame(params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories)		
+		}
 		redirect(action:"gameManagement", params:[categoryName:params.currentCategory])	
+	}
+	def editGame(){
+		def uncheckedCategory = params.list('formerCategory') - params.list('newCategory') 
+		def checkedCategory = params.list('newCategory')
+		def categories = GameCategory.getAll(checkedCategory)
+		def removeCat = GameCategory.getAll(uncheckedCategory)
+		if(categories.isEmpty()) {
+			flash.message = "You must select at least one category"
+		} else {
+			gameService.editGame(params.gameId, params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories, removeCat)
+		}
+		redirect(action:"gameProfile", params:[gameTitle:params.gameTitle])
 	}
 	
 	def deleteGame(){
@@ -58,8 +81,7 @@ class GameController {
 		if((!(session.user))||session?.user?.role != "Admin"){			
 			flash.message = "You do not have permission to access this page"
 			redirect(controller:"game", action: "index")
-		}
-		else{
+		} else {
 			def platforms = gameService.listPlatform()
 			def currentCategory = params.categoryName
 			def max = params.max ?: 10
