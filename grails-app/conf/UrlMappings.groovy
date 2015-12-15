@@ -8,7 +8,7 @@ class UrlMappings {
         }
 
         //"/"(view:"/index")
-		"/"(controller:"user")
+		"/"(controller:"game")
         "500"(view:'/error')
 	}
 }

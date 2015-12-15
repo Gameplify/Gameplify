@@ -21,15 +21,79 @@ class GameController {
 		render(template: '../navbar', model:[categories:categories])
 	}
 	
-	def gameProfile(){
+	def addReview(){
+		def gameTitle = params.gameTitle
+		gameService.addReview(params.review,  params.gameId, session.user.id)
+		redirect(action: "gameProfile", params: [gameTitle: gameTitle] )
+	}
+	
+	def addComment(){
+		def gameTitle = params.gameTitle
+		gameService.addComment(params.comment,  params.gameId, session.user.id, params.reviewId)
+		redirect(action: "gameProfile", params: [gameTitle: gameTitle] )
+	}
+	
+	def gameProfile(){	
 		def game = gameService.listGameInfo(params.gameTitle)
 		def reviews = gameService.listReview(params.gameTitle)
-		[game:game, reviews:reviews]
+		def comments= gameService.listComment(params.gameTitle, params.reviewId)
+		def platforms = gameService.listPlatform()
+		def categories = gameCategoryService.listGame()
+		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories]
 	}
-   
+	
+	def addGame(){
+		def checkedCategory = params.list('category')
+		def categories = GameCategory.getAll(checkedCategory)
+		def checkGame = gameService.listGameInfo(params.gameTitle)
+		if(checkGame != null && checkGame.status != "deleted"){
+			flash.message = "Game already exist"
+//		} else if(checkGame.status == "deleted"){
+//			gameService.editGame()
+		}
+		else if(categories.isEmpty()) {
+			flash.message = "You must select at least one category"
+		} else {
+			gameService.addGame(params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories)		
+		}
+		redirect(action:"gameManagement", params:[categoryName:params.currentCategory])	
+	}
+	def editGame(){
+		def uncheckedCategory = params.list('formerCategory') - params.list('newCategory') 
+		def checkedCategory = params.list('newCategory')
+		def categories = GameCategory.getAll(checkedCategory)
+		def removeCat = GameCategory.getAll(uncheckedCategory)
+		if(categories.isEmpty()) {
+			flash.message = "You must select at least one category"
+		} else {
+			gameService.editGame(params.gameId, params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories, removeCat)
+		}
+		redirect(action:"gameProfile", params:[gameTitle:params.gameTitle])
+	}
+	
+	def deleteGame(){
+		def currentCategory = params.categoryName
+		gameService.deleteGame(params.gameTitle, params.categoryName)
+		redirect(action: "gameManagement", params:[categoryName:currentCategory])
+	}
+	
+	def gameManagement(){
+		if((!(session.user))||session?.user?.role != "Admin"){			
+			flash.message = "You do not have permission to access this page"
+			redirect(controller:"game", action: "index")
+		} else {
+			def platforms = gameService.listPlatform()
+			def currentCategory = params.categoryName
+			def max = params.max ?: 10
+			def categories = gameCategoryService.listGame()
+			def offset = params.offset ?: 0
+			def chosenPlatform = params.platform
+			def games = gameService.listGame(currentCategory, chosenPlatform, max, offset)
+			[currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount,categories:categories]
+		}
+	}
   
 	def listGame(){
-	 
 	def platforms = gameService.listPlatform()
     def currentCategory = params.categoryName
     def max = params.max ?: 10
@@ -40,90 +104,5 @@ class GameController {
   }
   
 
-    def show(Game gameInstance) {
-        respond gameInstance
-    }
-
-    def create() {
-        respond new Game(params)
-    }
-
-    @Transactional
-    def save(Game gameInstance) {
-        if (gameInstance == null) {
-            notFound()
-            return
-        }
-
-        if (gameInstance.hasErrors()) {
-            respond gameInstance.errors, view:'create'
-            return
-        }
-
-        gameInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'game.label', default: 'Game'), gameInstance.id])
-                redirect gameInstance
-            }
-            '*' { respond gameInstance, [status: CREATED] }
-        }
-    }
-
-    def edit(Game gameInstance) {
-        respond gameInstance
-    }
-
-    @Transactional
-    def update(Game gameInstance) {
-        if (gameInstance == null) {
-            notFound()
-            return
-        }
-
-        if (gameInstance.hasErrors()) {
-            respond gameInstance.errors, view:'edit'
-            return
-        }
-
-        gameInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Game.label', default: 'Game'), gameInstance.id])
-                redirect gameInstance
-            }
-            '*'{ respond gameInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(Game gameInstance) {
-
-        if (gameInstance == null) {
-            notFound()
-            return
-        }
-
-        gameInstance.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Game.label', default: 'Game'), gameInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'game.label', default: 'Game'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+    
 }
