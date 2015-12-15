@@ -34,6 +34,8 @@ class GameController {
 		redirect(action: "gameProfile", params: [gameTitle: gameTitle] )
 	}
 	
+	
+	
 	def gameProfile(){
 		def currentUser	
 		if(session.user){
@@ -42,10 +44,6 @@ class GameController {
 		def game = gameService.listGameInfo(params.gameTitle)
 		def reviews = gameService.listReview(params.gameTitle, currentUser)
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
-<<<<<<< HEAD
-		
-		[game:game, reviews:reviews, comments:comments]
-=======
 		def platforms = gameService.listPlatform()
 		def categories = gameCategoryService.listGame()
 		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories]
@@ -100,7 +98,7 @@ class GameController {
 			def games = gameService.listGame(currentCategory, chosenPlatform, max, offset)
 			[currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount,categories:categories]
 		}
->>>>>>> c640b3876a7f1109827955baa6179cefdf40f507
+
 	}
   
 	def listGame(){

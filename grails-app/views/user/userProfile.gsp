@@ -77,6 +77,7 @@
                                      	<div style="position:relative">
                                      		<img class="ui image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
                                      		<div style="position:absolute;bottom:0;right:0">
+                                     		 <g:if test="${session?.user?.id == user.id}">
                                      			<g:uploadForm action="upload_avatar">
                                      			<div class="image-upload">
     												<label for="file-input">
@@ -86,6 +87,7 @@
     												</div>
     												<input type="submit" id="Up" style="display: none;" />
                                      			</g:uploadForm>
+                                     			</g:if>
                                      		</div>
                                      		</div>
                                          <div class="center aligned column">
