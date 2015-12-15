@@ -28,6 +28,8 @@ class UserController {
 		  }
 		
 		def upload_avatar() {
+			
+			print "wew"
 
 			def f = request.getFile('avatar')
 		  
