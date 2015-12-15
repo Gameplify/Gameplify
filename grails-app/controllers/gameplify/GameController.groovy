@@ -10,6 +10,7 @@ class GameController {
 
 	def gameService
 	def gameCategoryService
+	def userService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index() {
@@ -33,9 +34,15 @@ class GameController {
 		redirect(action: "gameProfile", params: [gameTitle: gameTitle] )
 	}
 	
-	def gameProfile(){	
+	
+	
+	def gameProfile(){
+		def currentUser	
+		if(session.user){
+			currentUser = userService.findUser(session.user.id)
+		}
 		def game = gameService.listGameInfo(params.gameTitle)
-		def reviews = gameService.listReview(params.gameTitle)
+		def reviews = gameService.listReview(params.gameTitle, currentUser)
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
 		def platforms = gameService.listPlatform()
 		def categories = gameCategoryService.listGame()
@@ -73,7 +80,7 @@ class GameController {
 	
 	def deleteGame(){
 		def currentCategory = params.categoryName
-		gameService.deleteGame(params.gameTitle, params.categoryName)
+		gameService.deleteGame(params.gameTitle)
 		redirect(action: "gameManagement", params:[categoryName:currentCategory])
 	}
 	
@@ -91,6 +98,7 @@ class GameController {
 			def games = gameService.listGame(currentCategory, chosenPlatform, max, offset)
 			[currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount,categories:categories]
 		}
+
 	}
   
 	def listGame(){

@@ -12,6 +12,22 @@
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
  <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
   <script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
+    <script src="${resource(dir:'dist', file:'jquery-2.1.4.min.js')}"></script>
+ 
+ <style>
+ .image-upload > input
+{
+    display: none;
+}
+
+.image-upload img
+{
+    width: 80px;
+    cursor: pointer;
+}
+ </style>
+ 
+ 
  
 </head>
 <body>
@@ -21,7 +37,7 @@
      
         <div class="ui two column stackable grid">
               <div class="row" style="margin-left: 0px;">
-                      <div class="ui segment" style="height: auto">
+                      <div class="ui segment" style="height: 500px;overflow-y:auto;">
                                   <div class="ui grid" style="width: 800px; padding: 20px; ">
                                      <h3>Reviews</h3>
                                   </div>
@@ -41,7 +57,7 @@
 		                                  	</div>                
 		                                  	<div class = "thirteen wide column" style="position:relative;">
 		                                  		<h3><div> ${review.game.gameTitle }</div></h3>
-		                                  		${review.review } 
+		                                  		<span style = ""word-wrap: break-word;">${review.review } </span>
 		                                  		<span style = "bottom:0; right:0;position:absolute;"><g:formatDate format="MM-dd-yyyy" date="${review.date}"/></span>
 		                                  	</div> 		                                  	
 		                              	</div>               									
@@ -58,7 +74,22 @@
                                   </div> 
                                   <div class="ui segment" style="margin-left: 40px;margin-top: 20px; height: 344px;width: 272px;">
                                   	<div class="column">                         
-                                     	<img class="ui centered image"  src="${resource(dir: 'images', file: "${user.userPhoto}")}">
+                                     	<div style="position:relative">
+                                     		<img class="ui image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
+                                     		<div style="position:absolute;bottom:0;right:0">
+                                     		 <g:if test="${session?.user?.id == user.id}">
+                                     			<g:uploadForm action="upload_avatar">
+                                     			<div class="image-upload">
+    												<label for="file-input">
+    													<img style="height:50px;width:50px" src="${resource(dir: 'images', file: 'upload.png')}"/>
+    												</label>
+    												<input id="file-input" name="avatar" id="avatar" type="file"/>
+    												</div>
+    												<input type="submit" id="Up" style="display: none;" />
+                                     			</g:uploadForm>
+                                     			</g:if>
+                                     		</div>
+                                     		</div>
                                          <div class="center aligned column">
                                          	<h4 style="text-align:center" >${user.username } </h4>
                                          	<span style = text-align:center">${user.totalNumberOfReviews } Reviews</span>
@@ -70,6 +101,10 @@
                             </div>
             </div>
        </div>
-                   
+    <script type="text/javascript">
+    $( "#file-input" ).change(function() {
+      $( "#Up" ).click();
+    });
+</script>               
 </body>
 </html>

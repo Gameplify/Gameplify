@@ -10,8 +10,8 @@
   <title>Game Management</title>
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
  <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
-  <script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
- 
+<script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
+<script src="${resource(dir:'dist/components', file:'modal.min.js')}"></script>  
 </head>
 
 
@@ -135,7 +135,7 @@
 
 $(function(){
 	$('#addGame').click(function(){
-		$('.modal').modal('show');
+		$('.modal').modal('show')
 	});
 	document.getElementById("gameLogo").onchange = function () {
 	    var reader = new FileReader();

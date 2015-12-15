@@ -1,13 +1,20 @@
 /asset/
 /dbdoc/
 /gameplify/
-/grails/
 /hibernate/
 /hibernate.cfg.xml
 /javascripts/
-/org/
 /spring/
 /uglifyjs/
+<<<<<<< HEAD
+=======
+/grails/
+/org/
+/AssetPipelineBootStrap$_closure1.class
+/AssetPipelineBootStrap.class
+/AssetUrlMappings$__clinit__closure1.class
+/AssetUrlMappings.class
+>>>>>>> 1ce2c1a60c28b3db32f36b971b0067d518851065
 /BootStrap$_closure1.class
 /BootStrap$_closure2.class
 /BootStrap.class
