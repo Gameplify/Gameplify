@@ -75,7 +75,13 @@
                                   <div class="ui segment" style="margin-left: 40px;margin-top: 20px; height: 344px;width: 272px;">
                                   	<div class="column">                         
                                      	<div style="position:relative">
-                                     		<img class="ui image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
+                                     		<g:if test="${user.avatar }">
+                                     		<img style="height:250px"class="ui image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
+                                     		</g:if><g:else>
+															    <img class="ui left floated image" src="${resource(dir: 'images', file: "nan.jpg")}">
+															    </g:else>
+															    
+															    
                                      		<div style="position:absolute;bottom:0;right:0">
                                      		 <g:if test="${session?.user?.id == user.id}">
                                      			<g:uploadForm action="upload_avatar">
@@ -92,7 +98,7 @@
                                      		</div>
                                          <div class="center aligned column">
                                          	<h4 style="text-align:center" >${user.username } </h4>
-                                         	<span style = text-align:center">${user.totalNumberOfReviews } Reviews</span>
+                                         	<div style = "text-align:center !important;">${user.totalNumberOfReviews } Reviews</div>
                                          	
                                          </div>    
                                    	</div>

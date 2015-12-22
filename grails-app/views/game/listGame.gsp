@@ -37,10 +37,11 @@
                                                   </div>
                                        </h3>
                                   </div>
-                               
+                               <g:if test="${gameCount > 0 }">
                                  <div class="ui segment"  style="width: 770px; height: auto;">
                                  
                                            <div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">
+                                 	
                                  	<g:each in="${games}" status="i" var="game">
                                  	<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">                             		
 
@@ -65,8 +66,17 @@
 									<div class="pagination" style="text-align: center;">
 				<g:paginate action="listGame" total="${gameCount}" params="${[chosenPlatform:"${chosenPlatform}", categoryName: currentCategory]}" ></g:paginate>
 							</div>
-                                   </div>
-                    </div>
+							 </div>
+							  </div>
+							</g:if>
+						<g:else>
+									 <div class="ui segment"  style="width: 770px; height: auto;">
+									   <h5>No Results Found</h5>
+									 </div> 
+									 </div>
+						</g:else>
+                                  
+                   
                
                <g:include controller="user" action="showUserAuthentication"/>
             </div>

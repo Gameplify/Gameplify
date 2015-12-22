@@ -145,10 +145,10 @@ class GameService {
 		log.println(platform.platformName)
 	}
 
-	def deleteGame(gameTitle, gameCategory){
-		def game = Game.findByGameTitle(gameTitle)
+	def deleteGame(gameTitle){
+		def game = Game.get(gameTitle)
 		game.status ="deleted"
-		game.save()
+		game.save(flush:true)
 	}
 
 	def listPlatform(){
