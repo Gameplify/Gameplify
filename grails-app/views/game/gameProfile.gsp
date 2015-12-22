@@ -39,7 +39,7 @@
 					</div>
 					<div class="eight wide column">
 						<div class="column">
-							<img id="currentImg"
+							<img id="currentImg" style="height:300px;" class="ui image"
 								src="${resource(dir: 'images', file: "${game.screenshot.first().photo}")}">
 						</div>
 						<div class="column">
@@ -129,7 +129,7 @@
 								</g:form>
 
 							</g:if>
-							<div style="height: auto; max-height: 600; overflow-y: auto;">
+							<div style="height:auto;max-height: 600px; overflow-y: scroll;">
 								<ul>
 									<g:each in="${reviews}" status="i" var="review">
 										<li>
@@ -167,7 +167,7 @@
 																		params="${[userId:"${comment.user.id}"]}">
 																		${comment.user.name }
 																	</g:link>
-																	</a>
+																	
 																	<div class="metadata">
 																		<span class="date"> ${comment.date }
 																		</span>
@@ -196,8 +196,7 @@
 																	value="${game.gameTitle}" />
 																<g:hiddenField name="reviewId" value="${review.id}" />
 															</div>
-															<g:actionSubmit action="addComment" value="Add Comment"
-																class="ui blue labeled submit icon button">
+															<g:actionSubmit action="addComment" value="Add Comment" class="ui blue labeled submit icon button">
 																<i class="icon edit"></i> Add Comment
 	                                             
 	                                                </g:actionSubmit>
@@ -280,17 +279,12 @@
 						</div>
 					</g:form>
 				</div>
+				</div>
 				<script>
 $(document).ready(function () {
 
 	
-    size_li = $("#myList li").size();
-    x=3;
-    $('#myList li:lt('+x+')').show();
-    $('#loadMore').click(function () {
-        x= (x+5 <= size_li) ? x+5 : size_li;
-        $('#myList li:lt('+x+')').show();
-    });
+  
 	$('#editGame').click(function(){
 		$('.modal').modal('show');
 	});
@@ -305,6 +299,7 @@ $(document).ready(function () {
 	    // read the image file as a data URL.
 	    reader.readAsDataURL(this.files[0]);
 	};
+	
 	i=0;
 	w=0;
 	x=0;
@@ -323,6 +318,7 @@ $(document).ready(function () {
 	   val=$('.loadMore').index(this);
 		   val2=val;
 		   size_li=0;
+		   
 			if(val!=0){
 			   	while(val>0){
 			   	 val--; 
@@ -331,6 +327,8 @@ $(document).ready(function () {
 		  	 
 		   }			 
 		   }
+			   alert(size_li);
+			   alert(myArr[val2]);
 			size_li= size_li+3; 
 	       	if ( size_li  < myArr[val2]) {
 	           $('.myList li').slice(size_li, myArr[val2]).show();
@@ -374,7 +372,7 @@ $(document).ready(function () {
 
     $("#submitButton").click(function(){
 		alert("hsadi");
-	})
+	});
 });
 
 

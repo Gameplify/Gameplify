@@ -17,4 +17,5 @@ class Game {
 	static belongsTo = [GameCategory ,Platform]  
 	 static constraints = {
     }
+	 static searchable =true
 }
