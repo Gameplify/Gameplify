@@ -4,8 +4,12 @@
                           <div class="column">
                                   <div class="row">
                                         <div class="ui segment" style=" height: 120px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top:0px;">
-                                        	<g:link controller = "user" action = "userProfile" params="${[userId:"${session?.user?.id}"]}">                        
+                                        	<g:link controller = "user" action = "userProfile" params="${[userId:"${session?.user?.id}"]}">
+                                        						<g:if test="${session?.user?.avatar}">             
 															    <img class="ui tiny left floated image" src="${createLink(controller:'user', action:'avatar_image', id:"${session?.user?.id}" )}" />
+															    </g:if> <g:else>
+															    <img class="ui tiny left floated image" src="${resource(dir: 'images', file: "nan.jpg")}">
+															    </g:else>
 															    <span>${session?.user?.name}</span>
 															        <g:link class="ui primary button" style=" margin-top: 10px; margin-right: 0px; width: 140px;" controller="user" action="logout">Logout</g:link>
 											</g:link>

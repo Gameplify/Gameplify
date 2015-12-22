@@ -25,13 +25,16 @@
 		            	User
 		           </div>		              
 	          </g:if>
-              <div class="ui search">
-                    <div class="ui icon input">
-                      <input class="prompt" type="text" placeholder="Search games...">
-                      <i class="search icon"></i>
-                    </div>
-                    <div class="results"></div>
-              </div>
+             <g:form action="list" method="GET">
+			        <div class="ui search">
+			         <div class="ui icon input" value="${params.query}">
+				           
+				            <input name="query" placeholder="Search games..." value="${params.query}"/>
+				       		 <i class="search icon"></i>
+				     </div>
+				      <div class="results"></div>
+			        </div>
+			   </g:form>
               <g:if test="${session?.user?.role != "Admin"}">
             	<div id="demo_box">
             	<span class="pop_ctrl"><img id= "navi" src="${resource(dir: 'icons', file: 'nav.png')}"></span>
@@ -47,6 +50,8 @@
         
         <script src="${resource(dir:'js', file:'jquery.min.js')}"></script>
     <script src="${resource(dir:'js', file:'jquery.popmenu.js')}"></script>
+     <script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
+   
     <script>
         $(function(){
             $('#demo_box').popmenu();
