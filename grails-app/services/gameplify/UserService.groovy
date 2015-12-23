@@ -15,7 +15,18 @@ class UserService {
 		}.list()
 		return admins
 	}
+	
+
+	def uploadAvatar(id,f){
+		def user = User.get(id)
+		user.avatar = f.bytes
+		user.avatarType = f.contentType
+		log.info("File uploaded: $user.avatarType")
+		user.save(flush:true)	
+	}
+	
     def serviceMethod() {
 
     }
+	
 }
