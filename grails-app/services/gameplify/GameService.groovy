@@ -149,6 +149,7 @@ class GameService {
 		def game = Game.get(gameTitle)
 		game.status ="deleted"
 		game.save(flush:true)
+
 	}
 
 	def listPlatform(){

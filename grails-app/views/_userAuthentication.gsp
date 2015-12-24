@@ -1,4 +1,5 @@
 
+
 <g:if test="${session?.user}">
 	<div class="ui two row stackable grid">
 		<div class="column">

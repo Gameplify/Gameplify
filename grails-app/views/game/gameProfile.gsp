@@ -21,6 +21,7 @@
 <body>
 	<div class="ui fixed inverted menu">
 	<g:include action="showNavbar" />
+
 	</div>
 	<div class="ui two column stackable grid">
 		<div class="row" style="margin-left: 0px;">
