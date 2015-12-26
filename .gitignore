@@ -3,7 +3,6 @@
 *Db.script
 .settings
 .classpath
-.project
 .idea
 eclipse
 stacktrace.log
