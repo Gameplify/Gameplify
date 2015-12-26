@@ -2,7 +2,6 @@
 *Db.properties
 *Db.script
 .settings
-.classpath
 .idea
 eclipse
 stacktrace.log
