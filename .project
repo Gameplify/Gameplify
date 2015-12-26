@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Gameplify</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.zeroturnaround.eclipse.rebelXmlBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.zeroturnaround.eclipse.remoting.remotingBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.grails.ide.eclipse.core.nature</nature>
+		<nature>org.eclipse.jdt.groovy.core.groovyNature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+		<nature>org.zeroturnaround.eclipse.jrebelNature</nature>
+		<nature>org.zeroturnaround.eclipse.remoting.remotingNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>.link_to_grails_plugins</name>
+			<type>2</type>
+			<location>/Users/jethrodivino/Gameplify/target/work/plugins</location>
+		</link>
+	</linkedResources>
+</projectDescription>
