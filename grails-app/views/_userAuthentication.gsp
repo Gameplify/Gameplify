@@ -1,29 +1,18 @@
 
-
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
- <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
-
-  <script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
-
-</head>
-
-
-<body>
    <g:if test="${session?.user}">
                        <div class="ui two row stackable grid">
                           <div class="column">
                                   <div class="row">
                                         <div class="ui segment" style=" height: 120px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top:0px;">
-                                                                <img class="ui tiny left floated image" src="${resource(dir: 'images', file: 'nan.jpg')}">
-                                                               
-															        <span>${session?.user?.name}</span>
+                                        	<g:link controller = "user" action = "userProfile" params="${[userId:"${session?.user?.id}"]}">
+                                        						<g:if test="${session?.user?.avatar}">             
+															    <img class="ui tiny left floated image" src="${createLink(controller:'user', action:'avatar_image', id:"${session?.user?.id}" )}" />
+															    </g:if> <g:else>
+															    <img class="ui tiny left floated image" src="${resource(dir: 'images', file: "nan.jpg")}">
+															    </g:else>
+															    <span>${session?.user?.name}</span>
 															        <g:link class="ui primary button" style=" margin-top: 10px; margin-right: 0px; width: 140px;" controller="user" action="logout">Logout</g:link>
-
+											</g:link>
 															   
                                                               	 </div> 
                                   </div> 
@@ -56,12 +45,10 @@
 
                                                                     </g:form>
                                                                       Create an account 
-                                                                       <g:link class="ui fluid large blue submit button" controller="user" action="register">Register</g:link>
+                                                                       <g:link class="ui fluid large blue submit button" controller="user" action="register" >Register</g:link>
                                               </div> 
                                           
                                         </div> 
                                       </div>
                </div>
                </g:else>
- </body>
- </html>

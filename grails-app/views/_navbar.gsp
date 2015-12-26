@@ -1,17 +1,4 @@
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
- <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
 
-  <script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
-
-</head>
-
-
-<body>
          
               <div class="ui container">
 	              <g:link action="index">
@@ -21,34 +8,55 @@
 	                </div>
 	               </g:link>
               </div>
-                <div class="ui search">
-                      <div class="ui icon input">
-                        <input class="prompt" type="text" placeholder="Search games...">
-                        <i class="search icon"></i>
-                      </div>
-                      <div class="results"></div>
-                </div>
-                 <div id="demo_box">
-            <span class="pop_ctrl"><img id= "navi" src="${resource(dir: 'icons', file: 'nav.png')}"></span>
-            <ul id="demo_ul">
-            	
-				<g:each in="${categories}" status="i" var="cat">				 	
-	                <li class="demo_li"><g:link action="listGame" params="${[categoryName: cat.categoryName]}"><img id= "icon" src="${resource(dir: 'icons', file: "${cat.icon}")}"><div>${cat.categoryName}</div></g:link></li>                	
-                </g:each>
-				
-           		
-            </ul>
-        </div>
+              <g:if test="${session?.user?.role == "Admin"}">
+		      		<div class = "header item">
+		        		<div id="demo_admin">
+           					<span class="pop_ctrl">Game</span>
+	           					<ul id="demo_ul" style="margin-top:22px; margin-left:-815px;">	            	
+									<g:each in="${categories}" status="i" var="cat">				 	
+		                				<li class="demo_li">
+		                				<g:link action="gameManagement" params="${[categoryName: cat.categoryName]}">
+		                				<img id= "icon" src="${resource(dir: 'icons', file: "${cat.icon}")}"><div>${cat.categoryName}</div></g:link></li>                	
+	                				</g:each>
+	            				</ul>
+	        			</div>
+		           </div>
+		           <div class = "header item">
+		            	User
+		           </div>		              
+	          </g:if>
+             <g:form action="list" method="GET">
+			        <div class="ui search">
+			         <div class="ui icon input" value="${params.query}">
+				           
+				            <input name="query" placeholder="Search games..." value="${params.query}"/>
+				       		 <i class="search icon"></i>
+				     </div>
+				      <div class="results"></div>
+			        </div>
+			   </g:form>
+              <g:if test="${session?.user?.role != "Admin"}">
+            	<div id="demo_box">
+            	<span class="pop_ctrl"><img id= "navi" src="${resource(dir: 'icons', file: 'nav.png')}"></span>
+            	<ul id="demo_ul">            	
+					<g:each in="${categories}" status="i" var="cat">				 	
+		                <li class="demo_li"><g:link action="listGame" params="${[categoryName: cat.categoryName]}"><img id= "icon" src="${resource(dir: 'icons', file: "${cat.icon}")}"><div>${cat.categoryName}</div></g:link></li>                	
+	                </g:each>   		
+	            </ul>
+	        	</div>
+        	</g:if>
        
        
         
         <script src="${resource(dir:'js', file:'jquery.min.js')}"></script>
     <script src="${resource(dir:'js', file:'jquery.popmenu.js')}"></script>
+     <script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
+   
     <script>
         $(function(){
             $('#demo_box').popmenu();
-        })
+            $('#demo_admin').popadminmenu();
+        });
     </script>
        
-</body>
-</html>
+
