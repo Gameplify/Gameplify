@@ -69,6 +69,7 @@
 																		      </div>
 																		    </g:hasErrors>
 																		   
+																		        	<div class="moreErr">${flash.message}</div>
                                                                              <div class="field">
                                                                             <label for="name">Name</label>
                                                                             <g:textField name="name" required=""  />

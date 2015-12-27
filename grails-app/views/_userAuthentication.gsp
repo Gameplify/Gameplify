@@ -3,17 +3,23 @@
                        <div class="ui two row stackable grid">
                           <div class="column">
                                   <div class="row">
-                                        <div class="ui segment" style=" height: 120px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top:0px;">
+                                        <div class="useraccount" >
                                         	<g:link controller = "user" action = "userProfile" params="${[userId:"${session?.user?.id}"]}">
                                         						<g:if test="${session?.user?.avatar}">             
 															    <img class="ui tiny left floated image" src="${createLink(controller:'user', action:'avatar_image', id:"${session?.user?.id}" )}" />
 															    </g:if> <g:else>
 															    <img class="ui tiny left floated image" src="${resource(dir: 'images', file: "nan.jpg")}">
 															    </g:else>
+															    
 															    <span>${session?.user?.name}</span>
+															    <g:if test="${session?.user?.role == "blocked"}">
+																<img class="block" 
+																src="${resource(dir: 'images', file: "block.png")}" title="You are blocked" >
+										
+																</g:if>	
 															        <g:link class="ui primary button" style=" margin-top: 10px; margin-right: 0px; width: 140px;" controller="user" action="logout">Logout</g:link>
 											</g:link>
-															   
+																	   
                                                               	 </div> 
                                   </div> 
                             </div>
@@ -27,22 +33,20 @@
                                                                       <h5 style="margin-left: 70px;">ACCESS PORTAL</h5>
                                                                       <g:form class="ui tiny form" style="margin-bottom: 19px;" url="[controller:'user',action:'login']">
                                                                             <g:if test="${flash.message}">
-																	          <div class="message">${flash.message}</div>
+																	          <div class="err">${flash.message}</div>
 																	      </g:if>
 		                                                                        <div class="field">
                                                                                 <label for="username">User name</label>
-                                                                                <g:textField name="username" />
+                                                                                <g:textField name="username" required="" />
                                                                               
                                                                             </div>
                                                                             <div class="field">
                                                                                 <label for="password">Password</label>
-       																			 <g:passwordField name="password" />
+       																			 <g:passwordField name="password" required="" />
                                                                              
                                                                             </div>
                                                                              <g:submitButton class="ui fluid large blue submit button" name="submitButton" value="Login" />
                                                                           
-                                                                          <div class="ui error message"></div>
-
                                                                     </g:form>
                                                                       Create an account 
                                                                        <g:link class="ui fluid large blue submit button" controller="user" action="register" >Register</g:link>

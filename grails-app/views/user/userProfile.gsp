@@ -10,6 +10,8 @@
   <!-- Site Properities -->
   <title>User Profile</title>
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
+    <link rel="stylesheet" type="text/css"
+	href="${resource(dir:'dist', file:'bg.css')}">
  <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
   <script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
     <script src="${resource(dir:'dist', file:'jquery-2.1.4.min.js')}"></script>
@@ -34,7 +36,13 @@
 <div class="ui fixed inverted menu">
       <g:include controller="game" action="showNavbar"/>
  </div>
-     
+     <div class="background blue-purple"></div>
+<div class="background green-blue"></div>
+
+
+
+<div class="svg-wrapper">
+ 
         <div class="ui two column stackable grid">
               <div class="row" style="margin-left: 0px;">
                       <div class="ui segment" style="height: 500px;overflow-y:auto;">
@@ -76,9 +84,9 @@
                                   	<div class="column">                         
                                      	<div style="position:relative">
                                      		<g:if test="${user.avatar }">
-                                     		<img style="height:250px"class="ui image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
+                                     		<img style="height:170px; width:170px; margin:35px;"class="ui image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
                                      		</g:if><g:else>
-															    <img class="ui left floated image" src="${resource(dir: 'images', file: "nan.jpg")}">
+															    <img class="photo" src="${resource(dir: 'images', file: "nan.jpg")}">
 															    </g:else>
 															    
 															    
@@ -87,7 +95,7 @@
                                      			<g:uploadForm action="upload_avatar">
                                      			<div class="image-upload">
     												<label for="file-input">
-    													<img style="height:50px;width:50px" src="${resource(dir: 'images', file: 'upload.png')}"/>
+    													<img style="height:30px;width:30px" src="${resource(dir: 'images', file: 'upload.png')}"/>
     												</label>
     												<input id="file-input" name="avatar" id="avatar" type="file"/>
     												</div>

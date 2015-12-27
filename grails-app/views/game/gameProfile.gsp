@@ -8,7 +8,8 @@
 	href="${resource(dir:'css', file:'semantic.css')}">
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'dist', file:'semantic.css')}">
-
+<link rel="stylesheet" type="text/css"
+	href="${resource(dir:'dist', file:'bg.css')}">
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'dist/components', file:'rating.min.css')}">
 
@@ -19,9 +20,18 @@
 </head>
 
 <body>
+
 	<div class="ui fixed inverted menu">
 		<g:include action="showNavbar" />
 	</div>
+	<div class="background blue-purple"></div>
+<div class="background green-blue"></div>
+
+
+
+<div class="svg-wrapper">
+ 
+	
 	<div class="ui two column stackable grid">
 		<div class="row" style="margin-left: 0px;">
 			<div class="ui segment">
@@ -121,9 +131,8 @@
 									</div>
 									<div id="counter"></div>
 									<g:actionSubmit id="reviewButton" action="addReview"
-										value="Add Review" class="ui blue labeled submit icon button">
-										<i class="icon edit"></i> Add Review
-	                                             
+										value="Review" class="ui blue labeled submit icon button">
+									
 	                                                </g:actionSubmit>
 
 								</g:form>
@@ -183,10 +192,10 @@
 														</g:each>
 													</ul>
 													<g:if test="${ review.comment.size() > 3}">
-														<div class="loadMore" style="text-align: center;">Load
+														<div class="loadMore" onclick="myFunc()" style="text-align: center;">Load
 															more</div>
 													</g:if>
-
+													
 													<g:if test="${session?.user}">
 														<g:form class="ui comment form">
 															<div class="field">
@@ -196,9 +205,10 @@
 																	value="${game.gameTitle}" />
 																<g:hiddenField name="reviewId" value="${review.id}" />
 															</div>
-															<g:actionSubmit action="addComment" value="Add Comment" class="ui blue labeled submit icon button">
-																<i class="icon edit"></i> Add Comment
-	                                             
+															
+															<g:actionSubmit action="addComment" value=" Comment" class="ui blue labeled submit icon button">
+																
+																 
 	                                                </g:actionSubmit>
 														</g:form>
 													</g:if>
@@ -280,6 +290,8 @@
 					</g:form>
 				</div>
 				</div>
+				</div>
+				</div>
 				<script>
 $(document).ready(function () {
 
@@ -303,48 +315,54 @@ $(document).ready(function () {
 	i=0;
 	w=0;
 	x=0;
+	var Arr= new Array();
 	var myArr = new Array();
 	size_li=0;
 		
 	$('.myList').each(function() {
 	    var count = $('> li', this).length;
 	    myArr.push(count);
+	    Arr.push(0);
 	    $('.myList li').slice(w, w+3).show();
 	    w+= myArr[i]; 
 	   	i++;
 	});
-    
+
 	  $('.loadMore').click(function () {
 	   val=$('.loadMore').index(this);
-		   val2=val;
 		   size_li=0;
-		   
-			if(val!=0){
+		    temp=myArr[val];
+		    val2=val;
+			if(val>1){
+				size_li=myArr[val];
 			   	while(val>0){
-			   	 val--; 
-			   	size_li+=myArr[val];
-		  	   	myArr[val2]+= myArr[val];
-		  	 
-		   }			 
-		   }
-			   alert(size_li);
-			   alert(myArr[val2]);
-			size_li= size_li+3; 
-	       	if ( size_li  < myArr[val2]) {
-	           $('.myList li').slice(size_li, myArr[val2]).show();
-	        }else{
-	        	size_li=3; 
-		        $('.myList li').slice(size_li, myArr[val2]).show();
-	        	$('.loadMore').eq($('.loadMore').index(this)).hide();	
-		    }
-	    	if ( size_li  < myArr[val2]) {
-	    		$('.loadMore').eq($('.loadMore').index(this)).hide();
+		  	 	val--; 
+		  		temp+= myArr[val]; 
+			   	size_li+=myArr[val]; 
+	 			}
+	 			temp+=myArr[0];
+		   }else if(val==1){
+			   size_li+=myArr[val-1];
+				temp+=myArr[val-1];
+				
+			}
+			   
+			size_li= size_li+3+Arr[val2];
+	       	if ( size_li  < temp) {
+	           $('.myList li').slice(size_li, size_li+3).show();
+	           Arr[val2]+=3;
+	       	}
+	       	
+	    	if ( size_li +3 >= temp) {
+	        $('.loadMore').eq($('.loadMore').index(this)).hide();	
 	    	}
-		   
+	
+
 	    });
    
-
-
+	  function myFunc() {
+		    alert('wel');
+		}
 
 	
 	$("#counter").css("color","red");

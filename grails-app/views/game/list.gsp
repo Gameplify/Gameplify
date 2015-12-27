@@ -9,6 +9,8 @@
 
   <!-- Site Properities -->
   <title>Game List</title>
+  <link rel="stylesheet" type="text/css"
+	href="${resource(dir:'dist', file:'bg.css')}">
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
  <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
   <script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
@@ -18,7 +20,13 @@
 <div class="ui fixed inverted menu">
       <g:include action="showNavbar"/>
  </div>
-     
+     <div class="background blue-purple"></div>
+<div class="background green-blue"></div>
+
+
+
+<div class="svg-wrapper">
+ 
         <div class="ui two column stackable grid">
               <div class="row" style="margin-left: 0px;">
                       <div class="ui segment" style="width:802px; height: auto">
@@ -158,6 +166,7 @@
               
                <g:include controller="user" action="showUserAuthentication"/>
             </div>
+                    </div>
                     
 </body>
 </html>
