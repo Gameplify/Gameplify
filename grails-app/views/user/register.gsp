@@ -11,6 +11,8 @@
   <title>Game List</title>
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
  <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
+ <link rel="stylesheet" type="text/css"
+	href="${resource(dir:'dist', file:'bg.css')}">
   <script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
  
 </head>
@@ -18,7 +20,12 @@
 <div class="ui fixed inverted menu">
       <g:include controller="game" action="showNavbar"/>
  </div>
-     
+     	<div class="background blue-purple"></div>
+<div class="background green-blue"></div>
+
+
+
+<div class="svg-wrapper">
         <div class="ui two column stackable grid">
               <div class="row" style="margin-left: 0px;">
                       <div class="ui segment" style="height: auto">
@@ -60,16 +67,19 @@
                                            <div id="register" class="registration" >
                                                                       <h5 style="margin-left: 70px;">JOIN NOW</h5>
                                                                       <g:form class="ui tiny form" style="margin-bottom: 19px;" controller='user' action='register'>
-                                                                        <g:if test="${flash.message}">
-																	          <div class="errors">${flash.message}</div>
-																	      </g:if>
-                                                                        <g:hasErrors bean="${user}">
-																		      <div class="errors">
+                                                                      
+                                                                      
+																		   <div class="errors">
+                                                                        	<g:hasErrors bean="${user}">
+                                                                        		<div class="moreErr">
 																		        <g:renderErrors bean="${user}"/>
-																		      </div>
+																		        </div>
 																		    </g:hasErrors>
-																		   
+																		    
+                                                                      			<g:if test="${flash.message}">
 																		        	<div class="moreErr">${flash.message}</div>
+																		        </g:if>
+																		   </div>
                                                                              <div class="field">
                                                                             <label for="name">Name</label>
                                                                             <g:textField name="name" required=""  />
@@ -105,6 +115,7 @@
                                       </div>
                </div>
             </div>
+       </div>
        </div>
                    
 </body>
