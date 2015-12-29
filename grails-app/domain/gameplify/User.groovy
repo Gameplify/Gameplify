@@ -21,9 +21,9 @@ class User {
 	}
 	
     static constraints = {
-        name 			blank:false, size:5..50
-        emailAddress  	blank:false, email:true, unique:true, size:5..50
-        username  		blank:false, size:5..50, matches:/[\S]+/, unique:true
+        name 			blank:false
+        emailAddress  	blank:false, email:true, unique:true
+        username  		blank:false, size:5..50, matches:/[\S]+/
         password  		blank:false, size:5..50, matches:/[\S]+/
 		avatar(nullable:true, maxSize: 16384 /* 16K */)
 		avatarType(nullable:true)

@@ -9,6 +9,8 @@
 
   <!-- Site Properities -->
   <title>Admin Profile</title>
+  <link rel="stylesheet" type="text/css"
+	href="${resource(dir:'dist', file:'bg.css')}">
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
  <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
   <script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
@@ -18,6 +20,14 @@
 <div class="ui fixed inverted menu">
       <g:include controller="game" action="showNavbar"/>
  </div>
+	<div class="background blue-purple"></div>
+<div class="background green-blue"></div>
+
+
+
+<div class="svg-wrapper">
+ 
+	
      
         <div class="ui two column stackable grid">
               <div class="row" style="margin-left: 0px;">

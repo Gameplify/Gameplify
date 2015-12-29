@@ -523,7 +523,8 @@ html {
 }
 
 body {
-  margin: 0px;
+  margin-top: 40px;
+  
   padding: 0px;
   overflow-x: hidden;
   min-width: 320px;
@@ -689,10 +690,10 @@ input::selection {
   outline: none;
   border: none;
   vertical-align: baseline;
-  background: #e0e1e2 none;
+  background: #365C8A none;
   color: rgba(0, 0, 0, 0.6);
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  margin: 0em -1.75em 0em 0em;
+  margin: 0em -1.75em 1em 0em;
   padding: 0.78571429em 1.5em 0.78571429em;
   text-transform: none;
   text-shadow: none;
@@ -1449,7 +1450,7 @@ input::selection {
 
 .ui.icon.buttons .button,
 .ui.icon.button {
-  padding: 0.78571429em 0.78571429em 0.78571429em;
+  padding: 0.5em;
 }
 
 .ui.icon.buttons .button > .icon,
@@ -1601,7 +1602,7 @@ input::selection {
 .ui.labeled.icon.buttons .button,
 .ui.labeled.icon.button {
   position: relative;
-  padding-left: 4.07142857em !important;
+  padding-left: 1.07142857em !important;
   padding-right: 1.5em !important;
 }
 
@@ -14457,7 +14458,7 @@ ol.ui.horizontal.list li:before,
 }
 
 .ui.segment:first-child {
-  margin-top: 0em;
+  margin-top: 0.4em;
 }
 
 .ui.segment:last-child {
@@ -17274,9 +17275,13 @@ ol.ui.horizontal.list li:before,
 /*----------------------
       Remove Gutters
 -----------------------*/
-
+.platformpic{
+	width:22px;
+	height:22px;
+	
+}
 .ui.grid {
-  margin-top: -1rem;
+  margin-top: -0.8rem;
   margin-bottom: -1rem;
   margin-left: -1rem;
   margin-right: -1rem;
@@ -19923,7 +19928,7 @@ ol.ui.horizontal.list li:before,
   display: inline-block;
   vertical-align: middle;
   margin: -0.3em 0em;
-  width: 2.5em;
+  width: 3.5em;
 }
 
 .ui.vertical.menu .item > img:not(.ui):only-child {
@@ -21471,11 +21476,11 @@ Floated Menu / Item
 ---------------*/
 
 .ui.menu.fixed {
-  position: fixed;
+  position: absolute;
   z-index: 101;
   margin: 0em;
-  width: 100%;
-  background: #061539;
+  width: 77%;
+  background: transparent;
 }
 
 .ui.menu.fixed,
@@ -21487,9 +21492,7 @@ Floated Menu / Item
 .ui.fixed.menu,
 .ui[class*="top fixed"].menu {
   top: 0px;
-  left: 0px;
-  right: auto;
-  bottom: auto;
+  left: 10%;
 }
 
 .ui[class*="top fixed"].menu {
@@ -31413,7 +31416,7 @@ a.ui.nag {
 .ui.search {
   position: relative;    
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   margin-right: 10px;
 }
 
@@ -34974,6 +34977,7 @@ div.errors {
     padding: 0;
     border-radius: 0.28571429rem
 }
+
 div.errors ul {
     list-style: none;
     padding: 0;
@@ -34984,7 +34988,6 @@ div.errors li {
     padding-left: 30px;
 }
  
-
 
 /* Pulse */
 

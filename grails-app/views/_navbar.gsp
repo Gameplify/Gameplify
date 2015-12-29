@@ -4,7 +4,7 @@
 	              <g:link action="index">
 	                <div href="#" class="header item">
 	                  <img class="logo" src="${resource(dir: 'images', file: 'gameplifylogo.png')}"/>
-	                  GAMEPLIFY 
+	                 GAMEPLIFY
 	                </div>
 	               </g:link>
               </div>
