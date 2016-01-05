@@ -16,13 +16,41 @@ class GameService {
 				status == "okay"
 			}.list(max: max, offset: offset)
 		} else if(!chosenPlatform){
-
-			
 			games = Game.where {
 				categories.categoryName == currentCategory
 				status == "okay"
 			}.list(max: max, offset: offset)
 			
+		}
+		return games
+	}
+	def listGamePlat( chosenPlatform, max, offset){
+		def games
+		if(chosenPlatform){
+			games = Game.where {
+				platform.platformName == chosenPlatform
+				status == "okay"
+			}.list(max: max, offset: offset)
+			
+		} else if(!chosenPlatform){
+			 games = Game.where {
+				status == "okay"
+			}.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
+		}
+		return games
+	}
+	def whatsHot( chosenPlatform, max, offset){
+		def games
+		if(chosenPlatform){
+			games = Game.where {
+				platform.platformName == chosenPlatform
+				status == "okay"
+			}.list(max: max, offset: offset)
+			
+		} else if(!chosenPlatform){
+			 games = Game.where {
+				status == "okay"
+			}.list(sort: 'rating', order: 'desc', max: max, offset: offset)
 		}
 		return games
 	}
@@ -89,6 +117,7 @@ class GameService {
 
 	}
 
+	
 	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories){
 		Platform platform = Platform.get(platformId)
 		Game game = new Game(

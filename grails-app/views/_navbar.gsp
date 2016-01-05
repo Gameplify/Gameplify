@@ -4,7 +4,7 @@
 	              <g:link action="index">
 	                <div href="#" class="header item">
 	                  <img class="logo" src="${resource(dir: 'images', file: 'gameplifylogo.png')}"/>
-	                  GAMEPLIFY 
+	                 GAMEPLIFY
 	                </div>
 	               </g:link>
               </div>
@@ -30,7 +30,8 @@
 			         <div class="ui icon input" value="${params.query}">
 				           
 				            <input name="query" placeholder="Search games..." value="${params.query}"/>
-				       		 <i class="search icon"></i>
+				       		 <button type="submit">
+				       		 <i class="search icon"></i></button>
 				     </div>
 				      <div class="results"></div>
 			        </div>

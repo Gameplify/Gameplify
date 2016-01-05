@@ -13,12 +13,8 @@ class GameController {
 	def userService
 	static scaffold = true
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
-    def index() {
-		
-    }
 	
-	def showNavbar(){
+	def showNavbar(){	
 		def categories = gameCategoryService.listGame()
 		render(template: '../navbar', model:[categories:categories])
 	}
@@ -48,7 +44,7 @@ class GameController {
 		def platforms = gameService.listPlatform()
 		def categories = gameCategoryService.listGame()
 		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories]
-	}
+	}	
 	
 	def addGame(){
 		def checkedCategory = params.list('category')
@@ -111,9 +107,22 @@ class GameController {
 	def games = gameService.listGame(currentCategory, chosenPlatform, max, offset)
     [currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount] 
   }
-  
-	def list() {
+
+	def index() {
+		def platform = gameService.listPlatform()
+		def max = params.max ?: 10
+		def offset = params.offset ?: 0
+		def chosenPlatfrm = params.platform
+		def taskList = gameService.listGamePlat(chosenPlatfrm,max,offset)
+		def taskL = gameService.whatsHot(chosenPlatfrm,max,offset)
 		
+		println taskList.totalCount
+		println taskL.totalCount
+		
+		[Hot:taskL, New:taskList, chosenPlatform:chosenPlatfrm, platforms:platform]
+	}
+	
+	def list() {
 		  def taskList = Game.createCriteria().list(params){
 			if ( params.query) {
 			  ilike("gameTitle", "%${params.query}%")
@@ -130,7 +139,7 @@ class GameController {
 			order("name", "asc")
 		  }
 		  
-		  def uuu = User.createCriteria().list(max:10){
+		  def uuu = User.createCriteria().list(params){
 			  if ( params.query) {
 				ilike("name", "%${params.query}%")
 				println "here user2"
@@ -138,7 +147,7 @@ class GameController {
 			  order("name", "asc")
 		  }
 		  
-		  def ggg = Game.createCriteria().list(max:10){
+		  def ggg = Game.createCriteria().list(params){
 			  if ( params.query) {
 				ilike("gameTitle", "%${params.query}%")
 				println "here game"
