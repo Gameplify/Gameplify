@@ -66,7 +66,7 @@ class UserController {
 			render(template: '../userAuthentication')
 		}
 		
-	   def register = {
+	  def register = {
 		   
 		   // new user posts his registration details
 		   if (request.method == 'POST') {
@@ -76,8 +76,31 @@ class UserController {
 			   u.role="User"
 			   if (params.password != params.confirm) {
 				   flash.message = "Password mismatch."
-				   redirect(action:'register')
+				   redirect(uri: request.getHeader('referer') )
+				   return
 				}
+			   User us=User.find{username==params.username}
+			   if(us){
+				   flash.message="Username already exists."
+				   redirect(uri: request.getHeader('referer') )
+				   return
+			   }
+			   int count=0
+			   String str=params.name.toString()
+			   for (int i = 0; i < str.length(); i++) {
+				   
+							   //If we find a non-digit character we return false.
+							   if (!Character.isLetter(str.charAt(i))){
+							   	if(!Character.isWhitespace(str.charAt(i))){
+								   count=count+1;
+							   	}
+							   }
+						   }
+			   if(count>0){
+				   flash.message="Name must contain letters only."
+				   redirect(uri: request.getHeader('referer') )
+				   return
+			   }
 			   
 			   u.password=params.password.encodeAsPassword()
 			   if (! u.save()) {
@@ -105,8 +128,6 @@ class UserController {
 			   User user = User.find{username==params.username}
 			   if (!user) {
 				  flash.message = "Username does not exist."
-				  redirect(uri: request.getHeader('referer') )
-				  return
 			   }
 			   User us = User.find{
 				   	username==params.username &&

@@ -11,6 +11,8 @@
   <title>Game List</title>
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
  <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
+ <link rel="stylesheet" type="text/css"
+	href="${resource(dir:'dist', file:'bg.css')}">
   <script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
  
 </head>
@@ -18,19 +20,25 @@
 <div class="ui fixed inverted menu">
       <g:include action="showNavbar"/>
  </div>
-     
+     	<div class="background blue-purple"></div>
+<div class="background green-blue"></div>
+
+
+
+<div class="svg-wrapper">
+ 
         <div class="ui two column stackable grid">
               <div class="row" style="margin-left: 0px;">
                       <div class="ui segment" style="height: auto">
                                   <div class="ui grid" style="width: 800px; padding: 20px; ">
                                       <h3 style="width: 770px;  margin-bottom: 0px;"> ${currentCategory } 
-                                                  <div class="ui grid" style="margin-left: 610px; margin-top: -35px;">
+                                                  <div class="ui grid" style="float:right">
                                                   			
-                                                          
                                                         <g:each in="${platforms }" var="platform">
                                                         <g:link action="listGame" params="${[ platform:platform.platformName, categoryName: currentCategory] }">
                                                         <button class="ui icon button">
-                                                            ${platform.platformName }
+                                                        	   <img class="platformpic" src="${resource(dir: 'images', file: "${platform.pic}")}">
+                                                           
                                                           </button>
                                                           </g:link>	
                                                           </g:each>
@@ -81,6 +89,6 @@
                <g:include controller="user" action="showUserAuthentication"/>
             </div>
        </div>
-                    
+                </div>    
 </body>
 </html>

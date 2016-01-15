@@ -9,9 +9,8 @@
   <!-- Site Properities -->
   <title>Game Management</title>
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'semantic.css')}">
- <link rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
+ <link 	rel="stylesheet" type="text/css" href="${resource(dir:'dist', file:'semantic.css')}">
   <script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
- 
 </head>
 
 
@@ -87,7 +86,7 @@
             </div>
        </div>
 
-<div class="ui modal addGame">
+<div class="ui modal addGame" name="modal">
   <i class="close icon"></i>
   <g:form class="ui equal width form" id="form" style="padding:10px" controller='game' action='addGame'>
   	<img class="ui centered small image" id="image" src="#" alt="Game Logo">
@@ -132,11 +131,14 @@
 	</g:form>
 </div>
 <script>
-
-$(function(){
+$(document).ready(function(){
 	$('#addGame').click(function(){
 		$('.modal').modal('show');
 	});
+});
+
+$(function(){
+	
 	document.getElementById("gameLogo").onchange = function () {
 	    var reader = new FileReader();
 
