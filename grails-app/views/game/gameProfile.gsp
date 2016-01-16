@@ -20,7 +20,7 @@
 
 <body>
 	<div class="ui fixed inverted menu">
-	<g:include action="showNavbar" />
+		<g:include action="showNavbar" />
 
 	</div>
 	<div class="ui two column stackable grid">
@@ -213,75 +213,75 @@
 						</div>
 					</div>
 				</div>
-				</div>
-				<div class="ui modal addGame">
-					<i class="close icon"></i>
-					<g:form class="ui equal width form" id="form" style="padding:10px"
-						controller='game' action='editGame'>
-						<img class="ui centered small image" id="image"
-							src="${resource(dir: 'images', file: "$game.gameLogo")}"
-							alt="Game Logo">
-						<g:field type="file" name="gameLogo" accept="image/*"
-							value="${game.gameLogo}" />
-						<div class="field">
-							<g:hiddenField name="gameId" value="${game.id }"></g:hiddenField>
-							<g:textField placeholder="Game Title*" name="gameTitle"
-								required="" value="${game.gameTitle}" />
-						</div>
-						<div class="fields">
-							<div class="field" style="width: 200px;">
-								<label for="releaseDate">Released On*</label>
-								<g:datePicker name="releaseDate" value="${game.releaseDate}"
-									precision="day"
-									years="${Calendar.instance.get(Calendar.YEAR)..1950}" />
-							</div>
-							<div class="field">
-								<label for="price">Price*</label>
-								<g:field type="number" name="gamePrice" required=""
-									value="${game.gamePrice }" />
-							</div>
-							<div class="field">
-								<label for="platform">Platform</label>
-								<g:select from="${platforms}" class="ui dropdown"
-									name="platformId" optionKey="id" optionValue="platformName" />
-							</div>
+			</div>
+			<div class="ui modal addGame">
+				<i class="close icon"></i>
+				<g:form class="ui equal width form" id="form" style="padding:10px"
+					controller='game' action='editGame'>
+					<img class="ui centered small image" id="image"
+						src="${resource(dir: 'images', file: "$game.gameLogo")}"
+						alt="Game Logo">
+					<g:field type="file" name="gameLogo" accept="image/*"
+						value="${game.gameLogo}" />
+					<div class="field">
+						<g:hiddenField name="gameId" value="${game.id }"></g:hiddenField>
+						<g:textField placeholder="Game Title*" name="gameTitle"
+							required="" value="${game.gameTitle}" />
+					</div>
+					<div class="fields">
+						<div class="field" style="width: 200px;">
+							<label for="releaseDate">Released On*</label>
+							<g:datePicker name="releaseDate" value="${game.releaseDate}"
+								precision="day"
+								years="${Calendar.instance.get(Calendar.YEAR)..1950}" />
 						</div>
 						<div class="field">
-							<g:textArea rows="3" name="gameDescription"
-								placeholder="Description*" required=""
-								value="${game.gameDescription }" />
+							<label for="price">Price*</label>
+							<g:field type="number" name="gamePrice" required=""
+								value="${game.gamePrice }" />
 						</div>
 						<div class="field">
-							<label for="category">Category(Select at least one)</label>
-							<div class="ui grid">
+							<label for="platform">Platform</label>
+							<g:select from="${platforms}" class="ui dropdown"
+								name="platformId" optionKey="id" optionValue="platformName" />
+						</div>
+					</div>
+					<div class="field">
+						<g:textArea rows="3" name="gameDescription"
+							placeholder="Description*" required=""
+							value="${game.gameDescription }" />
+					</div>
+					<div class="field">
+						<label for="category">Category(Select at least one)</label>
+						<div class="ui grid">
 
-								<g:each in="${categories}" status="i" var="cat">
-									<div class="four wide column"
-										style="padding: 0px; margin-left: 10px; margin-top: 12px;">
-										<div class="ui checkbox">
-											<g:if test="${cat in game.categories}">
-												<g:hiddenField name="formerCategory" value="${cat.id}" />
-												<g:checkBox name="newCategory" value="${cat.id}"
-													checked="true" />
-											</g:if>
-											<g:else>
-												<g:checkBox name="newCategory" value="${cat.id}"
-													checked="false" />
-											</g:else>
-											<label> ${cat.categoryName}
-											</label>
-										</div>
+							<g:each in="${categories}" status="i" var="cat">
+								<div class="four wide column"
+									style="padding: 0px; margin-left: 10px; margin-top: 12px;">
+									<div class="ui checkbox">
+										<g:if test="${cat in game.categories}">
+											<g:hiddenField name="formerCategory" value="${cat.id}" />
+											<g:checkBox name="newCategory" value="${cat.id}"
+												checked="true" />
+										</g:if>
+										<g:else>
+											<g:checkBox name="newCategory" value="${cat.id}"
+												checked="false" />
+										</g:else>
+										<label> ${cat.categoryName}
+										</label>
 									</div>
-								</g:each>
-							</div>
+								</div>
+							</g:each>
 						</div>
-						<div class="actions" style="text-align: center; margin-top: 30px;">
-							<g:submitButton class="ui button" name="addButton"
-								value="Add Game" style="margin-left: -1.75em;"></g:submitButton>
-						</div>
-					</g:form>
-				</div>
-				<script>
+					</div>
+					<div class="actions" style="text-align: center; margin-top: 30px;">
+						<g:submitButton class="ui button" name="addButton"
+							value="Add Game" style="margin-left: -1.75em;"></g:submitButton>
+					</div>
+				</g:form>
+			</div>
+			<script>
 $(document).ready(function () {
 
 	

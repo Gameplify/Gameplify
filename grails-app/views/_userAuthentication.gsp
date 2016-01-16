@@ -10,8 +10,7 @@
 						params="${[userId:"${session?.user?.id}"]}">
 						<img class="ui tiny left floated image"
 							src="${createLink(controller:'user', action:'avatar_image', id:"${session?.user?.id}" )}" />
-						<span>
-							${session?.user?.name}
+						<span> ${session?.user?.name}
 						</span>
 						<g:link class="ui primary button"
 							style=" margin-top: 10px; margin-right: 0px; width: 140px;"
@@ -33,7 +32,7 @@
 					<g:form class="ui tiny form" style="margin-bottom: 19px;"
 						url="[controller:'user',action:'login']">
 						<g:if test="${flash.message}">
-							<div class="message">
+							<div class="message" style="color:red">
 								${flash.message}
 							</div>
 						</g:if>

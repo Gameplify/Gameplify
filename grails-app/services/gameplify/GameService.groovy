@@ -86,7 +86,6 @@ class GameService {
 			review.id == reviewId
 		}.list()
 		return comment
-
 	}
 
 	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories){
