@@ -49,7 +49,12 @@
                                      	<h3>Admins</h3>
                                          	<g:each in="${admins}" status="i" var="admin">
                                          		<div class="ui segment" style= "height: 80px;">
-                                         			<img class="ui tiny left floated image" style = "width:50px; height:50px;"src="${resource(dir: 'images', file: "${admin.userPhoto}")}">
+                                         			<g:if test="${user.avatar }">
+                                     		<img style="height:170px; width:170px; margin:35px;"class="ui image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
+                                     		</g:if><g:else>
+															    <img class="photo" src="${resource(dir: 'images', file: "nan.jpg")}">
+															    </g:else>
+															    
                                          			<span style = "text-align:center">${admin.name }</span>
                                          		</div>
                                          	</g:each>
