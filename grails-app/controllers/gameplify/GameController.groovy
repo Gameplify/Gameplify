@@ -54,7 +54,8 @@ class GameController {
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
 		def platforms = gameService.listPlatform()
 		def categories = gameCategoryService.listGame()
-		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories]
+		def rating = game.averageRating
+		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories, rating:rating]
 	}	
 	
 	def addGame(){

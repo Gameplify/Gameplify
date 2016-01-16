@@ -11,12 +11,11 @@ class User {
 	byte[] avatar
 	String avatarType
 	int totalNumberOfReviews
-	static hasMany = [reviews:Review, comment:Comment]
+	static hasMany = [reviews:Review, comment:Comment, adminActivity:AdminActivity]
 	// transients
 	static transients = ['confirm']
 	
 	static mapping ={
-		userPhoto	defaultValue:"'nan.jpg'"
 		totalNumberOfReviews	defaultValue: "0"
 	}
 	

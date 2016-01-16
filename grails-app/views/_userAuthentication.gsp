@@ -29,7 +29,7 @@
                 <div class="ui two row stackable grid">
                                 <div class="column">
                                         <div class="row">
-                                         <div id="login" class="ui segment" style="display:block; height: 355px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top:0px;">
+                                         <div id="login" class="ui segment" style="display:block; height: 370px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top:0px;">
                                                                       <h5 style="margin-left: 70px;">ACCESS PORTAL</h5>
                                                                       <g:form class="ui tiny form" style="margin-bottom: 19px;" url="[controller:'user',action:'login']">
                                                                             <g:if test="${flash.message}">

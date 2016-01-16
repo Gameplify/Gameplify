@@ -57,9 +57,8 @@ grails.project.dependency.resolution = {
     plugins {
         // plugins for the build system only
         build ":tomcat:7.0.55"
-		compile ":rateable:0.7.1", {
-			excludes 'yui', 'svn'
-		}
+		compile ":rateable:0.7.1"
+		compile "org.grails.plugins:yui:2.8.2.1"
 
         // plugins for the compile step
         compile ":scaffolding:2.1.2"

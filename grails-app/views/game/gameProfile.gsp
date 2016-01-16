@@ -18,6 +18,8 @@
 <script src="${resource(dir:'dist', file:'jquery-2.1.4.min.js')}"></script>
 <script src="${resource(dir:'js', file:'javascript.js') }"></script>
 
+<rateable:resources/>
+
 </head>
 
 <body>
@@ -72,7 +74,7 @@
 						<div class="ui segment"
 							style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
 							<div class="column" style="width: 270px; height: 330px;">
-								<a class="ui red ribbon label"> ${game.rating }
+								<a class="ui red ribbon label"> ${rating}
 								</a> <img class="ui tiny centered image" style="width: 120px;"
 									src="${resource(dir: 'images', file: "$game.gameLogo")}">
 								<div class="center aligned column">
@@ -83,13 +85,8 @@
 										$
 										${game.gamePrice }
 									</h5>
-								</div>
-								<div class="ui star rating" data-rating="3">
-									<i class="icon"></i> <i class="icon"></i> <i class="icon"></i>
-									<i class="icon"></i> <i class="icon"></i>
-								</div>
-
-								<h5 class="rate">0 raters</h5>
+								</div>						
+								<rateable:ratings bean='${game}'/>
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
 								</h5>
