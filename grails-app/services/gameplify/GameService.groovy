@@ -39,6 +39,13 @@ class GameService {
 		}
 		return games
 	}
+	
+	def getReview(reviewId){
+		def review = Review.get(reviewId)
+	}
+	
+
+	
 	def whatsHot( chosenPlatform, max, offset){
 		def games
 		if(chosenPlatform){

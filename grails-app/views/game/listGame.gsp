@@ -36,9 +36,8 @@
                                                   			
                                                         <g:each in="${platforms }" var="platform">
                                                         <g:link action="listGame" params="${[ platform:platform.platformName, categoryName: currentCategory] }">
-                                                        <button class="ui icon button">
-                                                        	   <img class="platformpic" src="${resource(dir: 'images', file: "${platform.pic}")}">
-                                                           
+                                                          <button class="ui icon button">
+		                                                        	   <img class="platformpic" src="${resource(dir: 'images', file: "${platform.pic}")}">
                                                           </button>
                                                           </g:link>	
                                                           </g:each>

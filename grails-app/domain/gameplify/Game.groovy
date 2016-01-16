@@ -1,6 +1,7 @@
 package gameplify
+import org.grails.rateable.*
 
-class Game {
+class Game implements Rateable{
 	String gameTitle
 	String gameLogo
 	float gamePrice

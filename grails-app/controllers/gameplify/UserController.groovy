@@ -1,6 +1,7 @@
 package gameplify
 class UserController {
 	def userService
+	def gameService
 	private static final okcontents = ['image/png', 'image/jpeg', 'image/gif']
 		def index={
 			redirect(action:"login")
@@ -12,6 +13,18 @@ class UserController {
 				redirect(action:"adminProfile" ,parameters:[admin:user])
 			}
 			[user:user]
+		}
+		
+		def adminActivities(){
+			log.println(params.adminId)
+			def activities = userService.getAdminActivity(params.adminId)
+			log.println("wow"+activities)
+			render(template: 'adminActivities', model:[activities:activities])
+		}
+		
+		def getUserRating(){
+			def rating = userService.getUserRating(params.gameId, params.userId)
+			[rating:rating]
 		}
 		
 		def avatar_image() {
@@ -57,9 +70,14 @@ class UserController {
 		  }
 		
 		def adminProfile(){
+			if((!(session.user))||session?.user?.role != "Admin"){
+				flash.message = "You do not have permission to access this page"
+				redirect(controller:"game", action: "index")
+			} else {
 			def admin = params.admin
 			def admins = userService.listAdmins()
 			[admin:admin, admins:admins]
+			}
 		}
 		
 		def showUserAuthentication(){

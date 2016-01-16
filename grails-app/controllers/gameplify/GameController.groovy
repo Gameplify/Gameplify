@@ -15,8 +15,19 @@ class GameController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	
 	def showNavbar(){	
+		
 		def categories = gameCategoryService.listGame()
 		render(template: '../navbar', model:[categories:categories])
+	}
+	
+	def editReview(){
+		def review = gameService.getReview(params.reviewId)
+		[review:review]
+	}
+	
+	def saveNewReview(){
+		gameService.editReview(params.review, params.reviewId)
+		redirect(action: "gameProfile", params: [gameTitle: params.gameTitle] )
 	}
 	
 	def addReview(){
@@ -43,7 +54,8 @@ class GameController {
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
 		def platforms = gameService.listPlatform()
 		def categories = gameCategoryService.listGame()
-		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories]
+		def rating = game.averageRating
+		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories, rating:rating]
 	}	
 	
 	def addGame(){
