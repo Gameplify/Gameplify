@@ -194,7 +194,10 @@
 													<g:if test="${ review.comment.size() > 3}">
 														<div class="loadMore" onclick="myFunc()" style="text-align: center;">Load
 															more</div>
-													</g:if>
+													</g:if><g:else>
+														<div class="loadMore" onclick="myFunc()" style="text-align: center; visibility:hidden;">Load
+															more</div>
+													</g:else>
 													
 													<g:if test="${session?.user}">
 														<g:form class="ui comment form">
@@ -315,49 +318,50 @@ $(document).ready(function () {
 	i=0;
 	w=0;
 	x=0;
+
 	var Arr= new Array();
 	var myArr = new Array();
 	size_li=0;
 		
 	$('.myList').each(function() {
 	    var count = $('> li', this).length;
-	    myArr.push(count);
-	    Arr.push(0);
+
+	    myArr.push(count); //number of comments per review
+	    
+	    Arr.push(3);
 	    $('.myList li').slice(w, w+3).show();
 	    w+= myArr[i]; 
 	   	i++;
 	});
 
 	  $('.loadMore').click(function () {
+	   start=0;
 	   val=$('.loadMore').index(this);
-		   size_li=0;
-		    temp=myArr[val];
-		    val2=val;
-			if(val>1){
-				size_li=myArr[val];
-			   	while(val>0){
-		  	 	val--; 
-		  		temp+= myArr[val]; 
-			   	size_li+=myArr[val]; 
-	 			}
-	 			temp+=myArr[0];
-		   }else if(val==1){
-			   size_li+=myArr[val-1];
-				temp+=myArr[val-1];
-				
-			}
-			   
-			size_li= size_li+3+Arr[val2];
-	       	if ( size_li  < temp) {
-	           $('.myList li').slice(size_li, size_li+3).show();
-	           Arr[val2]+=3;
-	       	}
-	       	
-	    	if ( size_li +3 >= temp) {
-	        $('.loadMore').eq($('.loadMore').index(this)).hide();	
-	    	}
+	   val2=val;
 	
+		end= myArr[val];  
+		while(val>0){
+			val--;
+			start+= myArr[val]; //0 4 8 12 17
+			end+= myArr[val]; //4 8 12 17
 
+		}
+	  
+		  if(start<end){
+					start+=Arr[val2];
+					diff=end-start;
+				   	$('.myList li').slice(start, start+3).show();
+			  		if(start+3>=end)
+			  			 $('.loadMore').eq($('.loadMore').index(this)).hide();	
+					if(diff<3)
+						Arr[val2]+=diff;
+					else
+					
+						Arr[val2]+=3;
+				
+		  }
+	  	
+		
 	    });
    
 	  function myFunc() {
