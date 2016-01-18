@@ -12,7 +12,7 @@ class User {
 	String avatarType
 	String status
 	int totalNumberOfReviews
-	static hasMany = [reviews:Review, comment:Comment, adminActivity:AdminActivity, rating:Rating]
+	static hasMany = [reviews:Review, comment:Comment, adminActivity:AdminActivity, rating:Rating, reports:Report]
 	// transients
 	static transients = ['confirm']
 	

@@ -19,6 +19,12 @@ class GameController {
 		render(template: '../navbar', model:[categories:categories])
 	}
 	
+	def report(){
+		def userId = params.userId
+		def type = params.type
+		gameService.report(type,userId)
+	}
+	
 	def rating(){
 		def rating = params.rating
 		def user = session.user
