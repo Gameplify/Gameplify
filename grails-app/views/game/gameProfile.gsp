@@ -163,7 +163,13 @@
 																	params="${[reviewId:"${review.id}"]}"
 																	onSuccess="focusDiv();">edit</g:remoteLink>
 															</div>
-														</g:if>
+														</g:if><g:else>
+															<g:remoteLink
+																	url="[controller:'game', action:'report']"
+																    value="Report"
+																	params="${[type:"Review", userId:"${review.user.id}"]}"
+																	>Report</g:remoteLink>
+														</g:else>
 														<ul class="myList">
 															<g:each
 																in="${review.comment.sort{it.date}.reverse(true)}"

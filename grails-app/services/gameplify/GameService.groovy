@@ -24,6 +24,21 @@ class GameService {
 		return games
 	}
 
+	def report(type,userId){
+		def user = User.get(userId)
+		Date date = new Date()
+		Report report = new Report(
+			date:date,
+			type:type,
+			user:user,
+			status:"okay",
+			numberOfReports:1
+		)
+		report.save()
+		user.addToReports(report)
+		user.save(flush:true)
+	}
+	
 	def getUserRating(gameId, userId){
 		def rating = Rating.find{
 			game.id == gameId
