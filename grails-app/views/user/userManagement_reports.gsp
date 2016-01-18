@@ -50,8 +50,14 @@
 								params="${[type:"report", userId:report.user.id, reportId:report.id]}">
 								<div class="ui segment"
 									style="height: 160px; width: 640px; padding-top: 20px; margin-top: 0px;">
-									<img class="ui tiny left floated image"
-										src="${createLink(controller:'user', action:'avatar_image', id:"${report.user.id}" )}" "/>
+									<g:if test="${report.user.avatar}">
+										<img class="ui tiny left floated image"
+											src="${createLink(controller:'user', action:'avatar_image', id:"${report.user.id}" )}" />
+									</g:if>
+									<g:else>
+										<img class="ui tiny left floated image"
+											src="${resource(dir: 'images', file: "nan.jpg")}">
+									</g:else>
 									<div class="ui 3 column stackable grid"
 										style="margin-left: 62px; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
 										<h5 style="padding-left: 10px; margin-bottom: 0px;">
@@ -59,7 +65,9 @@
 										</h5>
 										<div class="row"
 											style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
-											<a style="margin-bottom: 5px; margin-left: 7px;"> check</a>
+											<a style="margin-bottom: 5px; margin-left: 7px;">
+												${report.type }
+											</a>
 										</div>
 									</div>
 									<div style="position: fixed; margin-top: 5px; width: 80;">

@@ -13,7 +13,6 @@
 							<img class="ui tiny left floated image"
 								src="${resource(dir: 'images', file: "nan.jpg")}">
 						</g:else>
-
 						<span>
 							${session?.user?.name}
 						</span>

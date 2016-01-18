@@ -23,6 +23,69 @@ class GameService {
 		}
 		return games
 	}
+
+	def getUserRating(gameId, userId){
+		def rating = Rating.find{
+			game.id == gameId
+			user.id == userId
+		}
+		if(rating){
+			return rating.rating
+		}
+	}
+	def getRatingId(gameId, userId){
+		def rating = Rating.find{
+			game.id == gameId
+			user.id == userId
+		}
+		if(rating){
+			return rating.id
+		}
+	}
+
+	def rate(rating, userId, gameId){
+		def game = Game.get(gameId)
+		def user = User.get(userId)
+		def id = getRatingId(gameId, userId)
+		if(id){
+			log.println("ni sud sa edit")
+			def newRate = Rating.get(id)
+			log.println(rating)
+			newRate.rating = rating
+			newRate.rating = newRate.rating-48
+			log.println("newrate: " +newRate.rating)
+			newRate.save(flush:true)
+			def averageRating = getAverageRating(gameId)
+			game.averageRating = averageRating
+			game.save(flush:true)
+		} else {
+			Rating rate = new Rating(
+					rating : rating,
+					user : user,
+					game : game
+					)
+			rate.save()
+			game.addToRating(rate)
+			user.addToRating(rate)
+			user.save(flush:true)
+			game.save(flush:true)
+			def averageRating = getAverageRating(gameId)
+			game.averageRating = averageRating
+			game.save(flush:true)
+		}
+	}
+
+	def getAverageRating(gameId){
+		def sum = 0
+		def x = 0
+		Rating.where { game.id == gameId }.list().each{
+			sum += it.rating
+			x++
+		}
+		log.println(x)
+		return (sum/x)
+	}
+
 	def listGamePlat( chosenPlatform, max, offset){
 		def games
 		if(chosenPlatform){
@@ -74,7 +137,6 @@ class GameService {
 		log.println(user.totalNumberOfReviews)
 		game.numberOfReviews +=1
 		user.totalNumberOfReviews +=1
-		log.println(user.totalNumberOfReviews)
 		rev.save()
 		user.addToReviews(rev)
 		game.addToReviews(rev)
@@ -125,11 +187,10 @@ class GameService {
 				gamePrice:gamePrice,
 				gameDescription:gameDescription,
 				releaseDate:releaseDate,
-				rating:0,
+				averageRating:0,
 				numberOfReviews:0,
 				numberOfRaters:0,
 				status:"okay"
-
 				)
 		game.save(failOnError: true)
 		platform.addToGame(game)

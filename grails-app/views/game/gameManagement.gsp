@@ -57,7 +57,8 @@
 								<g:link action="gameManagement"
 									params="${[ platform:platform.platformName, categoryName: currentCategory] }">
 									<button class="ui icon button">
-										<img class="platformpic" src="${resource(dir: 'images', file: "${platform.pic}")}">
+										<img class="platformpic"
+											src="${resource(dir: 'images', file: "${platform.pic}")}">
 									</button>
 								</g:link>
 							</g:each>
@@ -165,20 +166,16 @@
 		</g:form>
 	</div>
 	<script>
-$(function(){
-	$('#addGame').click(function() {
-		$('.modal').modal('show')
-	});
-	document.getElementById("gameLogo").onchange = function() {
-		var reader = new FileReader();
-	document.getElementById("gameLogo").onchange = function () {
-	    var reader = new FileReader();
-
+		$(function() {
+			$('#addGame').click(function() {
+				$('.modal').modal('show');
+			});
+			document.getElementById("gameLogo").onchange = function() {
+				var reader = new FileReader();
 				reader.onload = function(e) {
 					// get loaded data and render thumbnail.
 					document.getElementById("image").src = e.target.result;
 				};
-
 				// read the image file as a data URL.
 				reader.readAsDataURL(this.files[0]);
 			};
