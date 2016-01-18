@@ -134,6 +134,7 @@ class GameService {
 				game:game,
 				status:"okay"
 				)
+		log.println(user.totalNumberOfReviews)
 		game.numberOfReviews +=1
 		user.totalNumberOfReviews +=1
 		rev.save()
@@ -186,11 +187,10 @@ class GameService {
 				gamePrice:gamePrice,
 				gameDescription:gameDescription,
 				releaseDate:releaseDate,
-				rating:0,
+				averageRating:0,
 				numberOfReviews:0,
 				numberOfRaters:0,
 				status:"okay"
-
 				)
 		game.save(failOnError: true)
 		platform.addToGame(game)

@@ -9,9 +9,6 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <!-- Site Properities -->
-<title>User Profile</title>
-<link rel="stylesheet" type="text/css"
-	href="${resource(dir:'css', file:'semantic.css')}">
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'dist', file:'bg.css')}">
 <link rel="stylesheet" type="text/css"
@@ -29,9 +26,6 @@
 	cursor: pointer;
 }
 </style>
-
-
-
 </head>
 <body>
 	<div class="ui fixed inverted menu">
@@ -39,11 +33,7 @@
 	</div>
 	<div class="background blue-purple"></div>
 	<div class="background green-blue"></div>
-
-
-
 	<div class="svg-wrapper">
-
 		<div class="ui two column stackable grid">
 			<div class="row" style="margin-left: 0px;">
 				<div class="ui segment" style="height: 500px; overflow-y: auto;">
@@ -132,10 +122,12 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-			$("#file-input").change(function() {
-				$("#Up").click();
-			});
-		</script>
+	</div>
+
+	<script type="text/javascript">
+		$("#file-input").change(function() {
+			$("#Up").click();
+		});
+	</script>
 </body>
 </html>

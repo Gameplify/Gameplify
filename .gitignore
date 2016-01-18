@@ -1,3 +1,4 @@
+devDb.lock.db
 *.iws
 .settings
 .idea
