@@ -45,10 +45,9 @@
 		                                                        <g:link action="index" params="${[ platform:platform.platformName] }">
 		                                                        <button class="ui icon button">
 		                                                        	   <img class="platformpic" src="${resource(dir: 'images', file: "${platform.pic}")}">
-		                                                           
 		                                                          </button>
 		                                                          </g:link>	
-		                                                          </g:each>
+		                                                          </g:each> 
 		                                   </div>
 		                            </div>
                               </div>
@@ -58,24 +57,28 @@
 			                                                  <div class="ui segment" style="overflow:scroll; width: 392px;height: 436px; padding-left: 22px;">
 		
 																		       <div class="ui three column stackable grid">
-																		       				<div class="rows"    style=" width: 325px;"> 
-																		       			 		  <g:each in="${Hot}" status="i" var="game">
-																								  <g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">
-																								 		    	<div class="ui segment"  style=" height: 110px;width: 351px;padding-left: 30px;padding-top: 24px;">
-															                                                        <a class="ui red right ribbon label 1" style="left: 240px;">${game.rating }</a>
-															                                                        <img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${game.gameLogo}")}">
-																												    <h5 style="    padding-left: 10px; margin-top: 0px; margin-bottom: 0px; ">${game.gameTitle }</h5>
-																													<div class="row" style="padding-bottom: 13px;padding-top: 5px;border-top-width: 5px;margin-top: 0px;margin-left: 3px;">
-																														<g:each var="category" in="${game.categories}">
-																															<a  style="margin-bottom: 5px;margin-left: 7px;"> ${category.categoryName }</a> 
-																														</g:each>
-																													</div>
-																												</div>  
-																											
-																											
-																									</g:link>
-																									</g:each>
-																							</div>
+																		       <div class="rows"    style=" width: 325px;">    
+																		       			<g:each in="${games}" status="i" var="game">
+                        													         	<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">   
+																		       				              		
+																												 <div class="ui segment" style=" height: 104px;width: 347px; padding-top: 14px;margin-top: 14px;margin-bottom: 14px;">
+																	                                              		<a class="ui red right ribbon label 1" style="left: 251px;">${game.rating }</a>
+																	                                              		<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">
+																	                                              		<img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${game.gameLogo}")}"></g:link>
+																	                                              		<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">
+																	                                                    <h5 style="    padding-left: 10px; margin-top: 0px; margin-bottom: 0px;">${game.gameTitle }</h5> </g:link>  
+																	                                                    <g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">
+																	                                                    <div class="row" style="padding-bottom: 13px;padding-top: 5px;border-top-width: 5px;margin-top: 0px;margin-left: 3px;">
+														                                 									<g:each var="category" in="${game.categories}">
+														                                 									<a  style="margin-bottom: 5px;margin-left: 7px;"> ${category.categoryName }</a> 
+														                                                                    </g:each>
+														                                                                </div>   </g:link>
+																	                                              </div> 
+																	                                              
+																	                                    </g:link>
+																						</g:each>
+																				</div>
+																							
 																													
 																									
 																						
@@ -87,25 +90,27 @@
 			                                                   <div class="ui segment" style="overflow:scroll; width: 392px;height: 436px; padding-left: 22px;">
 		
 																		       <div class="ui three column stackable grid">
-																		       				<div class="rows"    style=" width: 325px;"> 
-																		       			 		  <g:each in="${New}" status="i" var="gam">
-																								  <g:link action="gameProfile" params="${[gameTitle: "${gam.gameTitle}"]}">
-																								 		    	<div class="ui segment"  style=" height: 110px;width: 351px;padding-left: 30px;padding-top: 24px;">
-															                                                        <a class="ui red right ribbon label 1" style="left: 240px;">${gam.rating }</a>
-															                                                        <img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${gam.gameLogo}")}">
-																												    <h5 style="    padding-left: 10px; margin-top: 0px; margin-bottom: 0px; ">${gam.gameTitle }</h5>
-																													<div class="row" style="padding-bottom: 13px;padding-top: 5px;border-top-width: 5px;margin-top: 0px;margin-left: 3px;">
-																														<g:each var="category" in="${gam.categories}">
-																															<a  style="margin-bottom: 5px;margin-left: 7px;"> ${category.categoryName }</a> 
-																														</g:each>
-																													</div>
-																												</div>  
-																											
-																											
-																									</g:link>
-																									</g:each>
-																							</div>
-																													
+																		       				<div class="rows"    style=" width: 325px;">  
+																		       				<g:each in="${bb}" status="i" var="games">
+                        													         	<g:link action="gameProfile" params="${[gameTitle: "${games.gameTitle}"]}">   
+																		       				                		
+																												 <div class="ui segment" style=" height: 104px;width: 347px; padding-top: 14px;margin-top: 14px;margin-bottom: 14px;">
+																	                                              		<a class="ui red right ribbon label 1" style="left: 251px;">${games.rating }</a>
+																	                                              		<g:link action="gameProfile" params="${[gameTitle: "${games.gameTitle}"]}"> 
+																	                                              		<img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${games.gameLogo}")}"></g:link>
+																	                                                    <g:link action="gameProfile" params="${[gameTitle: "${games.gameTitle}"]}"> 
+																	                                                    <h5 style="    padding-left: 10px; margin-top: 0px; margin-bottom: 0px;">${games.gameTitle }</h5></g:link>
+																	                                                    <g:link action="gameProfile" params="${[gameTitle: "${games.gameTitle}"]}"> 
+																	                                                    <div class="row" style="padding-bottom: 13px;padding-top: 5px;border-top-width: 5px;margin-top: 0px;margin-left: 3px;">
+														                                 									<g:each var="category" in="${games.categories}">
+														                                 									<a  style="margin-bottom: 5px;margin-left: 7px;"> ${category.categoryName }</a> 
+														                                                                    </g:each>
+														                                                                </div>   </g:link>
+																	                                              </div> 
+																	                                             
+																	                                    </g:link>
+																						</g:each>
+																							 </div>						
 																									
 																						
 																		         </div>

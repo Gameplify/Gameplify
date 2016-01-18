@@ -27,9 +27,9 @@
 	          </g:if>
              <g:form action="list" method="GET">
 			        <div class="ui search">
-			         <div class="ui icon input" value="${params.query}">
+			         <div class="ui icon input" value="${params.query}" >
 				           
-				            <input name="query" placeholder="Search games..." value="${params.query}"/>
+				            <input name="query" placeholder="Search games..." value="${params.query}"required="" />
 				       		 <button type="submit">
 				       		 <i class="search icon"></i></button>
 				     </div>

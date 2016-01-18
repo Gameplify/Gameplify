@@ -38,6 +38,7 @@ class GameService {
 			}.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
 		}
 		return games
+		
 	}
 	
 	def getReview(reviewId){

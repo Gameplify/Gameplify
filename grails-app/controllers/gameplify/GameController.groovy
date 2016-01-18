@@ -128,10 +128,8 @@ class GameController {
 		def taskList = gameService.listGamePlat(chosenPlatfrm,max,offset)
 		def taskL = gameService.whatsHot(chosenPlatfrm,max,offset)
 		
-		println taskList.totalCount
-		println taskL.totalCount
+		 [games:taskL, bb:taskList, chosenPlatform:chosenPlatfrm, platforms:platform] 
 		
-		[Hot:taskL, New:taskList, chosenPlatform:chosenPlatfrm, platforms:platform]
 	}
 	
 	def list() {
