@@ -46,7 +46,7 @@
 				<div class="ui segment" style="height: auto">
 					<div class="ui grid" style="width: 800px; padding: 20px;">
 						<h3>Activities</h3>
-						<div id="activityList">
+						<div id="activityList" style="height: 600px; overflow-x: hidden; overflow-y: auto;">
 							<g:render template="adminActivities" />
 						</div>
 					</div>

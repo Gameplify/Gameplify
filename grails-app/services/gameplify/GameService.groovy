@@ -6,6 +6,8 @@ import grails.transaction.Transactional
 
 @Transactional
 class GameService {
+	
+	def userService
 
 	def listGame(currentCategory, chosenPlatform, max, offset){
 		def games
@@ -129,7 +131,7 @@ class GameService {
 				status == "okay"
 			}.list(max: max, offset: offset)
 		} else if(!chosenPlatform){
-			games = Game.where { status == "okay" }.list(sort: 'rating', order: 'desc', max: max, offset: offset)
+			games = Game.where { status == "okay" }.list(sort: 'averageRating', order: 'desc', max: max, offset: offset)
 		}
 		return games
 	}
@@ -195,7 +197,7 @@ class GameService {
 	}
 
 
-	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories){
+	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories,adminId){
 		Platform platform = Platform.get(platformId)
 		Game game = new Game(
 				gameTitle:gameTitle,
@@ -219,8 +221,9 @@ class GameService {
 		}
 		platform.save(flush:true)
 		log.println(platform.platformName)
+		userService.addAdminActivity(adminId,"added " +gameTitle)
 	}
-	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, removeCat){
+	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, removeCat, adminId){
 		Platform platform = Platform.get(platformId)
 		Game game = Game.get(gameId)
 		game.gameTitle = gameTitle
@@ -248,12 +251,15 @@ class GameService {
 		}
 		platform.save(flush:true)
 		log.println(platform.platformName)
+		
+		userService.addAdminActivity(adminId,"edited " +gameTitle)
 	}
 
-	def deleteGame(gameTitle){
+	def deleteGame(gameTitle,adminId){
 		def game = Game.get(gameTitle)
 		game.status ="deleted"
 		game.save(flush:true)
+		userService.addAdminActivity(adminId,"deleted: " +game.gameTitle)
 	}
 
 	def listPlatform(){
@@ -286,7 +292,8 @@ class GameService {
 
 		return allReviews
 	}
-
+	
+	
 	def serviceMethod() {
 	}
 }

@@ -79,7 +79,7 @@
 							total="${blockedCount}"></g:paginate>
 					</div>
 				</div>
-				<div class="ui two row stackable grid" style="position: fixed;">
+				<div class="ui two row stackable grid" >
 					<div class="column">
 						<div class="row">
 							<g:include controller="user" action="showUserAuthentication" />

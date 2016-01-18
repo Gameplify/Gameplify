@@ -3,9 +3,7 @@ package gameplify
 class AdminActivity {
 	String action
 	Date date
-	static belongsTo = [admin:User,game:Game,user:User]
+	static belongsTo = [admin:User]
     static constraints = {
-		game(nullable:true)
-		user(nullable:true)
     }
 }

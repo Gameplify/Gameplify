@@ -2,11 +2,7 @@ package gameplify
 class UserController {
 	def userService
 	def gameService
-	private static final okcontents = [
-		'image/png',
-		'image/jpeg',
-		'image/gif'
-	]
+	private static final okcontents = ['image/png', 'image/jpeg', 'image/gif']
 	def index={ redirect(action:"login") }
 
 	def userProfile(){
@@ -192,18 +188,20 @@ class UserController {
 
 	}
 	def blockUser(){
-		userService.blockUser(params.userId, params.reportId)
+		userService.blockUser(params.userId, params.reportId, session.user.id)
 		redirect(action:"userManagement_reports")
 	}
 
 	def ignoreReport(){
-		userService.ignoreReport(params.reportId)
+		userService.ignoreReport(params.reportId, session.user.id)
 		redirect(action:"userManagement_reports")
 	}
 
 	def unblockUser(){
-		userService.unblockUser(params.userId, params.reportId)
+		userService.unblockUser(params.userId, params.reportId, session.user.id)
 		redirect(action:"userManagement_blocked")
 	}
+
+
 }
 
