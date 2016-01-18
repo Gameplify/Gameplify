@@ -112,6 +112,7 @@ class GameService {
 			games = Game.where { status == "okay" }.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
 		}
 		return games
+		
 	}
 
 	def getReview(reviewId){
