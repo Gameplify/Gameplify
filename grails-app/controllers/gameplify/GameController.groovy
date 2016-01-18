@@ -11,15 +11,23 @@ class GameController {
 	def gameService
 	def gameCategoryService
 	def userService
+	static scaffold = true
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
-    def index() {
-		
-    }
 	
-	def showNavbar(){
+	def showNavbar(){	
+		
 		def categories = gameCategoryService.listGame()
 		render(template: '../navbar', model:[categories:categories])
+	}
+	
+	def editReview(){
+		def review = gameService.getReview(params.reviewId)
+		[review:review]
+	}
+	
+	def saveNewReview(){
+		gameService.editReview(params.review, params.reviewId)
+		redirect(action: "gameProfile", params: [gameTitle: params.gameTitle] )
 	}
 	
 	def addReview(){
@@ -46,8 +54,9 @@ class GameController {
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
 		def platforms = gameService.listPlatform()
 		def categories = gameCategoryService.listGame()
-		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories]
-	}
+		def rating = game.averageRating
+		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories, rating:rating]
+	}	
 	
 	def addGame(){
 		def checkedCategory = params.list('category')
@@ -110,7 +119,61 @@ class GameController {
 	def games = gameService.listGame(currentCategory, chosenPlatform, max, offset)
     [currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount] 
   }
-  
 
+	def index() {
+		def platform = gameService.listPlatform()
+		def max = params.max ?: 10
+		def offset = params.offset ?: 0
+		def chosenPlatfrm = params.platform
+		def taskList = gameService.listGamePlat(chosenPlatfrm,max,offset)
+		def taskL = gameService.whatsHot(chosenPlatfrm,max,offset)
+		
+		println taskList.totalCount
+		println taskL.totalCount
+		
+		[Hot:taskL, New:taskList, chosenPlatform:chosenPlatfrm, platforms:platform]
+	}
+	
+	def list() {
+		  def taskList = Game.createCriteria().list(params){
+			if ( params.query) {
+			  ilike("gameTitle", "%${params.query}%")
+			  println "here task"
+			}
+			order("gameTitle", "asc")
+		  }
+			  
+		  def userList = User.createCriteria().list(params){
+			if ( params.query) {
+			  ilike("name", "%${params.query}%")
+			  println "here user"
+			}
+			order("name", "asc")
+		  }
+		  
+		  def uuu = User.createCriteria().list(params){
+			  if ( params.query) {
+				ilike("name", "%${params.query}%")
+				println "here user2"
+			  }
+			  order("name", "asc")
+		  }
+		  
+		  def ggg = Game.createCriteria().list(params){
+			  if ( params.query) {
+				ilike("gameTitle", "%${params.query}%")
+				println "here game"
+			  }
+			  order("gameTitle", "asc")
+			  
+		  }
+		  
+		  def total= userList.totalCount + taskList.totalCount
+		  println userList.totalCount
+		  println taskList.totalCount
+		  println uuu.totalCount
+		  println ggg.totalCount
+		[ gam:ggg, gamet: ggg.totalCount , uses:uuu, usert: uuu.totalCount ,users:userList, totals:total,  userInstanceTotal: userList.totalCount, games: taskList, taskInstanceTotal: taskList.totalCount]
+	 }
     
 }

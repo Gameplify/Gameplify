@@ -1,6 +1,7 @@
 package gameplify
 class UserController {
 	def userService
+	def gameService
 	private static final okcontents = [
 		'image/png',
 		'image/jpeg',
@@ -29,6 +30,20 @@ class UserController {
 		out.close()
 	}
 
+
+	def adminActivities(){
+		log.println(params.adminId)
+		def activities = userService.getAdminActivity(params.adminId)
+		log.println("wow"+activities)
+		render(template: 'adminActivities', model:[activities:activities])
+	}
+
+	def getUserRating(){
+		def rating = userService.getUserRating(params.gameId, params.userId)
+		[rating:rating]
+	}
+
+
 	def upload_avatar() {
 
 		print "wew"
@@ -56,12 +71,6 @@ class UserController {
 		}
 
 		redirect(uri: request.getHeader('referer') )
-	}
-
-	def adminProfile(){
-		def admin = params.admin
-		def admins = userService.listAdmins()
-		[admin:admin, admins:admins]
 	}
 
 	def showUserAuthentication(){
@@ -128,6 +137,18 @@ class UserController {
 		}
 	}
 
+	def adminProfile(){
+		if((!(session.user))||session?.user?.role != "Admin"){
+			flash.message = "You do not have permission to access this page"
+			redirect(controller:"game", action: "index")
+		} else {
+			def admin = params.admin
+			def admins = userService.listAdmins()
+			[admin:admin, admins:admins]
+		}
+	}
+
+
 	def admin={
 
 	}
@@ -172,25 +193,25 @@ class UserController {
 			}
 		}
 	}
-	
+
 	def showUserInfo(){
 		def user = userService.findUser(params.userId)
 		render(template: "userInfo", model:[user:user, type:params.type, report:params.reportId])
 	}
-	
+
 	def reportUser(){
-		
+
 	}
 	def blockUser(){
 		userService.blockUser(params.userId, params.reportId)
 		redirect(action:"userManagement_reports")
 	}
-	
+
 	def ignoreReport(){
 		userService.ignoreReport(params.reportId)
 		redirect(action:"userManagement_reports")
 	}
-	
+
 	def unblockUser(){
 		userService.unblockUser(params.userId, params.reportId)
 		redirect(action:"userManagement_blocked")

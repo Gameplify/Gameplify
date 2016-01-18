@@ -9,11 +9,24 @@ class UserService {
 		def user = User.get(userId)
 		return user
 	}
+
+	def getAdminActivity(userId){
+		def admin = findUser(userId)
+		def activities = AdminActivity.where{ admin == admin }.list()
+		log.println("ni sud sa service")
+		log.println(admin.adminActivity)
+		return activities
+	}
 	def listAdmins(){
 		def admins = User.where{ role == "Admin" }.list()
 		return admins
 	}
 
+	def getUserRating(gameId, userId){
+		def game = Game.get(gameId)
+		def user = User.get(userId)
+		def rating = game.userRating(user)
+	}
 
 	def uploadAvatar(id,f){
 		def user = User.get(id)
@@ -28,24 +41,16 @@ class UserService {
 
 	def listReports(max, offset){
 		def reports
-		reports = Report.where {
-			status == "okay"
-		}.list(max: max, offset: offset){
-		}.sort{
-			it.date
-		}.reverse(true)		
+		reports = Report.where { status == "okay" }.list(max: max, offset: offset){
+		}.sort{ it.date }.reverse(true)
 	}
 
 	def listBlocked(max, offset){
 		def blocked
-		blocked = Report.where {
-			status == "blocked"
-		}.list(max: max, offset: offset){
-		}.sort{
-			it.date
-		}.reverse(true)
+		blocked = Report.where { status == "blocked" }.list(max: max, offset: offset){
+		}.sort{ it.date }.reverse(true)
 	}
-	
+
 	def blockUser(userId,reportId){
 		User user = User.get(userId)
 		user.status = "blocked"
@@ -54,7 +59,7 @@ class UserService {
 		report.save(flush:true)
 		user.save(flush:true)
 	}
-	
+
 	def unblockUser(userId,reportId){
 		User user = User.get(userId)
 		user.status = "okay"
@@ -63,11 +68,10 @@ class UserService {
 		report.save(flush:true)
 		user.save(flush:true)
 	}
-	
+
 	def ignoreReport(reportId){
 		Report report = Report.get(reportId)
 		report.status = "ignored"
 		report.save(flush:true)
 	}
-	
 }

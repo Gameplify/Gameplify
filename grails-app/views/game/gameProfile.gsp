@@ -8,212 +8,220 @@
 	href="${resource(dir:'css', file:'semantic.css')}">
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'dist', file:'semantic.css')}">
-
+<link rel="stylesheet" type="text/css"
+	href="${resource(dir:'dist', file:'bg.css')}">
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'dist/components', file:'rating.min.css')}">
 
 <script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
 <script src="${resource(dir:'dist/components', file:'rating.min.js')}"></script>
 <script src="${resource(dir:'dist', file:'jquery-2.1.4.min.js')}"></script>
+<script src="${resource(dir:'js', file:'javascript.js') }"></script>
+
+<rateable:resources />
 
 </head>
 
 <body>
+
 	<div class="ui fixed inverted menu">
 		<g:include action="showNavbar" />
 
 	</div>
-	<div class="ui two column stackable grid">
-		<div class="row" style="margin-left: 0px;">
-			<div class="ui segment">
-				<div class="ui grid" style="width: 800px; padding: 20px;">
-					<div class="column">
-						<div class="ui five column stackable grid">
-							<g:each in="${game.screenshot}" status="i" var="screenshot">
-								<div class="rows">
-									<img id="smallerImg"
-										src="${resource(dir: 'images', file: "${screenshot.photo}")}"
-										onclick="showImage('${resource(dir: 'images', file: "${screenshot.photo}")}');" />
-								</div>
-							</g:each>
-						</div>
-					</div>
-					<div class="eight wide column">
+	<div class="background blue-purple"></div>
+	<div class="background green-blue"></div>
+
+
+
+	<div class="svg-wrapper">
+
+
+		<div class="ui two column stackable grid">
+			<div class="row" style="margin-left: 0px;">
+				<div class="ui segment">
+					<div class="ui grid" style="width: 800px; padding: 20px;">
 						<div class="column">
-							<img id="currentImg"
-								src="${resource(dir: 'images', file: "${game.screenshot.first().photo}")}">
-						</div>
-						<div class="column">
-							<p>
-								${game.gameDescription }
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="ui two row stackable grid" style="position: fixed">
-				<div class="column">
-					<div class="row">
-
-						<g:include controller="user" action="showUserAuthentication" />
-
-					</div>
-					<div class="ui segment"
-						style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
-						<div class="column" style="width: 270px; height: 330px;">
-							<a class="ui red ribbon label"> ${game.rating }
-							</a> <img class="ui tiny centered image" style="width: 120px;"
-								src="${resource(dir: 'images', file: "$game.gameLogo")}">
-							<div class="center aligned column">
-								<h4 class="title">
-									${game.gameTitle }
-								</h4>
-								<h5 class="price">
-									$
-									${game.gamePrice }
-								</h5>
-							</div>
-							<div class="ui star rating" data-rating="3">
-								<i class="icon"></i> <i class="icon"></i> <i class="icon"></i> <i
-									class="icon"></i> <i class="icon"></i>
-							</div>
-
-							<h5 class="rate">0 raters</h5>
-							<h5 class="published">
-								<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
-							</h5>
-							<g:if test="${session?.user?.role == "Admin"}">
-								<button class="ui blue button" id="editGame"
-									style="margin-left: 92px;">Edit</button>
-							</g:if>
-							<div class="ui two column stackable grid"
-								style="margin-left: 62px; margin-bottom: 0px; margin-right: 0px;">
-								<div class="row">
-
-									<g:each in="${game.categories}" status="i" var="cat">
-										<label class="ui blue label"> ${cat.categoryName }
-										</label>
-
-
-									</g:each>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="ui segment" style="width: 800px;">
-					<div class="ui minimal comments" style="width: 800px;">
-						<h3 class="ui dividing header" style="width: 770px;">
-							${game.numberOfReviews }
-							reviews
-						</h3>
-						<div class="ui segment" style="width: 770px;">
-							<g:if test="${session?.user}">
-								<h4>Write a Review</h4>
-								<g:form class="ui reply form">
-									<div class="field">
-										<g:textArea id="text" name="review" />
-										<input name="gameId" value="${game.id}" type="hidden" /> <input
-											name="gameTitle" value="${game.gameTitle}" type="hidden" />
+							<div class="ui five column stackable grid">
+								<g:each in="${game.screenshot}" status="i" var="screenshot">
+									<div class="rows">
+										<img id="smallerImg"
+											src="${resource(dir: 'images', file: "${screenshot.photo}")}"
+											onclick="showImage('${resource(dir: 'images', file: "${screenshot.photo}")}');" />
 									</div>
-									<div id="counter"></div>
-									<g:actionSubmit id="reviewButton" action="addReview"
-										value="Add Review" class="ui blue labeled submit icon button">
-										<i class="icon edit"></i> Add Review
-	                                             
-	                                                </g:actionSubmit>
+								</g:each>
+							</div>
+						</div>
+						<div class="eight wide column">
+							<div class="column">
+								<img id="currentImg" style="height: 300px;" class="ui image"
+									src="${resource(dir: 'images', file: "${game.screenshot.first().photo}")}">
+							</div>
+							<div class="column">
+								<p>
+									${game.gameDescription }
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
 
-								</g:form>
+				<div class="ui two row stackable grid">
+					<div class="column">
+						<div class="row">
 
-							</g:if>
-							<div style="height: auto; max-height: 600; overflow-y: auto;">
-								<ul>
-									<g:each in="${reviews}" status="i" var="review">
-										<li>
-											<div class="comment">
-												<a class="avatar"> <img
-													src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
-												</a>
-												<div class="content">
-													<g:link class="author" controller="user"
-														action="userProfile"
-														params="${[userId:"${review.user.id}"]}">
-														${review.user.name }
-													</g:link>
-													<div class="metadata">
-														<span class="date"> ${review.date }
-														</span>
-													</div>
-													<div class="text">
-														<p>
-															${review.review }
+							<g:include controller="user" action="showUserAuthentication" />
 
-														</p>
-													</div>
-													<div class="actions">Report</div>
-													<ul class="myList">
-														<g:each in="${review.comment.sort{it.date}.reverse(true)}"
-															status="k" var="comment">
-															<li class="comment" style="display: none;"><a
-																class="avatar"> <img
-																	src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
-															</a>
-																<div class="content">
-																	<g:link class="author" controller="user"
-																		action="userProfile"
-																		params="${[userId:"${comment.user.id}"]}">
-																		${comment.user.name }
-																	</g:link>
-																	</a>
-																	<div class="metadata">
-																		<span class="date"> ${comment.date }
-																		</span>
-																	</div>
-																	<div class="text">
-																		${comment.comment }
-																	</div>
-																	<div class="actions">
-																		<a class="Comment">Report</a>
-																	</div>
+						</div>
+						<div class="ui segment"
+							style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
+							<div class="column" style="width: 270px; height: 330px;">
+								<a class="ui red ribbon label"> ${rating}
+								</a> <img class="ui tiny centered image" style="width: 120px;"
+									src="${resource(dir: 'images', file: "$game.gameLogo")}">
+								<div class="center aligned column">
+									<h4 class="title">
+										${game.gameTitle }
+									</h4>
+									<h5 class="price">
+										$
+										${game.gamePrice }
+									</h5>
+								</div>
+								<rateable:ratings bean='${game}' />
+								<h5 class="published">
+									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
+								</h5>
+								<g:if test="${session?.user?.role == "Admin"}">
+									<button class="ui blue button" id="editGame"
+										style="margin-left: 92px;">Edit</button>
+								</g:if>
+								<div class="ui two column stackable grid"
+									style="margin-left: 62px; margin-bottom: 0px; margin-right: 0px;">
+									<div class="row">
 
-																</div></li>
-														</g:each>
-													</ul>
-													<g:if test="${ review.comment.size() > 3}">
-														<div class="loadMore" style="text-align: center;">Load
-															more</div>
-													</g:if>
+										<g:each in="${game.categories}" status="i" var="cat">
+											<label class="ui blue label"> ${cat.categoryName }
+											</label>
 
-													<g:if test="${session?.user}">
-														<g:form class="ui comment form">
-															<div class="field">
-																<g:textArea name="comment" required="" />
-																<g:hiddenField name="gameId" value="${game.id}" />
-																<g:hiddenField name="gameTitle"
-																	value="${game.gameTitle}" />
-																<g:hiddenField name="reviewId" value="${review.id}" />
+
+										</g:each>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="ui segment" style="width: 800px;">
+						<div class="ui minimal comments" style="width: 800px;">
+							<h3 class="ui dividing header" style="width: 770px;">
+								${game.numberOfReviews }
+								reviews
+							</h3>
+							<div class="ui segment" style="width: 770px;">
+								<g:if test="${session?.user}">
+									<h4>Write a Review</h4>
+									<div id="reviewForm">
+										<g:render template="reviewForm" />
+									</div>
+								</g:if>
+								<div
+									style="height: auto; max-height: 600px; overflow-y: scroll;">
+									<ul>
+										<g:each in="${reviews}" status="i" var="review">
+											<li>
+												<div class="comment">
+													<a class="avatar"> <img
+														src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
+													</a>
+													<div class="content">
+														<g:link class="author" controller="user"
+															action="userProfile"
+															params="${[userId:"${review.user.id}"]}">
+															${review.user.name }
+														</g:link>
+														<div class="metadata">
+															<span class="date"> ${review.date }
+															</span>
+														</div>
+														<div class="text">
+															<p>
+																${review.review }
+															</p>
+														</div>
+														<g:if test="${"${review.user}" == "${session?.user }"}">
+															<div class="actions">
+																<g:remoteLink
+																	url="[controller:'game', action:'editReview']"
+																	update="reviewForm" value="Edit"
+																	params="${[reviewId:"${review.id}"]}"
+																	onSuccess="focusDiv();">edit</g:remoteLink>
 															</div>
-															<g:actionSubmit action="addComment" value="Add Comment"
-																class="ui blue labeled submit icon button">
-																<i class="icon edit"></i> Add Comment
-	                                             
-	                                                </g:actionSubmit>
-														</g:form>
-													</g:if>
+														</g:if>
+														<ul class="myList">
+															<g:each
+																in="${review.comment.sort{it.date}.reverse(true)}"
+																status="k" var="comment">
+																<li class="comment" style="display: none;"><a
+																	class="avatar"> <img
+																		src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
+																</a>
+																	<div class="content">
+																		<g:link class="author" controller="user"
+																			action="userProfile"
+																			params="${[userId:"${comment.user.id}"]}">
+																			${comment.user.name }
+																		</g:link>
+
+																		<div class="metadata">
+																			<span class="date"> ${comment.date }
+																			</span>
+																		</div>
+																		<div class="text">
+																			${comment.comment }
+																		</div>
+																		<div class="actions">
+																			<a class="Comment">Report</a>
+																		</div>
+
+																	</div></li>
+															</g:each>
+														</ul>
+														<g:if test="${ review.comment.size() > 3}">
+															<div class="loadMore" onclick="myFunc()"
+																style="text-align: center;">Load more</div>
+														</g:if>
+
+														<g:if test="${session?.user}">
+															<g:form class="ui comment form">
+																<div class="field">
+																	<g:textArea name="comment" required="" />
+																	<g:hiddenField name="gameId" value="${game.id}" />
+																	<g:hiddenField name="gameTitle"
+																		value="${game.gameTitle}" />
+																	<g:hiddenField name="reviewId" value="${review.id}" />
+																</div>
+
+																<g:actionSubmit action="addComment" value=" Comment"
+																	class="ui blue labeled submit icon button">
+
+
+																</g:actionSubmit>
+															</g:form>
+														</g:if>
+													</div>
 												</div>
-											</div>
-										</li>
-									</g:each>
-								</ul>
+											</li>
+										</g:each>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<div class="ui modal addGame">
 				<i class="close icon"></i>
 				<g:form class="ui equal width form" id="form" style="padding:10px"
@@ -247,41 +255,51 @@
 						</div>
 					</div>
 					<div class="field">
-						<g:textArea rows="3" name="gameDescription"
-							placeholder="Description*" required=""
-							value="${game.gameDescription }" />
+						<label for="price">Price*</label>
+						<g:field type="number" name="gamePrice" required=""
+							value="${game.gamePrice }" />
 					</div>
 					<div class="field">
-						<label for="category">Category(Select at least one)</label>
-						<div class="ui grid">
-
-							<g:each in="${categories}" status="i" var="cat">
-								<div class="four wide column"
-									style="padding: 0px; margin-left: 10px; margin-top: 12px;">
-									<div class="ui checkbox">
-										<g:if test="${cat in game.categories}">
-											<g:hiddenField name="formerCategory" value="${cat.id}" />
-											<g:checkBox name="newCategory" value="${cat.id}"
-												checked="true" />
-										</g:if>
-										<g:else>
-											<g:checkBox name="newCategory" value="${cat.id}"
-												checked="false" />
-										</g:else>
-										<label> ${cat.categoryName}
-										</label>
-									</div>
-								</div>
-							</g:each>
-						</div>
+						<label for="platform">Platform</label>
+						<g:select from="${platforms}" class="ui dropdown"
+							name="platformId" optionKey="id" optionValue="platformName" />
 					</div>
-					<div class="actions" style="text-align: center; margin-top: 30px;">
-						<g:submitButton class="ui button" name="addButton"
-							value="Add Game" style="margin-left: -1.75em;"></g:submitButton>
-					</div>
-				</g:form>
 			</div>
-			<script>
+			<div class="field">
+				<g:textArea rows="3" name="gameDescription"
+					placeholder="Description*" required=""
+					value="${game.gameDescription }" />
+			</div>
+			<div class="field">
+				<label for="category">Category(Select at least one)</label>
+				<div class="ui grid">
+
+					<g:each in="${categories}" status="i" var="cat">
+						<div class="four wide column"
+							style="padding: 0px; margin-left: 10px; margin-top: 12px;">
+							<div class="ui checkbox">
+								<g:if test="${cat in game.categories}">
+									<g:hiddenField name="formerCategory" value="${cat.id}" />
+									<g:checkBox name="newCategory" value="${cat.id}" checked="true" />
+								</g:if>
+								<g:else>
+									<g:checkBox name="newCategory" value="${cat.id}"
+										checked="false" />
+								</g:else>
+								<label> ${cat.categoryName}
+								</label>
+							</div>
+						</div>
+					</g:each>
+				</div>
+			</div>
+			<div class="actions" style="text-align: center; margin-top: 30px;">
+				<g:submitButton class="ui button" name="addButton" value="Add Game"
+					style="margin-left: -1.75em;"></g:submitButton>
+			</div>
+			</g:form>
+		</div>
+		<script>
 $(document).ready(function () {
 
 	
@@ -345,11 +363,6 @@ $(document).ready(function () {
 	    	}
 		   
 	    });
-   
-
-
-
-	
 	$("#counter").css("color","red");
     document.getElementById("reviewButton").disabled = true;
     $("#counter").append("<strong> 0 </strong> characters ");
@@ -377,15 +390,6 @@ $(document).ready(function () {
 		alert("hsadi");
 	})
 });
-
-
-
- function showImage(imgName) {
-       var curImage = document.getElementById('currentImg');
-       var thePath = 'images/';
-       var theSource =  imgName;
-       curImage.src = theSource;
-     }
- </script>
+</script>
 </body>
 </html>

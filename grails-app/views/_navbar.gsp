@@ -1,5 +1,3 @@
-
-
 <div class="ui container">
 	<g:link action="index">
 		<div href="#" class="header item">
@@ -27,15 +25,21 @@
 			</ul>
 		</div>
 	</div>
-	<div class="header item"><g:link controller="user" action="userManagement_reports">User</g:link></div>
+	<div class="header item">User</div>
 </g:if>
-<div class="ui search">
-	<div class="ui icon input">
-		<input class="prompt" type="text" placeholder="Search games...">
-		<i class="search icon"></i>
+<g:form action="list" method="GET">
+	<div class="ui search">
+		<div class="ui icon input" value="${params.query}">
+
+			<input name="query" placeholder="Search games..."
+				value="${params.query}" />
+			<button type="submit">
+				<i class="search icon"></i>
+			</button>
+		</div>
+		<div class="results"></div>
 	</div>
-	<div class="results"></div>
-</div>
+</g:form>
 <g:if test="${session?.user?.role != "Admin"}">
 	<div id="demo_box">
 		<span class="pop_ctrl"><img id="navi"
@@ -54,12 +58,9 @@
 		</ul>
 	</div>
 </g:if>
-
-
-
 <script src="${resource(dir:'js', file:'jquery.min.js')}"></script>
-<script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
 <script src="${resource(dir:'js', file:'jquery.popmenu.js')}"></script>
+<script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
 <script>
 	$(function() {
 		$('#demo_box').popmenu();

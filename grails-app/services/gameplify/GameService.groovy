@@ -16,13 +16,41 @@ class GameService {
 				status == "okay"
 			}.list(max: max, offset: offset)
 		} else if(!chosenPlatform){
-
-			
 			games = Game.where {
 				categories.categoryName == currentCategory
 				status == "okay"
 			}.list(max: max, offset: offset)
-			
+		}
+		return games
+	}
+	def listGamePlat( chosenPlatform, max, offset){
+		def games
+		if(chosenPlatform){
+			games = Game.where {
+				platform.platformName == chosenPlatform
+				status == "okay"
+			}.list(max: max, offset: offset)
+		} else if(!chosenPlatform){
+			games = Game.where { status == "okay" }.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
+		}
+		return games
+	}
+
+	def getReview(reviewId){
+		def review = Review.get(reviewId)
+	}
+
+
+
+	def whatsHot( chosenPlatform, max, offset){
+		def games
+		if(chosenPlatform){
+			games = Game.where {
+				platform.platformName == chosenPlatform
+				status == "okay"
+			}.list(max: max, offset: offset)
+		} else if(!chosenPlatform){
+			games = Game.where { status == "okay" }.list(sort: 'rating', order: 'desc', max: max, offset: offset)
 		}
 		return games
 	}
@@ -37,12 +65,12 @@ class GameService {
 		Game game = Game.get(gameId)
 		Date date = new Date()
 		Review rev = new Review(
-		review:review,
-		date:date,
-		user:user,
-		game:game,
-		status:"okay"
-		)
+				review:review,
+				date:date,
+				user:user,
+				game:game,
+				status:"okay"
+				)
 		log.println(user.totalNumberOfReviews)
 		game.numberOfReviews +=1
 		user.totalNumberOfReviews +=1
@@ -64,13 +92,13 @@ class GameService {
 		num = num+1
 		Date date = new Date()
 		Comment com = new Comment(
-		comment:comment,
-		date:date,
-		user:user,
-		game:game,
-		review:review,
-		status:"okay"
-		)
+				comment:comment,
+				date:date,
+				user:user,
+				game:game,
+				review:review,
+				status:"okay"
+				)
 		review.numberOfComments = num
 		com.save()
 		user.addToComment(com)
@@ -88,20 +116,21 @@ class GameService {
 		return comment
 	}
 
+
 	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories){
 		Platform platform = Platform.get(platformId)
 		Game game = new Game(
-		gameTitle:gameTitle,
-		gameLogo:gameLogo,
-		gamePrice:gamePrice,
-		gameDescription:gameDescription,
-		releaseDate:releaseDate,
-		rating:0,
-		numberOfReviews:0,
-		numberOfRaters:0,
-		status:"okay"
+				gameTitle:gameTitle,
+				gameLogo:gameLogo,
+				gamePrice:gamePrice,
+				gameDescription:gameDescription,
+				releaseDate:releaseDate,
+				rating:0,
+				numberOfReviews:0,
+				numberOfRaters:0,
+				status:"okay"
 
-		)
+				)
 		game.save(failOnError: true)
 		platform.addToGame(game)
 		log.println (categories)
@@ -148,7 +177,6 @@ class GameService {
 		def game = Game.get(gameTitle)
 		game.status ="deleted"
 		game.save(flush:true)
-
 	}
 
 	def listPlatform(){
@@ -167,30 +195,20 @@ class GameService {
 		if (currentUser){
 			userReviews = Review.where {
 				user.id == currentUser.id &&
-				game.gameTitle == title
-			}.sort{
-				it.date
-			}.reverse(true)
+						game.gameTitle == title
+			}.sort{ it.date }.reverse(true)
 
 			otherReviews = Review.where{
 				user.id != currentUser.id &&
-				game.gameTitle == title
-			}.sort{
-				it.date
-			}.reverse(true)
+						game.gameTitle == title
+			}.sort{ it.date }.reverse(true)
 			allReviews = userReviews + otherReviews
 		} else {
-			allReviews  = Review.where{
-				game.gameTitle == title
-			}.sort{
-				it.date
-			}.reverse(true)
+			allReviews  = Review.where{ game.gameTitle == title }.sort{ it.date }.reverse(true)
 		}
 
 		return allReviews
 	}
-
-
 
 	def serviceMethod() {
 	}

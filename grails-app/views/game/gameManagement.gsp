@@ -95,7 +95,6 @@
 								</button>
 							</g:link>
 						</g:each>
-
 					</div>
 
 					<div class="pagination" style="text-align: center;">
@@ -149,8 +148,7 @@
 							style="padding: 0px; margin-left: 10px; margin-top: 12px;">
 							<div class="ui checkbox">
 								<g:checkBox name="category" value="${cat.id}" checked="false" />
-								<label>
-									${cat.categoryName}
+								<label> ${cat.categoryName}
 								</label>
 							</div>
 						</div>
@@ -164,12 +162,14 @@
 		</g:form>
 	</div>
 	<script>
-		$(function() {
-			$('#addGame').click(function() {
-				$('.modal').modal('show')
-			});
-			document.getElementById("gameLogo").onchange = function() {
-				var reader = new FileReader();
+$(function(){
+	$('#addGame').click(function() {
+		$('.modal').modal('show')
+	});
+	document.getElementById("gameLogo").onchange = function() {
+		var reader = new FileReader();
+	document.getElementById("gameLogo").onchange = function () {
+	    var reader = new FileReader();
 
 				reader.onload = function(e) {
 					// get loaded data and render thumbnail.
