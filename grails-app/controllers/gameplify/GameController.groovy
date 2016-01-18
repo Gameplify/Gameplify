@@ -107,7 +107,6 @@ class GameController {
 			def games = gameService.listGame(currentCategory, chosenPlatform, max, offset)
 			[currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount,categories:categories]
 		}
-
 	}
   
 	def listGame(){

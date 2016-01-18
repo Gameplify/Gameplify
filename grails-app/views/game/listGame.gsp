@@ -24,11 +24,7 @@
 	</div>
 	<div class="background blue-purple"></div>
 	<div class="background green-blue"></div>
-
-
-
 	<div class="svg-wrapper">
-
 		<div class="ui two column stackable grid">
 			<div class="row" style="margin-left: 0px;">
 				<div class="ui segment" style="height: auto">
