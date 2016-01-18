@@ -24,25 +24,55 @@ class GameService {
 		return games
 	}
 
+	def getUserRating(gameId, userId){
+		def rating = Rating.find{
+			game.id == gameId
+			user.id == userId
+		}
+		if(rating){
+			return rating.rating
+		}
+	}
+	def getRatingId(gameId, userId){
+		def rating = Rating.find{
+			game.id == gameId
+			user.id == userId
+		}
+		if(rating){
+			return rating.id
+		}
+	}
+
 	def rate(rating, userId, gameId){
 		def game = Game.get(gameId)
 		def user = User.get(userId)
-		log.println("wew")
-		log.println("naa nay rating")
-		Rating rate = new Rating(
-				rating : rating,
-				user : user,
-				game : game
-				)
-		rate.save()
-
-		game.addToRating(rate)
-		user.addToRating(rate)
-		user.save(flush:true)
-		game.save(flush:true)
-		def averageRating = getAverageRating(gameId)
-		game.averageRating = averageRating
-		game.save(flush:true)
+		def id = getRatingId(gameId, userId)
+		if(id){
+			log.println("ni sud sa edit")
+			def newRate = Rating.get(id)
+			log.println(rating)
+			newRate.rating = rating
+			newRate.rating = newRate.rating-48
+			log.println("newrate: " +newRate.rating)
+			newRate.save(flush:true)
+			def averageRating = getAverageRating(gameId)
+			game.averageRating = averageRating
+			game.save(flush:true)
+		} else {
+			Rating rate = new Rating(
+					rating : rating,
+					user : user,
+					game : game
+					)
+			rate.save()
+			game.addToRating(rate)
+			user.addToRating(rate)
+			user.save(flush:true)
+			game.save(flush:true)
+			def averageRating = getAverageRating(gameId)
+			game.averageRating = averageRating
+			game.save(flush:true)
+		}
 	}
 
 	def getAverageRating(gameId){
@@ -53,7 +83,7 @@ class GameService {
 			x++
 		}
 		log.println(x)
-		return sum/x
+		return (sum/x)
 	}
 
 	def listGamePlat( chosenPlatform, max, offset){

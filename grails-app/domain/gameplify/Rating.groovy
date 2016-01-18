@@ -1,7 +1,7 @@
 package gameplify
 
 class Rating {
-	float rating
+	int rating
 	static belongsTo = [user:User, game:Game]
     static constraints = {
     }

@@ -27,8 +27,7 @@ class GameController {
 		log.println("rating: " +rating)
 		log.println("userId: " +user.id)
 		log.println("gameId: " +gameId)
-		gameService.rate(rating,user.id,gameId)
-		
+		gameService.rate(rating,user.id,gameId)	
 	}
 	
 	def editReview(){
@@ -56,16 +55,24 @@ class GameController {
 	
 	
 	def gameProfile(){
+		def rating
 		def currentUser	
+		def game = gameService.listGameInfo(params.gameTitle)
 		if(session.user){
 			currentUser = userService.findUser(session.user.id)
+		    rating = gameService.getUserRating(game.id,session.user.id)
+			if(rating == null){
+				rating = 0
+			}
+		} else {
+			rating = 0
 		}
-		def game = gameService.listGameInfo(params.gameTitle)
+		
 		def reviews = gameService.listReview(params.gameTitle, currentUser)
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
 		def platforms = gameService.listPlatform()
-		def categories = gameCategoryService.listGame()
-		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories]
+		def categories = gameCategoryService.listGame()	
+		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories, rating:rating]
 	}	
 	
 	def addGame(){

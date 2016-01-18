@@ -72,8 +72,10 @@
 						<div class="ui segment"
 							style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
 							<div class="column" style="width: 270px; height: 330px;">
-								<a class="ui red ribbon label"> ${game.averageRating}
-								</a> <img class="ui tiny centered image" style="width: 120px;"
+								<div id="updateMe">
+								 <a  class="ui red ribbon label"> ${game.averageRating}
+								</a>
+								</div> <img class="ui tiny centered image" style="width: 120px;"
 									src="${resource(dir: 'images', file: "$game.gameLogo")}">
 								<div class="center aligned column">
 									<h4 class="title">
@@ -82,10 +84,11 @@
 									<h5 class="price">
 										$
 										${game.gamePrice }
+										
 									</h5>
 								</div>
 
-								<div class="ui large star rating" data-rating="0"
+								<div class="ui large star rating" data-rating=${rating }
 									data-max-rating="5"></div>
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
@@ -299,8 +302,8 @@ $('.ui.rating')
 .rating('setting', 'onRate', function(value) {
     var rating = value;
     var gameId = ${game.id}	
-    ${remoteFunction(controller: 'game' , action: 'rating', params: '\'rating=\' + rating +  \'&gameId=\' + gameId')}
-    
+    ${remoteFunction(controller: 'game' , update: 'updateMe',  action: 'rating', params: '\'rating=\' + rating +  \'&gameId=\' + gameId')}
+ 
 });
 
 
