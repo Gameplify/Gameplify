@@ -15,14 +15,24 @@
 <script src="${resource(dir:'dist', file:'semantic.js')}"></script>
 <script src="${resource(dir:'dist', file:'jquery-2.1.4.min.js')}"></script>
 <script src="${resource(dir:'js', file:'javascript.js') }"></script>
+
+
+
 </head>
+
 <body>
+
 	<div class="ui fixed inverted menu">
 		<g:include action="showNavbar" />
 	</div>
 	<div class="background blue-purple"></div>
 	<div class="background green-blue"></div>
+
+
+
 	<div class="svg-wrapper">
+
+
 		<div class="ui two column stackable grid">
 			<div class="row" style="margin-left: 0px;">
 				<div class="ui segment">
@@ -63,10 +73,9 @@
 							style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
 							<div class="column" style="width: 270px; height: 330px;">
 								<div id="updateMe">
-									<a class="ui red ribbon label"> ${game.averageRating}
-									</a>
-								</div>
-								<img class="ui tiny centered image" style="width: 120px;"
+								 <a  class="ui red ribbon label"> ${game.averageRating}
+								</a>
+								</div> <img class="ui tiny centered image" style="width: 120px;"
 									src="${resource(dir: 'images', file: "$game.gameLogo")}">
 								<div class="center aligned column">
 									<h4 class="title">
@@ -75,11 +84,11 @@
 									<h5 class="price">
 										$
 										${game.gamePrice }
-
+										
 									</h5>
 								</div>
-								<div class="ui large star rating" data-rating=${rating
-									}
+
+								<div class="ui large star rating" data-rating=${rating }
 									data-max-rating="5"></div>
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
@@ -118,6 +127,9 @@
 									<div id="reviewForm">
 										<g:render template="reviewForm" />
 									</div>
+
+
+
 								</g:if>
 								<div
 									style="height: auto; max-height: 600px; overflow-y: scroll;">
@@ -213,177 +225,79 @@
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="ui modal addGame">
-				<i class="close icon"></i>
-				<g:form class="ui equal width form" id="form" style="padding:10px"
-					controller='game' action='editGame'>
-					<img class="ui centered small image" id="image"
-						src="${resource(dir: 'images', file: "$game.gameLogo")}"
-						alt="Game Logo">
-					<g:field type="file" name="gameLogo" accept="image/*"
-						value="${game.gameLogo}" />
-					<div class="field">
-						<g:hiddenField name="gameId" value="${game.id }"></g:hiddenField>
-						<g:textField placeholder="Game Title*" name="gameTitle"
-							required="" value="${game.gameTitle}" />
-					</div>
-					<div class="fields">
-						<div class="field" style="width: 200px;">
-							<label for="releaseDate">Released On*</label>
-							<g:datePicker name="releaseDate" value="${game.releaseDate}"
-								precision="day"
-								years="${Calendar.instance.get(Calendar.YEAR)..1950}" />
-						</div>
+				<div class="ui modal addGame">
+					<i class="close icon"></i>
+					<g:form class="ui equal width form" id="form" style="padding:10px"
+						controller='game' action='editGame'>
+						<img class="ui centered small image" id="image"
+							src="${resource(dir: 'images', file: "$game.gameLogo")}"
+							alt="Game Logo">
+						<g:field type="file" name="gameLogo" accept="image/*"
+							value="${game.gameLogo}" />
 						<div class="field">
-							<label for="price">Price*</label>
-							<g:field type="number" name="gamePrice" required=""
-								value="${game.gamePrice }" />
+							<g:hiddenField name="gameId" value="${game.id }"></g:hiddenField>
+							<g:textField placeholder="Game Title*" name="gameTitle"
+								required="" value="${game.gameTitle}" />
 						</div>
-						<div class="field">
-							<label for="platform">Platform</label>
-							<g:select from="${platforms}" class="ui dropdown"
-								name="platformId" optionKey="id" optionValue="platformName" />
-						</div>
-					</div>
-					<div class="field">
-						<label for="price">Price*</label>
-						<g:field type="number" name="gamePrice" required=""
-							value="${game.gamePrice }" />
-					</div>
-					<div class="field">
-						<label for="platform">Platform</label>
-						<g:select from="${platforms}" class="ui dropdown"
-							name="platformId" optionKey="id" optionValue="platformName" />
-					</div>
-			</div>
-			<div class="field">
-				<g:textArea rows="3" name="gameDescription"
-					placeholder="Description*" required=""
-					value="${game.gameDescription }" />
-			</div>
-			<div class="field">
-				<label for="category">Category(Select at least one)</label>
-				<div class="ui grid">
-
-					<g:each in="${categories}" status="i" var="cat">
-						<div class="four wide column"
-							style="padding: 0px; margin-left: 10px; margin-top: 12px;">
-							<div class="ui checkbox">
-								<g:if test="${cat in game.categories}">
-									<g:hiddenField name="formerCategory" value="${cat.id}" />
-									<g:checkBox name="newCategory" value="${cat.id}" checked="true" />
-								</g:if>
-								<g:else>
-									<g:checkBox name="newCategory" value="${cat.id}"
-										checked="false" />
-								</g:else>
-								<label> ${cat.categoryName}
-								</label>
+						<div class="fields">
+							<div class="field" style="width: 200px;">
+								<label for="releaseDate">Released On*</label>
+								<g:datePicker name="releaseDate" value="${game.releaseDate}"
+									precision="day"
+									years="${Calendar.instance.get(Calendar.YEAR)..1950}" />
+							</div>
+							<div class="field">
+								<label for="price">Price*</label>
+								<g:field type="number" name="gamePrice" required=""
+									value="${game.gamePrice }" />
+							</div>
+							<div class="field">
+								<label for="platform">Platform</label>
+								<g:select from="${platforms}" class="ui dropdown"
+									name="platformId" optionKey="id" optionValue="platformName" />
 							</div>
 						</div>
-					</g:each>
+						<div class="field">
+							<g:textArea rows="3" name="gameDescription"
+								placeholder="Description*" required=""
+								value="${game.gameDescription }" />
+						</div>
+						<div class="field">
+							<label for="category">Category(Select at least one)</label>
+							<div class="ui grid">
+
+								<g:each in="${categories}" status="i" var="cat">
+									<div class="four wide column"
+										style="padding: 0px; margin-left: 10px; margin-top: 12px;">
+										<div class="ui checkbox">
+											<g:if test="${cat in game.categories}">
+												<g:hiddenField name="formerCategory" value="${cat.id}" />
+												<g:checkBox name="newCategory" value="${cat.id}"
+													checked="true" />
+											</g:if>
+											<g:else>
+												<g:checkBox name="newCategory" value="${cat.id}"
+													checked="false" />
+											</g:else>
+											<label> ${cat.categoryName}
+											</label>
+										</div>
+									</div>
+								</g:each>
+							</div>
+						</div>
+						<div class="actions" style="text-align: center; margin-top: 30px;">
+							<g:submitButton class="ui button" name="addButton"
+								value="Add Game" style="margin-left: -1.75em;"></g:submitButton>
+						</div>
+					</g:form>
 				</div>
 			</div>
-			<div class="actions" style="text-align: center; margin-top: 30px;">
-				<g:submitButton class="ui button" name="addButton" value="Add Game"
-					style="margin-left: -1.75em;"></g:submitButton>
-			</div>
-			</g:form>
 		</div>
-		<script>
-$(document).ready(function () {
+	</div>
 
-	
-    size_li = $("#myList li").size();
-    x=3;
-    $('#myList li:lt('+x+')').show();
-    $('#loadMore').click(function () {
-        x= (x+5 <= size_li) ? x+5 : size_li;
-        $('#myList li:lt('+x+')').show();
-    });
-	$('#editGame').click(function(){
-		$('.modal').modal('show');
-	});
-	document.getElementById("gameLogo").onchange = function () {
-	    var reader = new FileReader();
 
-	    reader.onload = function (e) {
-	        // get loaded data and render thumbnail.
-	        document.getElementById("image").src = e.target.result;
-	    };
-
-	    // read the image file as a data URL.
-	    reader.readAsDataURL(this.files[0]);
-	};
-	i=0;
-	w=0;
-	x=0;
-	var myArr = new Array();
-	size_li=0;
-		
-	$('.myList').each(function() {
-	    var count = $('> li', this).length;
-	    myArr.push(count);
-	    $('.myList li').slice(w, w+3).show();
-	    w+= myArr[i]; 
-	   	i++;
-	});
-    
-	  $('.loadMore').click(function () {
-	   val=$('.loadMore').index(this);
-		   val2=val;
-		   size_li=0;
-			if(val!=0){
-			   	while(val>0){
-			   	 val--; 
-			   	size_li+=myArr[val];
-		  	   	myArr[val2]+= myArr[val];
-		  	 
-		   }			 
-		   }
-			size_li= size_li+3; 
-	       	if ( size_li  < myArr[val2]) {
-	           $('.myList li').slice(size_li, myArr[val2]).show();
-	        }else{
-	        	size_li=3; 
-		        $('.myList li').slice(size_li, myArr[val2]).show();
-	        	$('.loadMore').eq($('.loadMore').index(this)).hide();	
-		    }
-	    	if ( size_li  < myArr[val2]) {
-	    		$('.loadMore').eq($('.loadMore').index(this)).hide();
-	    	}
-		   
-	    });
-	$("#counter").css("color","red");
-    document.getElementById("reviewButton").disabled = true;
-    $("#counter").append("<strong> 0 </strong> characters ");
-    $("#text").keyup(function(){
- 
-	    var reviewLength = $(this).val().length;
-	    $("#counter").html(" <strong>"+  reviewLength+"</strong> characters");
-	    if(reviewLength < 100){
-	    	document.getElementById("reviewButton").disabled = true;
-	    }
-	    if(reviewLength >= 100){
-	    	document.getElementById("reviewButton").disabled = false;
-	    }
-	    if(reviewLength <= 100)
-	    {
-	        $("#counter").css("color","red");
-	    }
-	    else
-	    {
-	        $("#counter").css("color","black");
-	    }
-    });
-
-    $("#submitButton").click(function(){
-		alert("hsadi");
-	})
-});
-
+	<script>
 $('.ui.rating')
 .rating('setting', 'onRate', function(value) {
     var rating = value;
@@ -391,6 +305,9 @@ $('.ui.rating')
     ${remoteFunction(controller: 'game' , update: 'updateMe',  action: 'rating', params: '\'rating=\' + rating +  \'&gameId=\' + gameId')}
  
 });
+
+
+
 </script>
 </body>
 </html>
