@@ -10,15 +10,13 @@
 	href="${resource(dir:'dist', file:'semantic.css')}">
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'dist', file:'bg.css')}">
-<link rel="stylesheet" type="text/css"
-	href="${resource(dir:'dist/components', file:'rating.min.css')}">
 
-<script src="${resource(dir:'dist', file:'semantic.min.js')}"></script>
-<script src="${resource(dir:'dist/components', file:'rating.min.js')}"></script>
+
+<script src="${resource(dir:'dist', file:'semantic.js')}"></script>
 <script src="${resource(dir:'dist', file:'jquery-2.1.4.min.js')}"></script>
 <script src="${resource(dir:'js', file:'javascript.js') }"></script>
 
-<rateable:resources/>
+
 
 </head>
 
@@ -74,7 +72,7 @@
 						<div class="ui segment"
 							style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
 							<div class="column" style="width: 270px; height: 330px;">
-								<a class="ui red ribbon label"> ${rating}
+								<a class="ui red ribbon label"> ${game.averageRating}
 								</a> <img class="ui tiny centered image" style="width: 120px;"
 									src="${resource(dir: 'images', file: "$game.gameLogo")}">
 								<div class="center aligned column">
@@ -85,8 +83,10 @@
 										$
 										${game.gamePrice }
 									</h5>
-								</div>						
-								<rateable:ratings bean='${game}'/>
+								</div>
+
+								<div class="ui large star rating" data-rating="0"
+									data-max-rating="5"></div>
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
 								</h5>
@@ -126,7 +126,7 @@
 									</div>
 
 
-									
+
 								</g:if>
 								<div
 									style="height: auto; max-height: 600px; overflow-y: scroll;">
@@ -293,5 +293,18 @@
 		</div>
 	</div>
 
+
+	<script>
+$('.ui.rating')
+.rating('setting', 'onRate', function(value) {
+    var rating = value;
+    var gameId = ${game.id}	
+    ${remoteFunction(controller: 'game' , action: 'rating', params: '\'rating=\' + rating +  \'&gameId=\' + gameId')}
+    
+});
+
+
+
+</script>
 </body>
 </html>

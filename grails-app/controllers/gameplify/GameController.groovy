@@ -14,10 +14,21 @@ class GameController {
 	static scaffold = true
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	
-	def showNavbar(){	
-		
+	def showNavbar(){			
 		def categories = gameCategoryService.listGame()
 		render(template: '../navbar', model:[categories:categories])
+	}
+	
+	def rating(){
+		def rating = params.rating
+		def user = session.user
+		def gameId = params.gameId
+		log.println("yey ni sud ngari")
+		log.println("rating: " +rating)
+		log.println("userId: " +user.id)
+		log.println("gameId: " +gameId)
+		gameService.rate(rating,user.id,gameId)
+		
 	}
 	
 	def editReview(){
@@ -54,8 +65,7 @@ class GameController {
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
 		def platforms = gameService.listPlatform()
 		def categories = gameCategoryService.listGame()
-		def rating = game.averageRating
-		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories, rating:rating]
+		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories]
 	}	
 	
 	def addGame(){
@@ -138,7 +148,6 @@ class GameController {
 		  def taskList = Game.createCriteria().list(params){
 			if ( params.query) {
 			  ilike("gameTitle", "%${params.query}%")
-			  println "here task"
 			}
 			order("gameTitle", "asc")
 		  }
@@ -146,7 +155,6 @@ class GameController {
 		  def userList = User.createCriteria().list(params){
 			if ( params.query) {
 			  ilike("name", "%${params.query}%")
-			  println "here user"
 			}
 			order("name", "asc")
 		  }
@@ -154,7 +162,6 @@ class GameController {
 		  def uuu = User.createCriteria().list(params){
 			  if ( params.query) {
 				ilike("name", "%${params.query}%")
-				println "here user2"
 			  }
 			  order("name", "asc")
 		  }
@@ -162,17 +169,13 @@ class GameController {
 		  def ggg = Game.createCriteria().list(params){
 			  if ( params.query) {
 				ilike("gameTitle", "%${params.query}%")
-				println "here game"
 			  }
 			  order("gameTitle", "asc")
 			  
 		  }
 		  
 		  def total= userList.totalCount + taskList.totalCount
-		  println userList.totalCount
-		  println taskList.totalCount
-		  println uuu.totalCount
-		  println ggg.totalCount
+
 		[ gam:ggg, gamet: ggg.totalCount , uses:uuu, usert: uuu.totalCount ,users:userList, totals:total,  userInstanceTotal: userList.totalCount, games: taskList, taskInstanceTotal: taskList.totalCount]
 	 }
     
