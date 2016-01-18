@@ -11,7 +11,7 @@ class User {
 	byte[] avatar
 	String avatarType
 	int totalNumberOfReviews
-	static hasMany = [reviews:Review, comment:Comment, adminActivity:AdminActivity]
+	static hasMany = [reviews:Review, comment:Comment, adminActivity:AdminActivity, rating:Rating]
 	// transients
 	static transients = ['confirm']
 	

@@ -16,9 +16,7 @@ class UserController {
 		}
 		
 		def adminActivities(){
-			log.println(params.adminId)
 			def activities = userService.getAdminActivity(params.adminId)
-			log.println("wow"+activities)
 			render(template: 'adminActivities', model:[activities:activities])
 		}
 		
