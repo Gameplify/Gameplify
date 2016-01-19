@@ -87,7 +87,7 @@ class GameService {
 			user.save(flush:true)
 			game.save(flush:true)
 			def averageRating = getAverageRating(gameId)
-			game.averageRating = averageRating
+			game.averageRating = averageRating.round(2)
 			game.save(flush:true)
 		}
 	}
