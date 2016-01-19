@@ -6,8 +6,8 @@
 		<div class="ten wide column">
 			${activity.action }
 		</div>
-		<div class="three wide column">
-			<g:formatDate format="MMM d, yyyy h:mm a" date="${activity.date}" />
+		<div class="five wide column">
+			<g:formatDate format="h:mm a MMM d, yyyy" date="${activity.date}" />
 		</div>
 	</div>
 </div>
