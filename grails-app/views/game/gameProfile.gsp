@@ -100,7 +100,7 @@
 										style="margin-left: 92px;">Edit</button>
 								</g:if>
 								<div class="ui two column stackable grid"
-									style="margin-left: 62px; margin-bottom: 0px; margin-right: 0px;">
+									style="margin:auto; display: block;">
 									<div class="row">
 
 										<g:each in="${game.categories}" status="i" var="cat">
