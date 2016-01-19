@@ -56,7 +56,7 @@
 										params="${[gameTitle: "${game.gameTitle}"]}">
 
 										<g:include controller="user" action="showUserAuthentication" />
-							</div>
+							</g:link></g:each></div>
 						</div>
 				</div>
 
