@@ -87,7 +87,7 @@ class GameService {
 			user.save(flush:true)
 			game.save(flush:true)
 			def averageRating = getAverageRating(gameId)
-			game.averageRating = averageRating.round(2)
+			game.averageRating = averageRating
 			game.save(flush:true)
 		}
 	}
@@ -212,6 +212,13 @@ class GameService {
 				status:"okay"
 				)
 		game.save(failOnError: true)
+		Screenshots ss = new Screenshots(
+			photo:"ss1.jpg",
+			game:game
+			)
+		ss.save()
+		game.addToScreenshot(ss)
+		game.save(flush:true)		
 		platform.addToGame(game)
 		log.println (categories)
 		categories.each {
