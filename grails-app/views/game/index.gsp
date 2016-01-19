@@ -35,13 +35,7 @@
 			<div class="row" style="margin-left: 0px;">
 				<div class="ui segment" style="width: 800px; height: auto">
 					<div class="ui three column stackable grid">
-						<div class="column" style="width: 378px;">
-							<h3>What's HOT</h3>
-						</div>
-						<div class="column" style="width: 140px;">
-							<h3>What's NEW</h3>
-						</div>
-						<div class="column">
+						<div class="column" style="    width: 98.333333%;">
 							<div class="ui grid" style="float: right">
 
 								<g:each in="${platforms }" var="platform">
@@ -60,10 +54,13 @@
 						<div class="column" style="width: 378px;">
 
 							<div class="ui segment"
-								style="overflow-x: hidden; overflow-y: scroll; width: 392px; height: 436px; padding-left: 22px;">
+								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 22px;">
 
 								<div class="ui three column stackable grid">
 									<div class="rows" style="width: 325px;">
+									<div class="column" style="width: 378px;">
+										<h3>What's HOT</h3>
+									</div>
 										<g:each in="${games}" status="i" var="game">
 											<g:link action="gameProfile"
 												params="${[gameTitle: "${game.gameTitle}"]}">
@@ -109,10 +106,14 @@
 						</div>
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
-								style="overflow-x: hidden; overflow-y: scroll; width: 392px; height: 436px; padding-left: 22px;">
+								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 22px;">
 
 								<div class="ui three column stackable grid">
 									<div class="rows" style="width: 325px;">
+															
+						<div class="column" style="width: 140px;">
+							<h3>What's NEW</h3>
+						</div>
 										<g:each in="${bb}" status="i" var="games">
 											<g:link action="gameProfile"
 												params="${[gameTitle: "${games.gameTitle}"]}">

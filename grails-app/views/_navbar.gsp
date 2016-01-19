@@ -33,7 +33,8 @@
 
 			<input name="query" required="" placeholder="Search games..."
 				value="${params.query}" />
-			<button type="submit">
+			<button type="submit" style="background-color: #365C8A;
+    color: #ffffff;">
 				<i class="search icon"></i>
 			</button>
 		</div>

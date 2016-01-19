@@ -34,25 +34,26 @@
 							${currentCategory }
 						</h3>
 						<div class="ui grid"
-							style="margin-left: 510px; margin-top: -35px;">
+							style="    margin-left: 545px;  margin-top: -50px;">
 							<g:if test="${flash.message}">
 								<div class="message" style="width: 200px; margin-left: -171px;">
 									${flash.message }
 								</div>
 							</g:if>
+							<div style="margin-top:10px;">
 							<button class="ui inverted icon button" id="addGame"
-								style="height: 28px; width: 28px; padding: 0;">
+								style="height: 28px;     margin-left: -55px; width: 28px; padding: 0;">
 								<i class="big green add square icon"
 									style="height: 28px; width: 28px;"></i>
 							</button>
 							<button class="ui inverted icon button" id="deleteGame"
-								style="height: 28px; width: 28px; margin-left: 30px; padding: 0;">
+								style="height: 28px; width: 28px;      margin-left: -35px;padding: 0;">
 								<i class="big red trash icon" style="height: 28px; width: 28px;"></i>
 							</button>
-						</div>
+						
 
 						<div class="ui grid"
-							style="margin-left: 610px; margin-top: -35px;">
+							style=" margin-top: -45px;">
 							<g:each in="${platforms }" var="platform">
 								<g:link action="gameManagement"
 									params="${[ platform:platform.platformName, categoryName: currentCategory] }">
@@ -62,6 +63,8 @@
 									</button>
 								</g:link>
 							</g:each>
+						</div>
+						</div>
 						</div>
 						</h3>
 					</div>

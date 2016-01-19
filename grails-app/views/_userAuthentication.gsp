@@ -16,7 +16,7 @@
 						<span>
 							${session?.user?.name}
 						</span>
-						<g:if test="${session?.user?.role == "blocked"}">
+						<g:if test="${session?.user?.status == "blocked"}">
 							<img class="block"
 								src="${resource(dir: 'images', file: "block.png")}"
 								title="You are blocked">
