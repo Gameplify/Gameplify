@@ -62,6 +62,7 @@
 										<h3>What's HOT</h3>
 									</div>
 										<g:each in="${games}" status="i" var="game">
+										<g:if test="${game.averageRating != 0 }">
 											<g:link action="gameProfile"
 												params="${[gameTitle: "${game.gameTitle}"]}">
 
@@ -94,6 +95,7 @@
 												</div>
 
 											</g:link>
+											</g:if>
 										</g:each>
 									</div>
 

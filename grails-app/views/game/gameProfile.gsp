@@ -51,8 +51,8 @@
 						<div class="eight wide column">
 							<div class="column">
 								<g:if test="${game.screenshot.photo }">
-								<img id="currentImg" style="height: 300px;" class="ui image"
-									src="${resource(dir: 'images', file: "${game.screenshot.first().photo}")}">
+									<img id="currentImg" style="height: 300px;" class="ui image"
+										src="${resource(dir: 'images', file: "${game.screenshot.first().photo}")}">
 								</g:if>
 							</div>
 							<div class="column">
@@ -72,12 +72,16 @@
 
 						</div>
 						<div class="ui segment"
-							style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
+							style="margin-left: 40px; margin-top: 20px; height: 400px; width: 272px;">
 							<div class="column" style="width: 270px; height: 330px;">
+
 								<div id="updateMe">
-								 <a  class="ui red ribbon label"> ${game.averageRating}
-								</a>
-								</div> <img class="ui tiny centered image" style="width: 150px; height:150px;"
+									<a class="ui red ribbon label"> ${game.averageRating}
+									</a>
+								</div>
+
+								<img class="ui tiny centered image"
+									style="width: 150px; height: 150px;"
 									src="${resource(dir: 'images', file: "$game.gameLogo")}">
 								<div class="center aligned column">
 									<h4 class="title">
@@ -86,12 +90,16 @@
 									<h5 class="price">
 										$
 										${game.gamePrice }
-										
+
 									</h5>
 								</div>
-
-								<div class="ui large star rating" data-rating=${rating }
+								<g:if test="${session?.user }">
+									<g:if test="${session?.user?.status != "blocked"}">
+										<div class="ui large star rating" data-rating=${rating
+											}
 									data-max-rating="5"></div>
+									</g:if>
+								</g:if>
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
 								</h5>
@@ -100,7 +108,7 @@
 										style="margin-left: 92px;">Edit</button>
 								</g:if>
 								<div class="ui two column stackable grid"
-									style="margin:auto; display: block;">
+									style="margin: auto; display: block;">
 									<div class="row">
 
 										<g:each in="${game.categories}" status="i" var="cat">
@@ -125,13 +133,15 @@
 							</h3>
 							<div class="ui segment" style="width: 770px;">
 								<g:if test="${session?.user}">
-									<h4>Write a Review</h4>
-									<div id="reviewForm">
-										<g:render template="reviewForm" />
-									</div>
+									<g:if test="${session?.user?.status != "blocked"}">
+										<h4>Write a Review</h4>
+										<div id="reviewForm">
+											<g:render template="reviewForm" />
+										</div>
 
 
 
+									</g:if>
 								</g:if>
 								<div
 									style="height: auto; max-height: 600px; overflow-y: scroll;">
@@ -139,9 +149,16 @@
 										<g:each in="${reviews}" status="i" var="review">
 											<li>
 												<div class="comment">
-													<a class="avatar"> <img
-														src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
-													</a>
+													<g:if test="${review.user.avatar}">
+														<a class="avatar"> <img
+															src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
+														</a>
+													</g:if>
+													<g:else>
+														<img class="ui tiny left floated image"
+															style="width: 70px;"
+															src="${resource(dir: 'images', file: "nan.jpg")}">
+													</g:else>
 													<div class="content">
 														<g:link class="author" controller="user"
 															action="userProfile"
@@ -165,12 +182,13 @@
 																	params="${[reviewId:"${review.id}"]}"
 																	onSuccess="focusDiv();">edit</g:remoteLink>
 															</div>
-														</g:if><g:else>
-															<g:remoteLink
-																	url="[controller:'game', action:'report']"
-																    value="Report"
-																	params="${[type:"Review", userId:"${review.user.id}"]}"
-																	>Report</g:remoteLink>
+														</g:if>
+														<g:else>
+															<g:if test="${session?.user?.status != "blocked"}">
+																<g:remoteLink url="[controller:'game', action:'report']"
+																	value="Report" onclick="return confirm('Are you sure you want to report this user?')"
+																	params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
+															</g:if>
 														</g:else>
 														<ul class="myList">
 															<g:each
@@ -200,12 +218,14 @@
 																		<div class="text">
 																			${comment.comment }
 																		</div>
-																		<g:if
-																			test="${session?.user && "${review.user.role}" != "Admin"}">
-																			<g:remoteLink
-																				url="[controller:'game', action:'report']"
-																				value="Report"
-																				params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																		<g:if test="${session?.user?.status != "blocked"}">
+																			<g:if
+																				test="${session?.user && "${review.user.role}" != "Admin"}">
+																				<g:remoteLink
+																					url="[controller:'game', action:'report']"
+																					value="Report" onclick="return confirm('Are you sure you want to report this user?')"
+																					params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																			</g:if>
 																		</g:if>
 
 																	</div></li>
@@ -217,21 +237,23 @@
 														</g:if>
 
 														<g:if test="${session?.user}">
-															<g:form class="ui comment form">
-																<div class="field">
-																	<g:textArea name="comment" required="" />
-																	<g:hiddenField name="gameId" value="${game.id}" />
-																	<g:hiddenField name="gameTitle"
-																		value="${game.gameTitle}" />
-																	<g:hiddenField name="reviewId" value="${review.id}" />
-																</div>
+															<g:if test="${session?.user?.status != "blocked"}">
+																<g:form class="ui comment form">
+																	<div class="field">
+																		<g:textArea name="comment" required="" />
+																		<g:hiddenField name="gameId" value="${game.id}" />
+																		<g:hiddenField name="gameTitle"
+																			value="${game.gameTitle}" />
+																		<g:hiddenField name="reviewId" value="${review.id}" />
+																	</div>
 
-																<g:actionSubmit action="addComment" value=" Comment"
-																	class="ui blue labeled submit icon button">
+																	<g:actionSubmit action="addComment" value=" Comment"
+																		class="ui blue labeled submit icon button">
 
 
-																</g:actionSubmit>
-															</g:form>
+																	</g:actionSubmit>
+																</g:form>
+															</g:if>
 														</g:if>
 													</div>
 												</div>
@@ -245,13 +267,13 @@
 				</div>
 				<div class="ui modal addGame">
 					<i class="close icon"></i>
-					<g:form class="ui equal width form" id="form" style="padding:10px"
+					<g:form class="ui equal width form" id="form" style="padding:20px"
 						controller='game' action='editGame'>
 						<img class="ui centered small image" id="image"
 							src="${resource(dir: 'images', file: "$game.gameLogo")}"
 							alt="Game Logo">
 						<g:field type="file" name="gameLogo" accept="image/*"
-							value="${game.gameLogo}" />
+							value="${game.gameLogo}" style="margin: 10px;" />
 						<div class="field">
 							<g:hiddenField name="gameId" value="${game.id }"></g:hiddenField>
 							<g:textField placeholder="Game Title*" name="gameTitle"
@@ -267,7 +289,7 @@
 							<div class="field">
 								<label for="price">Price*</label>
 								<g:field type="number" name="gamePrice" required=""
-									value="${game.gamePrice }" />
+									value="${game.gamePrice }" style="font-size: 14px;" />
 							</div>
 							<div class="field">
 								<label for="platform">Platform</label>
@@ -323,6 +345,8 @@ $('.ui.rating')
     var gameId = ${game.id}	
     ${remoteFunction(controller: 'game' , update: 'updateMe',  action: 'rating', params: '\'rating=\' + rating +  \'&gameId=\' + gameId')}
 });
+
+
     $('.loadMore').click(function () {
  	   start=0;
  	   val=$('.loadMore').index(this);

@@ -55,7 +55,7 @@
 											src="${createLink(controller:'user', action:'avatar_image', id:"${report.user.id}" )}" />
 									</g:if>
 									<g:else>
-										<img class="ui tiny left floated image"
+										<img class="ui tiny left floated image" style="width: 70px;"
 											src="${resource(dir: 'images', file: "nan.jpg")}">
 									</g:else>
 									<div class="ui 3 column stackable grid"
@@ -65,8 +65,7 @@
 										</h5>
 										<div class="row"
 											style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
-											<a style="margin-bottom: 5px; margin-left: 7px;">
-												${report.type }
+											<a style="margin-bottom: 5px; margin-left: 7px;"> ${report.type }
 											</a>
 										</div>
 									</div>
@@ -88,7 +87,7 @@
 					</div>
 
 				</div>
-				<div class="ui two row stackable grid" >
+				<div class="ui two row stackable grid">
 					<div class="column">
 						<div class="row">
 							<g:include controller="user" action="showUserAuthentication" />
