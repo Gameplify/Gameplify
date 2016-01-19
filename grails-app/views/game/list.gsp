@@ -47,7 +47,7 @@
                                 	     <g:if test="${taskInstanceTotal >0}">
                                 	      <div class="ui two column stackable grid">
 			                                   			<div class="column" style="width: 378px;" >
-			                                                            <div class="ui segment" style="overflow: scroll; width: 392px;height: 436px; padding-left: 22px;">
+			                                                            <div class="ui segment" style="overflow-x: auto; width: 392px;height: 436px; padding-left: 22px;">
 																						<h3>Games Found</h3>
 			                                                                            <div class="ui three column stackable grid">
 			                                                                                     <div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">
@@ -70,7 +70,7 @@
 			                                                            </div> 
 			                                  			</div>
 			                                 			 <div class="column" style="width: 378px;" >
-			                                                            <div class="ui segment" style="overflow: scroll; width: 392px;height: 436px;padding-left: 22px;">
+			                                                            <div class="ui segment" style="overflow-x: auto; width: 392px;height: 436px;padding-left: 22px;">
 			                                                                  <h3>User's Found</h3>
 			                                                                             <div class="ui three column stackable grid">
 			                                                                                     <div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">

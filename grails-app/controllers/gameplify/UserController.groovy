@@ -26,6 +26,35 @@ class UserController {
 		out.close()
 	}
 
+	def upload_avatar() {
+
+		print "wew"
+
+		def f = request.getFile('avatar')
+
+		if(f){
+			print "yow"
+		} else {
+			print "you fail fucker"
+		}
+
+
+		if (!okcontents.contains(f.getContentType())) {
+			flash.message = "Avatar must be one of: ${okcontents}"
+			redirect(uri: request.getHeader('referer') )
+			return
+		}
+
+
+		if(!userService.uploadAvatar(session.user.id, f)){
+			render(view:'select_avatar', model:[user:user])
+			print "too big"
+			return
+		}
+
+		redirect(uri: request.getHeader('referer') )
+	}
+
 	def getUserRating(){
 		def rating = userService.getUserRating(params.gameId, params.userId)
 		[rating:rating]
@@ -35,28 +64,8 @@ class UserController {
 		render(template: 'adminActivities', model:[activities:activities])
 	}
 
-	def upload_avatar() {
-		print "wew"
-		def f = request.getFile('avatar')
-		if(f){
-			print "yow"
-		} else {
-			print "you fail fucker"
-			if (!okcontents.contains(f.getContentType())) {
-				flash.message = "Avatar must be one of: ${okcontents}"
-				redirect(uri: request.getHeader('referer') )
-				return
-			}
 
-			if(!userService.uploadAvatar(session.user.id, f)){
-				render(view:'select_avatar', model:[user:user])
-				print "too big"
-				return
-			}
 
-			redirect(uri: request.getHeader('referer') )
-		}
-	}
 
 	def showUserAuthentication(){
 		render(template: '../userAuthentication')

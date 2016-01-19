@@ -31,7 +31,7 @@
 	<div class="ui search">
 		<div class="ui icon input" value="${params.query}">
 
-			<input name="query" placeholder="Search games..."
+			<input name="query" required="" placeholder="Search games..."
 				value="${params.query}" />
 			<button type="submit">
 				<i class="search icon"></i>

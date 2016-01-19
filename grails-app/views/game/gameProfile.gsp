@@ -50,12 +50,10 @@
 						</div>
 						<div class="eight wide column">
 							<div class="column">
-								<g:if test="${game.screenshot.photo}">
+								<g:if test="${game.screenshot.photo }">
 								<img id="currentImg" style="height: 300px;" class="ui image"
 									src="${resource(dir: 'images', file: "${game.screenshot.first().photo}")}">
-							</g:if><g:else>
-							<h1>No photo available</h1>
-							</g:else>
+								</g:if>
 							</div>
 							<div class="column">
 								<p>
@@ -77,10 +75,9 @@
 							style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
 							<div class="column" style="width: 270px; height: 330px;">
 								<div id="updateMe">
-									<a class="ui red ribbon label"> ${game.averageRating}
-									</a>
-								</div>
-								<img class="ui tiny centered image" style="width: 120px;"
+								 <a  class="ui red ribbon label"> ${game.averageRating}
+								</a>
+								</div> <img class="ui tiny centered image" style="width: 150px; height:150px;"
 									src="${resource(dir: 'images', file: "$game.gameLogo")}">
 								<div class="center aligned column">
 									<h4 class="title">
@@ -89,12 +86,11 @@
 									<h5 class="price">
 										$
 										${game.gamePrice }
-
+										
 									</h5>
 								</div>
 
-								<div class="ui large star rating" data-rating=${rating
-									}
+								<div class="ui large star rating" data-rating=${rating }
 									data-max-rating="5"></div>
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
@@ -134,7 +130,6 @@
 										<g:render template="reviewForm" />
 									</div>
 
-<<<<<<< HEAD
 
 
 								</g:if>
@@ -144,14 +139,8 @@
 										<g:each in="${reviews}" status="i" var="review">
 											<li>
 												<div class="comment">
-													<a class="avatar"> <g:if test="${review.user.avatar }">
-
-															<img
-																src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
-														</g:if> <g:else>
-															<img class="photo"
-																src="${resource(dir: 'images', file: "nan.jpg")}">
-														</g:else>
+													<a class="avatar"> <img
+														src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
 													</a>
 													<div class="content">
 														<g:link class="author" controller="user"
@@ -175,64 +164,13 @@
 																	update="reviewForm" value="Edit"
 																	params="${[reviewId:"${review.id}"]}"
 																	onSuccess="focusDiv();">edit</g:remoteLink>
-=======
-														</p>
-													</div>
-													<div class="actions">Report</div>
-													<ul class="myList">
-														<g:each in="${review.comment.sort{it.date}.reverse(true)}"
-															status="k" var="comment">
-															<li class="comment" style="display: none;"><a
-																class="avatar"> <img
-																	src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
-															</a>
-																<div class="content">
-																	<g:link class="author" controller="user"
-																		action="userProfile"
-																		params="${[userId:"${comment.user.id}"]}">
-																		${comment.user.name }
-																	</g:link>
-																	
-																	<div class="metadata">
-																		<span class="date"> ${comment.date }
-																		</span>
-																	</div>
-																	<div class="text">
-																		${comment.comment }
-																	</div>
-																	<div class="actions">
-																		<a class="Comment">Report</a>
-																	</div>
-
-																</div></li>
-														</g:each>
-													</ul>
-													<g:if test="${ review.comment.size() > 3}">
-														<div class="loadMore" onclick="myFunc()" style="text-align: center;">Load
-															more</div>
-													</g:if><g:else>
-														<div class="loadMore" onclick="myFunc()" style="text-align: center; visibility:hidden;">Load
-															more</div>
-													</g:else>
-													
-													<g:if test="${session?.user}">
-														<g:form class="ui comment form">
-															<div class="field">
-																<g:textArea name="comment" required="" />
-																<g:hiddenField name="gameId" value="${game.id}" />
-																<g:hiddenField name="gameTitle"
-																	value="${game.gameTitle}" />
-																<g:hiddenField name="reviewId" value="${review.id}" />
->>>>>>> 11cd9670cac6a59a51bb063ac6140c8e6d9a6bbc
 															</div>
-														</g:if>
-														<g:else>
-															<g:if
-																test="${session?.user && "${review.user.role}" != "Admin"}">
-																<g:remoteLink url="[controller:'game', action:'report']"
-																	value="Report"
-																	params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
-															</g:if>
+														</g:if><g:else>
+															<g:remoteLink
+																	url="[controller:'game', action:'report']"
+																    value="Report"
+																	params="${[type:"Review", userId:"${review.user.id}"]}"
+																	>Report</g:remoteLink>
 														</g:else>
 														<ul class="myList">
 															<g:each
@@ -384,7 +322,7 @@ $('.ui.rating')
     var rating = value;
     var gameId = ${game.id}	
     ${remoteFunction(controller: 'game' , update: 'updateMe',  action: 'rating', params: '\'rating=\' + rating +  \'&gameId=\' + gameId')}
-
+});
     $('.loadMore').click(function () {
  	   start=0;
  	   val=$('.loadMore').index(this);

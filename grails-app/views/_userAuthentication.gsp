@@ -6,11 +6,11 @@
 					<g:link controller="user" action="userProfile"
 						params="${[userId:"${session?.user?.id}"]}">
 						<g:if test="${session?.user?.avatar}">
-							<img class="ui tiny left floated image"
+							<img class="ui tiny left floated image" style="width:70px;"
 								src="${createLink(controller:'user', action:'avatar_image', id:"${session?.user?.id}" )}" />
 						</g:if>
 						<g:else>
-							<img class="ui tiny left floated image"
+							<img class="ui tiny left floated image" style="width:70px;"
 								src="${resource(dir: 'images', file: "nan.jpg")}">
 						</g:else>
 						<span>
