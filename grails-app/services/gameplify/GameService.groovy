@@ -135,6 +135,7 @@ class GameService {
 		}
 		return games
 	}
+	
 	def editReview(newReview, reviewId){
 		def review = Review.get(reviewId)
 		review.review = newReview
