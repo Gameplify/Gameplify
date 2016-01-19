@@ -46,7 +46,7 @@
 
 		<div class="ui two column stackable grid">
 			<div class="row" style="margin-left: 0px;">
-				<div class="ui segment" style="height: 500px; overflow-y: auto;">
+				<div class="ui segment" style="height: 500px; overflow-x: disabled; overflow-y: auto;">
 					<div class="ui grid" style="width: 800px; padding: 20px;">
 						<h3>Reviews</h3>
 					</div>
@@ -82,9 +82,7 @@
 				<div class="ui two row stackable grid">
 					<div class="column">
 						<div class="row">
-
 							<g:include controller="user" action="showUserAuthentication" />
-
 						</div>
 						<div class="ui segment"
 							style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">

@@ -50,8 +50,12 @@
 						</div>
 						<div class="eight wide column">
 							<div class="column">
+								<g:if test="${game.screenshot.photo}">
 								<img id="currentImg" style="height: 300px;" class="ui image"
 									src="${resource(dir: 'images', file: "${game.screenshot.first().photo}")}">
+							</g:if><g:else>
+							<h1>No photo available</h1>
+							</g:else>
 							</div>
 							<div class="column">
 								<p>
@@ -73,9 +77,10 @@
 							style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
 							<div class="column" style="width: 270px; height: 330px;">
 								<div id="updateMe">
-								 <a  class="ui red ribbon label"> ${game.averageRating}
-								</a>
-								</div> <img class="ui tiny centered image" style="width: 120px;"
+									<a class="ui red ribbon label"> ${game.averageRating}
+									</a>
+								</div>
+								<img class="ui tiny centered image" style="width: 120px;"
 									src="${resource(dir: 'images', file: "$game.gameLogo")}">
 								<div class="center aligned column">
 									<h4 class="title">
@@ -84,11 +89,12 @@
 									<h5 class="price">
 										$
 										${game.gamePrice }
-										
+
 									</h5>
 								</div>
 
-								<div class="ui large star rating" data-rating=${rating }
+								<div class="ui large star rating" data-rating=${rating
+									}
 									data-max-rating="5"></div>
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
@@ -137,8 +143,14 @@
 										<g:each in="${reviews}" status="i" var="review">
 											<li>
 												<div class="comment">
-													<a class="avatar"> <img
-														src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
+													<a class="avatar"> <g:if test="${review.user.avatar }">
+
+															<img
+																src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
+														</g:if> <g:else>
+															<img class="photo"
+																src="${resource(dir: 'images', file: "nan.jpg")}">
+														</g:else>
 													</a>
 													<div class="content">
 														<g:link class="author" controller="user"
@@ -163,20 +175,28 @@
 																	params="${[reviewId:"${review.id}"]}"
 																	onSuccess="focusDiv();">edit</g:remoteLink>
 															</div>
-														</g:if><g:else>
-															<g:remoteLink
-																	url="[controller:'game', action:'report']"
-																    value="Report"
-																	params="${[type:"Review", userId:"${review.user.id}"]}"
-																	>Report</g:remoteLink>
+														</g:if>
+														<g:else>
+															<g:if
+																test="${session?.user && "${review.user.role}" != "Admin"}">
+																<g:remoteLink url="[controller:'game', action:'report']"
+																	value="Report"
+																	params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
+															</g:if>
 														</g:else>
 														<ul class="myList">
 															<g:each
 																in="${review.comment.sort{it.date}.reverse(true)}"
 																status="k" var="comment">
 																<li class="comment" style="display: none;"><a
-																	class="avatar"> <img
-																		src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
+																	class="avatar"> <g:if test="${review.user.avatar }">
+																			<img
+																				src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
+																		</g:if> <g:else>
+																			<img class="photo"
+																				src="${resource(dir: 'images', file: "nan.jpg")}">
+																		</g:else>
+
 																</a>
 																	<div class="content">
 																		<g:link class="author" controller="user"
@@ -192,9 +212,13 @@
 																		<div class="text">
 																			${comment.comment }
 																		</div>
-																		<div class="actions">
-																			<a class="Comment">Report</a>
-																		</div>
+																		<g:if
+																			test="${session?.user && "${review.user.role}" != "Admin"}">
+																			<g:remoteLink
+																				url="[controller:'game', action:'report']"
+																				value="Report"
+																				params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																		</g:if>
 
 																	</div></li>
 															</g:each>

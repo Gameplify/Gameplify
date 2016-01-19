@@ -12,7 +12,7 @@ class UserService {
 
 	def getAdminActivity(userId){
 		def admin = findUser(userId)
-		def activities = AdminActivity.where{ admin == admin }.list()
+		def activities = AdminActivity.where{ admin == admin }.list(sort: 'date', order: 'desc')
 		log.println("ni sud sa service")
 		log.println(admin.adminActivity)
 		return activities
@@ -51,27 +51,47 @@ class UserService {
 		}.sort{ it.date }.reverse(true)
 	}
 
-	def blockUser(userId,reportId){
+	def blockUser(userId,reportId, adminId){
 		User user = User.get(userId)
 		user.status = "blocked"
 		Report report = Report.get(reportId)
 		report.status = "blocked"
 		report.save(flush:true)
 		user.save(flush:true)
+		addAdminActivity(adminId,"Blocked " +user.username)
 	}
 
-	def unblockUser(userId,reportId){
+	def unblockUser(userId,reportId, adminId){
 		User user = User.get(userId)
 		user.status = "okay"
 		Report report = Report.get(reportId)
 		report.status = "managed"
 		report.save(flush:true)
 		user.save(flush:true)
+		addAdminActivity(adminId,"Unblocked " +user.username)
 	}
 
-	def ignoreReport(reportId){
+	def ignoreReport(reportId, adminId){
 		Report report = Report.get(reportId)
 		report.status = "ignored"
 		report.save(flush:true)
+		addAdminActivity(adminId,"Ignored report #" +reportId)
 	}
+	
+	def addAdminActivity(adminId, activity){
+		User admin = User.get(adminId)
+		Date date = new Date()
+		AdminActivity aa = new AdminActivity(
+			admin:admin,
+			date:date,
+			action:activity
+			)
+		if(aa.save()){
+			log.println("it fucking worked")
+		}
+		admin.addToAdminActivity(aa)
+		admin.save(flush:true)
+		
+	}
+	
 }

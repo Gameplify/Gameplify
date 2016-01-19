@@ -62,7 +62,7 @@
                         													         	<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">   
 																		       				              		
 																												 <div class="ui segment" style=" height: 104px;width: 347px; padding-top: 14px;margin-top: 14px;margin-bottom: 14px;">
-																	                                              		<a class="ui red right ribbon label 1" style="left: 251px;">${game.rating }</a>
+																	                                              		<a class="ui red right ribbon label 1" style="left: 251px;">${game.averageRating }</a>
 																	                                              		<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">
 																	                                              		<img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${game.gameLogo}")}"></g:link>
 																	                                              		<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">
@@ -95,7 +95,7 @@
                         													         	<g:link action="gameProfile" params="${[gameTitle: "${games.gameTitle}"]}">   
 																		       				                		
 																												 <div class="ui segment" style=" height: 104px;width: 347px; padding-top: 14px;margin-top: 14px;margin-bottom: 14px;">
-																	                                              		<a class="ui red right ribbon label 1" style="left: 251px;">${games.rating }</a>
+																	                                              		<a class="ui red right ribbon label 1" style="left: 251px;">${games.averageRating }</a>
 																	                                              		<g:link action="gameProfile" params="${[gameTitle: "${games.gameTitle}"]}"> 
 																	                                              		<img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${games.gameLogo}")}"></g:link>
 																	                                                    <g:link action="gameProfile" params="${[gameTitle: "${games.gameTitle}"]}"> 

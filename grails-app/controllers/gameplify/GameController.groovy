@@ -93,7 +93,7 @@ class GameController {
 		else if(categories.isEmpty()) {
 			flash.message = "You must select at least one category"
 		} else {
-			gameService.addGame(params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories)		
+			gameService.addGame(params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories, session.user.id)		
 		}
 		redirect(action:"gameManagement", params:[categoryName:params.currentCategory])	
 	}
@@ -105,14 +105,14 @@ class GameController {
 		if(categories.isEmpty()) {
 			flash.message = "You must select at least one category"
 		} else {
-			gameService.editGame(params.gameId, params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories, removeCat)
+			gameService.editGame(params.gameId, params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories, removeCat, session.user.id)
 		}
 		redirect(action:"gameProfile", params:[gameTitle:params.gameTitle])
 	}
 	
 	def deleteGame(){
 		def currentCategory = params.categoryName
-		gameService.deleteGame(params.gameTitle)
+		gameService.deleteGame(params.gameTitle, session.user.id)
 		redirect(action: "gameManagement", params:[categoryName:currentCategory])
 	}
 	
