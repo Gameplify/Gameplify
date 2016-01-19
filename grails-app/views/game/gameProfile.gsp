@@ -134,6 +134,7 @@
 										<g:render template="reviewForm" />
 									</div>
 
+<<<<<<< HEAD
 
 
 								</g:if>
@@ -174,6 +175,55 @@
 																	update="reviewForm" value="Edit"
 																	params="${[reviewId:"${review.id}"]}"
 																	onSuccess="focusDiv();">edit</g:remoteLink>
+=======
+														</p>
+													</div>
+													<div class="actions">Report</div>
+													<ul class="myList">
+														<g:each in="${review.comment.sort{it.date}.reverse(true)}"
+															status="k" var="comment">
+															<li class="comment" style="display: none;"><a
+																class="avatar"> <img
+																	src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
+															</a>
+																<div class="content">
+																	<g:link class="author" controller="user"
+																		action="userProfile"
+																		params="${[userId:"${comment.user.id}"]}">
+																		${comment.user.name }
+																	</g:link>
+																	
+																	<div class="metadata">
+																		<span class="date"> ${comment.date }
+																		</span>
+																	</div>
+																	<div class="text">
+																		${comment.comment }
+																	</div>
+																	<div class="actions">
+																		<a class="Comment">Report</a>
+																	</div>
+
+																</div></li>
+														</g:each>
+													</ul>
+													<g:if test="${ review.comment.size() > 3}">
+														<div class="loadMore" onclick="myFunc()" style="text-align: center;">Load
+															more</div>
+													</g:if><g:else>
+														<div class="loadMore" onclick="myFunc()" style="text-align: center; visibility:hidden;">Load
+															more</div>
+													</g:else>
+													
+													<g:if test="${session?.user}">
+														<g:form class="ui comment form">
+															<div class="field">
+																<g:textArea name="comment" required="" />
+																<g:hiddenField name="gameId" value="${game.id}" />
+																<g:hiddenField name="gameTitle"
+																	value="${game.gameTitle}" />
+																<g:hiddenField name="reviewId" value="${review.id}" />
+>>>>>>> 11cd9670cac6a59a51bb063ac6140c8e6d9a6bbc
 															</div>
 														</g:if>
 														<g:else>
@@ -322,6 +372,7 @@
 						</div>
 					</g:form>
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -333,9 +384,37 @@ $('.ui.rating')
     var rating = value;
     var gameId = ${game.id}	
     ${remoteFunction(controller: 'game' , update: 'updateMe',  action: 'rating', params: '\'rating=\' + rating +  \'&gameId=\' + gameId')}
- 
-});
 
+    $('.loadMore').click(function () {
+ 	   start=0;
+ 	   val=$('.loadMore').index(this);
+ 	   val2=val;
+ 	
+ 		end= myArr[val];  
+ 		while(val>0){
+ 			val--;
+ 			start+= myArr[val]; //0 4 8 12 17
+ 			end+= myArr[val]; //4 8 12 17
+
+ 		}
+ 	  
+ 		  if(start<end){
+ 					start+=Arr[val2];
+ 					diff=end-start;
+ 				   	$('.myList li').slice(start, start+3).show();
+ 			  		if(start+3>=end)
+ 			  			 $('.loadMore').eq($('.loadMore').index(this)).hide();	
+ 					if(diff<3)
+ 						Arr[val2]+=diff;
+ 					else
+ 					
+ 						Arr[val2]+=3;
+ 				
+ 		  }
+ 	  	
+ 		
+ 	    });
+    
 
 
 </script>
