@@ -54,7 +54,7 @@
 						<div class="column" style="width: 378px;">
 
 							<div class="ui segment"
-								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 22px;">
+								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid">
 									<div class="rows" style="width: 325px;">
@@ -108,7 +108,7 @@
 						</div>
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
-								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 22px;">
+								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid">
 									<div class="rows" style="width: 325px;">
