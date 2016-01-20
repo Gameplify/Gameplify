@@ -72,18 +72,40 @@ def avatar_image() {
 	}
 
 	def register = {
-
+		int count=0
 		// new user posts his registration details
 		if (request.method == 'POST') {
 
+			
+			if(params.name =~ ".*\\d+.*"){
+				flash.integer= "Name must contains characters only."
+				count=1
+			}
+			
+			User user1 = User.find{emailAddress==params.emailAddress}
+			if (user1) {
+				flash.email = "Email Address already exists."
+				count=1
+			}
+			
+			User user = User.find{username==params.username}
+			if (user) {
+				flash.username = "Username already exists."
+				count=1
+			}
+		
+		
 			// create domain object and assign parameters using data binding
 			def u = new User(params)
 			u.role="User"
 			if (params.password != params.confirm) {
 				flash.message = "Password mismatch."
-				redirect(action:'register')
+				count=1
 			}
-
+			
+			if(count){
+			redirect(action:'register')
+			}else{
 			u.password=params.password.encodeAsPassword()
 			u.status = "okay"
 			if (! u.save()) {
@@ -97,6 +119,7 @@ def avatar_image() {
 				redirect(controller:"game", action: "index")
 
 
+			}
 			}
 		} else if (session.user) {
 			// don't allow registration while user is logged in

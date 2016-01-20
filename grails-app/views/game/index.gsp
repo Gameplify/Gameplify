@@ -68,7 +68,7 @@
 
 												<div class="ui segment"
 													style="height: 104px; width: 347px; padding-top: 14px; margin-top: 14px; margin-bottom: 14px;">
-													<a class="ui red right ribbon label 1" style="left: 251px;">
+													<a class="ui red right ribbon label 1" style="left: 260px;">
 														${game.averageRating }
 													</a>
 													<g:link action="gameProfile"
@@ -122,7 +122,7 @@
 
 												<div class="ui segment"
 													style="height: 104px; width: 347px; padding-top: 14px; margin-top: 14px; margin-bottom: 14px;">
-													<a class="ui red right ribbon label 1" style="left: 251px;">
+													<a class="ui red right ribbon label 1" style="left: 260px;">
 														${games.averageRating }
 													</a>
 													<g:link action="gameProfile"
