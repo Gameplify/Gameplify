@@ -183,7 +183,7 @@
 															</div>
 														</g:if>
 														<g:else>
-															<g:if test="${session?.user?.status != "blocked"}">
+															<g:if test="${session?.user?.status != "blocked" && session?.user}">
 																<div class = "reportUser">
 																<g:remoteLink url="[controller:'game', action:'report']"
 																	value="Report"
@@ -221,7 +221,7 @@
 																		<div class="text">
 																			${comment.comment }
 																		</div>
-																		<g:if test="${session?.user?.status != "blocked"}">
+																		<g:if test="${session?.user?.status != "blocked" && session?.user}">
 																			<g:if
 																				test="${session?.user && "${review.user.role}" != "Admin"}">
 																				<div class = "reportUser">
