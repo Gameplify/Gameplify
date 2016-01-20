@@ -23,6 +23,7 @@ class GameService {
 				status == "okay"
 			}.list(max: max, offset: offset)
 		}
+		
 		return games
 	}
 
