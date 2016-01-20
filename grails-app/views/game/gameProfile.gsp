@@ -143,8 +143,7 @@
 
 									</g:if>
 								</g:if>
-								<div
-									style="height: auto; max-height: 600px; overflow-y: auto;">
+								<div style="height: auto; max-height: 600px; overflow-y: auto;">
 									<ul>
 										<g:each in="${reviews}" status="i" var="review">
 											<li>
@@ -185,11 +184,14 @@
 														</g:if>
 														<g:else>
 															<g:if test="${session?.user?.status != "blocked"}">
+																<div class = "reportUser">
 																<g:remoteLink url="[controller:'game', action:'report']"
 																	value="Report"
-																	onclick="return confirm('Are you sure you want to report this user?')"
+																	before="if(!confirm('Are you sure you want to report this user?')) return false"
 																	params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
+															</div>
 															</g:if>
+															
 														</g:else>
 														<ul class="myList">
 															<g:each
@@ -222,11 +224,13 @@
 																		<g:if test="${session?.user?.status != "blocked"}">
 																			<g:if
 																				test="${session?.user && "${review.user.role}" != "Admin"}">
+																				<div class = "reportUser">
 																				<g:remoteLink
 																					url="[controller:'game', action:'report']"
 																					value="Report"
-																					onclick="return confirm('Are you sure you want to report this user?')"
+																					before="if(!confirm('Are you sure you want to report this user?')) return false"																				
 																					params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																			</div>
 																			</g:if>
 																		</g:if>
 
@@ -275,6 +279,11 @@
 						</div>
 					</div>
 				</div>
+
+
+			
+
+
 				<div class="ui modal addGame">
 					<i class="close icon"></i>
 					<g:form class="ui equal width form" id="form" style="padding:20px"
@@ -349,6 +358,8 @@
 
 
 	<script>
+
+	
 $('.ui.rating')
 .rating('setting', 'onRate', function(value) {
     var rating = value;
