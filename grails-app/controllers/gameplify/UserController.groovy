@@ -71,6 +71,7 @@ def avatar_image() {
 		render(template: '../userAuthentication')
 	}
 
+	
 	def register = {
 		int count=0
 		// new user posts his registration details
@@ -153,6 +154,8 @@ def avatar_image() {
 			redirect(uri: request.getHeader('referer') )
 		}
 	}
+
+
 
 	def adminProfile(){
 		if((!(session.user))||session?.user?.role != "Admin"){
