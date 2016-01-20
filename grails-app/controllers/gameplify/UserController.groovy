@@ -151,7 +151,11 @@ def avatar_image() {
 
 
 			session.user = user
-			redirect(uri: request.getHeader('referer') )
+			if(session.user.role == "Admin"){
+				redirect(controller: 'game', action:'index')
+			} else {
+				redirect(uri: request.getHeader('referer') )
+			}
 		}
 	}
 
