@@ -46,34 +46,50 @@
 
 		<div class="ui two column stackable grid">
 			<div class="row" style="margin-left: 0px;">
+<<<<<<< HEAD
 				<div class="ui segment" style="height: 500px; overflow-x: disabled; overflow-y: auto;">
+=======
+				<div class="ui segment"
+					style="height: 500px; overflow-x: disabled; overflow-y: auto;">
+>>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
 					<div class="ui grid" style="width: 800px; padding: 20px;">
 						<h3>Reviews</h3>
 					</div>
 					<g:each in="${user.reviews}" status="i" var="review">
-						<g:link controller="game" action="gameProfile"
-							params="${[gameTitle:"${review.game.gameTitle}"] }">
+						
 							<div class="ui segment"
 								style="width: 770px; height: auto; margin-top: 10px">
+								<div>
+									<a class="ui red ribbon label"> ${review.game.averageRating}
+									</a>
+								</div>
+								<g:link controller="game" action="gameProfile"
+							params="${[gameTitle:"${review.game.gameTitle}"] }">
 								<div class="ui grid">
+									<div class="one wide column"></div>
+
 									<div class="three wide column">
 										<img class="ui centered image"
 											src="${resource(dir: 'images', file: "$review.game.gameLogo")}">
-										<div class="ui star rating" data-rating="5">
-											<i class="icon"></i> <i class="icon"></i> <i class="icon"></i>
-											<i class="icon"></i> <i class="icon"></i>
-										</div>
+
 									</div>
-									<div class="thirteen wide column" style="position: relative;">
+
+									<div class="eleven wide column" style="position: relative;">
 										<h3>
 											<div>
 												${review.game.gameTitle}
+
 											</div>
 										</h3>
-										<span style=""word-wrap:break-word;"> ${review.review }
+										<span> ${review.review }
 										</span> <span style="bottom: 0; right: 0; position: absolute;"><g:formatDate
 												format="MM-dd-yyyy" date="${review.date}" /></span>
 									</div>
+
+
+
+
+
 								</div>
 							</div>
 						</g:link>
@@ -89,12 +105,12 @@
 							<div class="column">
 								<div style="position: relative">
 									<g:if test="${user.avatar }">
-										<img style="height: 170px; width: 170px; margin: 35px;"
+										<img style="height: 170px; width: 170px; margin: 35px; border:1px solid lightgray;"
 											class="ui image"
 											src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
 									</g:if>
 									<g:else>
-										<img class="photo"
+										<img class="photo" style="border:1px solid lightgray;"
 											src="${resource(dir: 'images', file: "nan.jpg")}">
 									</g:else>
 

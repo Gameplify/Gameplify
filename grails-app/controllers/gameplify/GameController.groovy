@@ -154,9 +154,12 @@ class GameController {
 	}
 	
 	def list() {
-		  def taskList = Game.createCriteria().list(params){
+		def taskList = Game.createCriteria().list(params){
 			if ( params.query) {
 			  ilike("gameTitle", "%${params.query}%")
+			  and {
+			        eq("status", "okay")
+			   }
 			}
 			order("gameTitle", "asc")
 		  }
@@ -164,6 +167,10 @@ class GameController {
 		  def userList = User.createCriteria().list(params){
 			if ( params.query) {
 			  ilike("name", "%${params.query}%")
+			  and {
+			        eq("role", "User")
+					eq("status", "okay")
+			   }
 			}
 			order("name", "asc")
 		  }
@@ -171,6 +178,10 @@ class GameController {
 		  def uuu = User.createCriteria().list(params){
 			  if ( params.query) {
 				ilike("name", "%${params.query}%")
+				and {
+			        eq("role", "User")
+					eq("status", "okay")
+			    }
 			  }
 			  order("name", "asc")
 		  }
@@ -178,6 +189,9 @@ class GameController {
 		  def ggg = Game.createCriteria().list(params){
 			  if ( params.query) {
 				ilike("gameTitle", "%${params.query}%")
+				and {
+			        eq("status", "okay")
+			   }
 			  }
 			  order("gameTitle", "asc")
 			  

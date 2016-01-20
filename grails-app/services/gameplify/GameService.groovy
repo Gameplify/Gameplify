@@ -135,6 +135,7 @@ class GameService {
 		}
 		return games
 	}
+	
 	def editReview(newReview, reviewId){
 		def review = Review.get(reviewId)
 		review.review = newReview
@@ -211,6 +212,13 @@ class GameService {
 				status:"okay"
 				)
 		game.save(failOnError: true)
+		Screenshots ss = new Screenshots(
+			photo:"ss1.jpg",
+			game:game
+			)
+		ss.save()
+		game.addToScreenshot(ss)
+		game.save(flush:true)		
 		platform.addToGame(game)
 		log.println (categories)
 		categories.each {

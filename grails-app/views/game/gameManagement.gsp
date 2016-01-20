@@ -34,25 +34,26 @@
 							${currentCategory }
 						</h3>
 						<div class="ui grid"
-							style="margin-left: 510px; margin-top: -35px;">
+							style="    margin-left: 545px;  margin-top: -50px;">
 							<g:if test="${flash.message}">
 								<div class="message" style="width: 200px; margin-left: -171px;">
 									${flash.message }
 								</div>
 							</g:if>
+							<div style="margin-top:10px;">
 							<button class="ui inverted icon button" id="addGame"
-								style="height: 28px; width: 28px; padding: 0;">
+								style="height: 28px;     margin-left: -55px; width: 28px; padding: 0;">
 								<i class="big green add square icon"
 									style="height: 28px; width: 28px;"></i>
 							</button>
 							<button class="ui inverted icon button" id="deleteGame"
-								style="height: 28px; width: 28px; margin-left: 30px; padding: 0;">
+								style="height: 28px; width: 28px;      margin-left: -35px;padding: 0;">
 								<i class="big red trash icon" style="height: 28px; width: 28px;"></i>
 							</button>
-						</div>
+						
 
 						<div class="ui grid"
-							style="margin-left: 610px; margin-top: -35px;">
+							style=" margin-top: -45px;">
 							<g:each in="${platforms }" var="platform">
 								<g:link action="gameManagement"
 									params="${[ platform:platform.platformName, categoryName: currentCategory] }">
@@ -62,6 +63,8 @@
 									</button>
 								</g:link>
 							</g:each>
+						</div>
+						</div>
 						</div>
 						</h3>
 					</div>
@@ -74,7 +77,7 @@
 									params="${[gameTitle: "${game.gameTitle}"]}">
 									<div class="ui segment"
 										style="height: 120px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top: 0px;">
-										<img class="ui tiny left floated image"
+										<img class="ui tiny left floated image" style="width: 70px; height: 70px;"
 											src="${resource(dir: 'images', file: "${game.gameLogo}")}">
 										<div class="ui 3 column stackable grid"
 											style="margin-left: 62px; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
@@ -118,7 +121,7 @@
 			controller='game' action='addGame'>
 			<img class="ui centered small image" id="image" src="#"
 				alt="Game Logo">
-			<g:field type="file" name="gameLogo" accept="image/*" required="" />
+			<g:field type="file" name="gameLogo" accept="image/*" required="" style="    margin: 10px;"/>
 			<div class="field">
 				<g:hiddenField name="currentCategory" value="${currentCategory}" />
 				<g:textField placeholder="Game Title*" name="gameTitle" required="" />
@@ -132,7 +135,7 @@
 				</div>
 				<div class="field">
 					<label for="price">Price*</label>
-					<g:field type="number" name="gamePrice" required="" />
+					<g:field type="number" name="gamePrice" required="" style="font-size:14px;" />
 				</div>
 				<div class="field">
 					<label for="platform">Platform</label>

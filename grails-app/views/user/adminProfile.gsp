@@ -77,7 +77,7 @@
 													action="upload_avatar">
 													<div class="image-upload">
 														<label for="file-input"> <img
-															style="height: 30px; width: 30px"
+															style="    height: 20px;width: 20px;margin-left: 75px;margin-bottom: 40px;"
 															src="${resource(dir: 'images', file: 'upload.png')}" />
 														</label> <input id="file-input" name="avatar" id="avatar"
 															type="file" />
@@ -96,14 +96,14 @@
 
 						</div>
 						<div class="ui segment"
-							style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
-							<div class="column">
+							style=" margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
+							<div class="column" style="right:50px;height: 300px; overflow-x: hidden; overflow-y: scroll;" >
 								<h3>Admins</h3>
 								<g:each in="${admins}" status="i" var="admin">
 									<g:remoteLink url="[controller:'user', action:'adminActivities']"
 										update="activityList" 
 										params="${[adminId:"${admin.id}"]}" >
-										<div class="ui segment" style="height: 80px;">
+										<div class="ui segment" style="width:215px;height: 80px;">
 											<g:if test="${admin.avatar }">
 												<img class="ui tiny left floated image"
 													src="${createLink(controller:'user', action:'avatar_image', id:"${admin.id}" )}" />
