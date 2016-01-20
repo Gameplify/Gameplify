@@ -50,19 +50,10 @@
 						</div>
 						<div class="eight wide column">
 							<div class="column">
-<<<<<<< HEAD
-								<g:if test="${game.screenshot.photo}">
-								<img id="currentImg" style="height: 300px;" class="ui image"
-									src="${resource(dir: 'images', file: "${game.screenshot.first().photo}")}">
-							</g:if><g:else>
-							<h1>No photo available</h1>
-							</g:else>
-=======
 								<g:if test="${game.screenshot.photo }">
 									<img id="currentImg" style="height: 300px;" class="ui image"
 										src="${resource(dir: 'images', file: "${game.screenshot.first().photo}")}">
 								</g:if>
->>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
 							</div>
 							<div class="column">
 								<p>
@@ -88,13 +79,9 @@
 									<a class="ui red ribbon label"> ${game.averageRating}
 									</a>
 								</div>
-<<<<<<< HEAD
-								<img class="ui tiny centered image" style="width: 120px;"
-=======
 
 								<img class="ui tiny centered image"
 									style="width: 150px; height: 150px;"
->>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
 									src="${resource(dir: 'images', file: "$game.gameLogo")}">
 								<div class="center aligned column">
 									<h4 class="title">
@@ -106,16 +93,10 @@
 
 									</h5>
 								</div>
-<<<<<<< HEAD
-
-								<div class="ui large star rating" data-rating=${rating
-									}
-=======
 								<g:if test="${session?.user }">
 									<g:if test="${session?.user?.status != "blocked"}">
 										<div class="ui large star rating" data-rating=${rating
 											}
->>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
 									data-max-rating="5"></div>
 									</g:if>
 								</g:if>
@@ -168,17 +149,6 @@
 										<g:each in="${reviews}" status="i" var="review">
 											<li>
 												<div class="comment">
-<<<<<<< HEAD
-													<a class="avatar"> <g:if test="${review.user.avatar }">
-
-															<img
-																src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
-														</g:if> <g:else>
-															<img class="photo"
-																src="${resource(dir: 'images', file: "nan.jpg")}">
-														</g:else>
-													</a>
-=======
 													<g:if test="${review.user.avatar}">
 														<a class="avatar"> <img
 															src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
@@ -189,7 +159,6 @@
 															style="width: 70px;"
 															src="${resource(dir: 'images', file: "nan.jpg")}">
 													</g:else>
->>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
 													<div class="content">
 														<g:link class="author" controller="user"
 															action="userProfile"
@@ -215,16 +184,9 @@
 															</div>
 														</g:if>
 														<g:else>
-<<<<<<< HEAD
-															<g:if
-																test="${session?.user && "${review.user.role}" != "Admin"}">
-																<g:remoteLink url="[controller:'game', action:'report']"
-																	value="Report"
-=======
 															<g:if test="${session?.user?.status != "blocked"}">
 																<g:remoteLink url="[controller:'game', action:'report']"
 																	value="Report" onclick="return confirm('Are you sure you want to report this user?')"
->>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
 																	params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
 															</g:if>
 														</g:else>
@@ -256,14 +218,6 @@
 																		<div class="text">
 																			${comment.comment }
 																		</div>
-<<<<<<< HEAD
-																		<g:if
-																			test="${session?.user && "${review.user.role}" != "Admin"}">
-																			<g:remoteLink
-																				url="[controller:'game', action:'report']"
-																				value="Report"
-																				params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
-=======
 																		<g:if test="${session?.user?.status != "blocked"}">
 																			<g:if
 																				test="${session?.user && "${review.user.role}" != "Admin"}">
@@ -272,7 +226,6 @@
 																					value="Report" onclick="return confirm('Are you sure you want to report this user?')"
 																					params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
 																			</g:if>
->>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
 																		</g:if>
 
 																	</div></li>
