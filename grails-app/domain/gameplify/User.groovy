@@ -22,7 +22,7 @@ class User {
 	
     static constraints = {
         name 			blank:false
-        emailAddress  	blank:false, email:true, unique:true
+        emailAddress  	blank:false, email:true
         username  		blank:false, size:5..50, matches:/[\S]+/
         password  		blank:false, size:5..50, matches:/[\S]+/
 		avatar(nullable:true, maxSize: 16384 /* 16K */)

@@ -144,7 +144,7 @@
 									</g:if>
 								</g:if>
 								<div
-									style="height: auto; max-height: 600px; overflow-y: scroll;">
+									style="height: auto; max-height: 600px; overflow-y: auto;">
 									<ul>
 										<g:each in="${reviews}" status="i" var="review">
 											<li>
