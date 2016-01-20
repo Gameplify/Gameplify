@@ -71,65 +71,86 @@ def avatar_image() {
 		render(template: '../userAuthentication')
 	}
 
-	def register = {
+def register = {
+		   
+		   // new user posts his registration details
+		   if (request.method == 'POST') {
+			   
+			   // create domain object and assign parameters using data binding
+			   def u = new User(params)
+			   u.role="User"
+			   if (params.password != params.confirm) {
+				   flash.message = "Password mismatch."
+				   redirect(uri: request.getHeader('referer') )
+				   return
+				}
+			   User us=User.find{username==params.username}
+			   if(us){
+				   flash.message="Username already exists."
+				   redirect(uri: request.getHeader('referer') )
+				   return
+			   }
+			   int count=0
+			   String str=params.name.toString()
+			   for (int i = 0; i < str.length(); i++) {
+				   
+							   //If we find a non-digit character we return false.
+							   if (!Character.isLetter(str.charAt(i))){
+							   	if(!Character.isWhitespace(str.charAt(i))){
+								   count=count+1;
+							   	}
+							   }
+						   }
+			   if(count>0){
+				   flash.message="Name must contain letters only."
+				   redirect(uri: request.getHeader('referer') )
+				   return
+			   }
+			   
+			   u.password=params.password.encodeAsPassword()
+			   u.status = "okay"
+			   if (! u.save()) {
+				   // validation failed, render registration page again
+				   return [user:u]
+			   } else {
+				   // validate/save ok, store user in session, redirect to homepage
+				   session.user = u
+				   log.error "You have successfully registered."
+				   u.errors.allErrors.each {log.error it.defaultMessage}
+				   redirect(controller:"game", action: "index")
+				  
+				   
+			   }
+		   } else if (session.user) {
+			   // don't allow registration while user is logged in
+				   log.error "There was an error in registration process. Please try again later."
+				   u.errors.allErrors.each {log.error it.defaultMessage}
+		   		   redirect(controller:"game", action: "index")
+		   }
+	   }
 
-		// new user posts his registration details
-		if (request.method == 'POST') {
-
-			// create domain object and assign parameters using data binding
-			def u = new User(params)
-			u.role="User"
-			if (params.password != params.confirm) {
-				flash.message = "Password mismatch."
-				redirect(action:'register')
-			}
-
-			u.password=params.password.encodeAsPassword()
-			u.status = "okay"
-			if (! u.save()) {
-				// validation failed, render registration page again
-				return [user:u]
-			} else {
-				// validate/save ok, store user in session, redirect to homepage
-				session.user = u
-				log.error "You have successfully registered."
-				u.errors.allErrors.each {log.error it.defaultMessage}
-				redirect(controller:"game", action: "index")
-
-
-			}
-		} else if (session.user) {
-			// don't allow registration while user is logged in
-			log.error "There was an error in registration process. Please try again later."
-			u.errors.allErrors.each {log.error it.defaultMessage}
-			redirect(controller:"game", action: "index")
-		}
-	}
-
-	def login = {
-		if (request.method == 'POST') {
-			User user = User.find{username==params.username}
-			if (!user) {
-				flash.message = "Username does not exist."
-				redirect(uri: request.getHeader('referer') )
-				return
-			}
-			User us = User.find{
-				username==params.username &&
-						password== params.password.encodeAsPassword()
-			}
-			//user = User.findByUsernameAndPasswordHashed(params.username, passwordHashed)
-			if (!us) {
-				flash.message = "Invalid input."
-				redirect(uri: request.getHeader('referer') )
-				return
-			}
-
-
-			session.user = user
-			redirect(uri: request.getHeader('referer') )
-		}
-	}
+	 def login = {
+		   if (request.method == 'POST') {
+			   User user = User.find{username==params.username}
+			   if (!user) {
+				  flash.message = "Username does not exist."
+			   }
+			   User us = User.find{
+				   	username==params.username &&
+					password== params.password.encodeAsPassword() 
+			   }
+			   //user = User.findByUsernameAndPasswordHashed(params.username, passwordHashed)
+			   if (!us) {
+				  flash.message = "Invalid input."
+				  redirect(uri: request.getHeader('referer') )
+				  return
+			   }
+			   
+			   
+			   session.user = user
+			   redirect(uri: request.getHeader('referer') )
+		   }
+	   }
 
 	def adminProfile(){
 		if((!(session.user))||session?.user?.role != "Admin"){
