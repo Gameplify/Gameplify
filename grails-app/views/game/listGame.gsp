@@ -53,14 +53,6 @@
                                  	<g:each in="${games}" status="i" var="game">
                                  	<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">                             		
 
-<<<<<<< HEAD
-										<g:include controller="user" action="showUserAuthentication" />
-								</g:link>
-								</g:each>
-							</div>
-						</div>
-				</div>
-=======
                                               <div class="ui segment" style=" height: 120px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top:0px;">
                                                                       <img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${game.gameLogo}")}">
                                                                       <div class="ui 3 column stackable grid" style="margin-left: 62px;margin-bottom: 0px;margin-right: 0px; margin-top:0px;">
@@ -76,7 +68,6 @@
                                            </g:link>
                                            
                                    </g:each>
->>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
 
                                            </div>
                                    
