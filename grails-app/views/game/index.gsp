@@ -69,7 +69,7 @@
 
 												<div class="ui segment"
 													style="height: 104px; width: 347px; padding-top: 14px; margin-top: 14px; margin-bottom: 14px;">
-													<a class="ui red right ribbon label 1" style="left: 260px;">
+													<a class="ui red right ribbon label 1" style="left: 253px;">
 														${game.averageRating }
 													</a>
 													<g:link action="gameProfile"
@@ -102,7 +102,7 @@
 										 
 									</div>
 
-											<div class="pagination" style="margin-left: 170px;text-align: center;">
+											<div class="pagination" style="margin-left: 157px;text-align: center;">
 												<g:paginate action="index" total="${gameCount}" offset="0" max="3" params="${params.max}"/>
 											</div>
 
@@ -128,7 +128,7 @@
 
 												<div class="ui segment"
 													style="height: 104px; width: 347px; padding-top: 14px; margin-top: 14px; margin-bottom: 14px;">
-													<a class="ui red right ribbon label 1" style="left: 260px;">
+													<a class="ui red right ribbon label 1" style="left: 253px;">
 														${games.averageRating }
 													</a>
 													<g:link action="gameProfile"
@@ -160,7 +160,7 @@
 										
 									</div>
 									
-											<div class="pagination" style="margin-left: 170px;text-align: center;">
+											<div class="pagination" style="margin-left: 157px;text-align: center;">
 												<g:paginate action="index" total="${gameCont}" offset="0" max="3" params="${params}"/>
 											</div>
 
