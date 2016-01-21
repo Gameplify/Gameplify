@@ -9,23 +9,7 @@ class GameService {
 
 	def userService
 
-	def listGame(currentCategory, chosenPlatform, max, offset){
-		def games
-		if(chosenPlatform){
-			games = Game.where {
-				categories.categoryName == currentCategory
-				platform.platformName == chosenPlatform
-				status == "okay"
-			}.list(max: max, offset: offset)
-		} else if(!chosenPlatform){
-			games = Game.where {
-				categories.categoryName == currentCategory
-				status == "okay"
-			}.list(max: max, offset: offset)
-		}
-		
-		return games
-	}
+
 
 	def report(type,userId){
 		def rep = Report.find{user.id == userId}
@@ -312,6 +296,142 @@ class GameService {
 
 		return allReviews
 	}
+
+
+
+
+	def listGame(currentCategory, chosenPlatform, max, offset, what, how){
+		def games
+		def h = how
+		def w = what
+		if (how == 'asc'){
+			games = sortByAsc(currentCategory, chosenPlatform, max, offset, what)
+		} else if (how == 'desc'){
+			games = sortByDesc(currentCategory, chosenPlatform, max, offset, what)
+		}
+
+		return games
+	}
+
+	def sortByAsc(currentCategory, chosenPlatform, max, offset, what){
+		def games
+		if(what == 'gameTitle'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gameTitle', order: "asc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gameTitle', order: "asc", max: max, offset: offset)
+			}
+		} else if (what == 'gamePrice'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			}
+		} else if (what == 'averageRating'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			}
+		} else {
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			}
+		}
+		log.println("ni sud sa ascend")
+		return games
+	}
+
+	def sortByDesc(currentCategory, chosenPlatform, max, offset, what){
+		def games
+		if(what == 'gameTitle'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gameTitle', order: "desc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gameTitle', order: "desc", max: max, offset: offset)
+			}
+		} else if (what == 'gamePrice'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			}
+		} else if (what == 'averageRating'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			}
+		} else {
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			}
+		}
+		log.println("ni sud sa descend")
+		return games
+	}
+
+
 
 
 	def serviceMethod() {
