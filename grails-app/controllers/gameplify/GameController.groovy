@@ -173,6 +173,7 @@ class GameController {
 			        eq("status", "okay")
 			   }
 			}
+			
 			order("gameTitle", "asc")
 		  }
 			  
