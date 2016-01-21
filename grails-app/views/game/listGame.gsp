@@ -112,6 +112,7 @@
 
 					</div>
 
+
 					<div class="segments">
 						<div class="ui left aligned segment"
 							style="margin-left: 40px; margin-top: 20px; height: 100%; width: 87%;">

@@ -104,7 +104,9 @@ class GameService {
 				status == "okay"
 			}.list(max: max, offset: offset)
 		} else if(!chosenPlatform){
-			games = Game.where { status == "okay" }.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
+			games = Game.where {
+				 status == "okay"
+		    }.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
 		}
 		return games
 	}
@@ -123,7 +125,9 @@ class GameService {
 				status == "okay"
 			}.list(max: max, offset: offset)
 		} else if(!chosenPlatform){
-			games = Game.where { status == "okay" }.list(sort: 'averageRating', order: 'desc', max: max, offset: offset)
+			games = Game.where { 
+				status == "okay" 
+			}.list(sort: 'averageRating', order: 'desc', max: max, offset: offset)
 		}
 		return games
 	}

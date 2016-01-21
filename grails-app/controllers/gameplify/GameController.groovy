@@ -139,6 +139,7 @@ class GameController {
 	}
 
 	def listGame(){
+
 		def how = 'asc'
 		def what = 'gameTitle'
 		def platforms = gameService.listPlatform()
@@ -178,7 +179,17 @@ class GameController {
 		def chosenPlatfrm = params.platform
 		def taskList = gameService.listGamePlat(chosenPlatfrm,max,offset)
 		def taskL = gameService.whatsHot(chosenPlatfrm,max,offset)
-		[games:taskL, bb:taskList, chosenPlatform:chosenPlatfrm, platforms:platform]
+
+		def now = new Date()
+		def dateString = now.toTimestamp()
+		def lYear = now[Calendar.YEAR] -1
+		def lDate = now[Calendar.DATE]
+		def prevMonth = now[Calendar.MONTH]
+		def lastYear=now.updated(year: lYear, date: lDate, month: prevMonth)
+		def dateStrng = lastYear.toTimestamp()
+		[now: dateString, last:dateStrng, games:taskL, bb:taskList, chosenPlatform:chosenPlatfrm, platforms:platform, gameCount:taskL.totalCount, gameCont:taskList.totalCount] 
+		
+
 	}
 
 	def list() {
