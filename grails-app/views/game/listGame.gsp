@@ -111,6 +111,7 @@
 						<g:include controller="user" action="showUserAuthentication" />
 
 					</div>
+
 					<div class="segments">
 						<div class="ui left aligned segment"
 							style="margin-left: 40px; margin-top: 20px; height: 100%; width: 87%;">
@@ -143,6 +144,7 @@
 							</div>
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>

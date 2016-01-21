@@ -72,6 +72,7 @@
 						<div id="updateThis" class="ui segment"
 							style="width: 770px; height: auto;">
 
+
 							<div class="ui cards"
 								style="margin-bottom: 20px; margin-left: 50px; margin-right: 50px; margin-top: 20px;">
 								<g:each in="${games}" status="i" var="game">
@@ -93,25 +94,32 @@
 													<g:each var="category" in="${game.categories}">
 														<a style="margin-bottom: 5px; margin-left: 7px;"> ${category.categoryName }</a>
 
+
 													</g:each>
 												</div>
 											</div>
 										</div>
-									</g:link>
-									<g:link action="deleteGame"
-										params="${[gameTitle:"${game.id}",categoryName:currentCategory, gameCategory:"${game.categories}"] }">
-										<button class="ui icon button delete" id="delete"
-											style="display: none; padding: 0; margin-top: 4px; margin-left: -267px;">
-											<i class="small red delete icon"></i>
-										</button>
-									</g:link>
-								</g:each>
-							</div>
 
-							<div class="pagination" style="text-align: center;">
-								<g:paginate action="gameManagement" total="${gameCount}"
-									params="${[chosenPlatform:"${chosenPlatform}", categoryName: currentCategory]}"></g:paginate>
-							</div>
+									</div>
+								</g:link>
+								<%--
+								<g:form controller="game"action="deleteGame">
+								<g:hiddenField name="gameTitle" value="${game.id}"/>
+								<g:hiddenField name="categoryName" value="${currentCategory}"/>
+								<g:hiddenField name="gameCategory" value="${game.categories}"/>
+								<g:submitButton class class="ui icon button delete" id="delete"
+										style="display: none; padding: 0; margin-top: 4px; margin-left: -267px;" value="" name=""></g:submitButton>
+								</g:form>--%>
+								<g:link action="deleteGame"
+									params="${[gameTitle:"${game.id}",categoryName:currentCategory, gameCategory:"${game.categories}"] }"
+									onclick="return confirm('Are you sure you want to ignore this report?')">
+									<button class="ui icon button delete" id="delete"
+										style="display: none; padding: 0; margin-top: 4px; margin-left: -267px;">
+										<i class="small red delete icon"></i>
+									</button>
+								</g:link>
+							</g:each>
+
 						</div>
 				</div>
 
