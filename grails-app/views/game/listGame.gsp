@@ -106,34 +106,7 @@
 						<g:include controller="user" action="showUserAuthentication" />
 
 					</div>
-					<div class="segments">
-						<div class="ui left aligned segment"
-							style="margin-left: 40px; margin-top: 20px; height: 100%; width: 87%;">
-							<div style="text-align: left;">
-								<h3>Sort By:</h3>
-							</div>
-							<div class="segment"
-								style="border: 1px solid lightgray; margin-top: 10px; padding: 5px;">
-								<p>
-									<g:input type="what" name="gender" value="male" checked>
-									A-Z<br>
-										<g:input type="what" name="gender" value="female">
-									Price<br>
-											<g:input type="what" name="gender" value="other">
-									Rating<br>
-												<g:input type="what" name="gender" value="other">
-									Release Date
-								
-								
-								</p>
-							</div>
-							<div class="segment"
-								style="border: 1px solid lightgray; margin-top: 10px; padding: 5px;">
-								<g:input type="radio" name="how" value="Ascend" checked>Ascend<br>
-								<g:input type="radio" name="how" value="Descend"> Descend<br>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 
