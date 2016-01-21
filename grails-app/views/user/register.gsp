@@ -75,12 +75,25 @@
 												<g:renderErrors bean="${user}" />
 											</div>
 										</g:hasErrors>
-
+										<div class="moreErr">
 										<g:if test="${flash.message}">
-											<div class="moreErr">
+										
 												${flash.message}
-											</div>
-										</g:if>
+												</g:if>
+												<g:if test="${flash.username}">
+												${flash.username }
+												</g:if>
+												<g:if test="${flash.email}">
+												${flash.email }
+												</g:if>
+												<g:if test="${flash.integer}">
+												${flash.integer}
+												</g:if>
+												<g:if test="${flash.user}">
+												${flash.user}
+												</g:if>
+										
+										</div>
 									</div>
 									<div class="field">
 										<label for="name">Name</label>

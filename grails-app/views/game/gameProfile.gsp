@@ -143,8 +143,7 @@
 
 									</g:if>
 								</g:if>
-								<div
-									style="height: auto; max-height: 600px; overflow-y: scroll;">
+								<div style="height: auto; max-height: 600px; overflow-y: auto;">
 									<ul>
 										<g:each in="${reviews}" status="i" var="review">
 											<li>
@@ -184,11 +183,15 @@
 															</div>
 														</g:if>
 														<g:else>
-															<g:if test="${session?.user?.status != "blocked"}">
+															<g:if test="${session?.user?.status != "blocked" && session?.user}">
+																<div class = "reportUser">
 																<g:remoteLink url="[controller:'game', action:'report']"
-																	value="Report" onclick="return confirm('Are you sure you want to report this user?')"
+																	value="Report"
+																	before="if(!confirm('Are you sure you want to report this user?')) return false"
 																	params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
+															</div>
 															</g:if>
+															
 														</g:else>
 														<ul class="myList">
 															<g:each
@@ -218,13 +221,16 @@
 																		<div class="text">
 																			${comment.comment }
 																		</div>
-																		<g:if test="${session?.user?.status != "blocked"}">
+																		<g:if test="${session?.user?.status != "blocked" && session?.user}">
 																			<g:if
 																				test="${session?.user && "${review.user.role}" != "Admin"}">
+																				<div class = "reportUser">
 																				<g:remoteLink
 																					url="[controller:'game', action:'report']"
-																					value="Report" onclick="return confirm('Are you sure you want to report this user?')"
+																					value="Report"
+																					before="if(!confirm('Are you sure you want to report this user?')) return false"																				
 																					params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																			</div>
 																			</g:if>
 																		</g:if>
 
@@ -232,9 +238,17 @@
 															</g:each>
 														</ul>
 														<g:if test="${ review.comment.size() > 3}">
+
+
+
 															<div class="loadMore" onclick="myFunc()"
 																style="text-align: center;">Load more</div>
 														</g:if>
+														<g:else>
+															<div class="loadMore" onclick="myFunc()"
+																style="text-align: center; visibility: hidden;">Load
+																more</div>
+														</g:else>
 
 														<g:if test="${session?.user}">
 															<g:if test="${session?.user?.status != "blocked"}">
@@ -265,6 +279,11 @@
 						</div>
 					</div>
 				</div>
+
+
+			
+
+
 				<div class="ui modal addGame">
 					<i class="close icon"></i>
 					<g:form class="ui equal width form" id="form" style="padding:20px"
@@ -339,6 +358,8 @@
 
 
 	<script>
+
+	
 $('.ui.rating')
 .rating('setting', 'onRate', function(value) {
     var rating = value;
@@ -347,37 +368,55 @@ $('.ui.rating')
 });
 
 
-    $('.loadMore').click(function () {
- 	   start=0;
- 	   val=$('.loadMore').index(this);
- 	   val2=val;
- 	
- 		end= myArr[val];  
- 		while(val>0){
- 			val--;
- 			start+= myArr[val]; //0 4 8 12 17
- 			end+= myArr[val]; //4 8 12 17
 
- 		}
- 	  
- 		  if(start<end){
- 					start+=Arr[val2];
- 					diff=end-start;
- 				   	$('.myList li').slice(start, start+3).show();
- 			  		if(start+3>=end)
- 			  			 $('.loadMore').eq($('.loadMore').index(this)).hide();	
- 					if(diff<3)
- 						Arr[val2]+=diff;
- 					else
- 					
- 						Arr[val2]+=3;
- 				
- 		  }
- 	  	
- 		
- 	    });
+i=0;
+w=0;
+x=0;
+
+var Arr= new Array();
+var myArr = new Array();
+size_li=0;
+	
+$('.myList').each(function() {
+    var count = $('> li', this).length;
+
+    myArr.push(count); //number of comments per review
     
+    Arr.push(3);
+    $('.myList li').slice(w, w+3).show();
+    w+= myArr[i]; 
+   	i++;
+});
 
+  $('.loadMore').click(function () {
+   start=0;
+   val=$('.loadMore').index(this);
+   val2=val;
+
+	end= myArr[val];  
+	while(val>0){
+		val--;
+		start+= myArr[val]; //0 4 8 12 17
+		end+= myArr[val]; //4 8 12 17
+
+	}
+  
+	  if(start<end){
+				start+=Arr[val2];
+				diff=end-start;
+			   	$('.myList li').slice(start, start+3).show();
+		  		if(start+3>=end)
+		  			 $('.loadMore').eq($('.loadMore').index(this)).hide();	
+				if(diff<3)
+					Arr[val2]+=diff;
+				else
+				
+					Arr[val2]+=3;
+			
+	  }
+  	
+	
+    });
 
 </script>
 </body>
