@@ -139,6 +139,7 @@ class GameController {
     def offset = params.offset ?: 0
 	def chosenPlatform = params.platform
 	def games = gameService.listGame(currentCategory, chosenPlatform, max, offset)
+	
     [currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount] 
   }
 
@@ -149,7 +150,8 @@ class GameController {
 		def chosenPlatfrm = params.platform
 		def taskList = gameService.listGamePlat(chosenPlatfrm,max,offset)
 		def taskL = gameService.whatsHot(chosenPlatfrm,max,offset)
-		 [games:taskL, bb:taskList, chosenPlatform:chosenPlatfrm, platforms:platform] 
+		
+		[games:taskL, bb:taskList, chosenPlatform:chosenPlatfrm, platforms:platform, gameCount:taskL.totalCount, gameCont:taskList.totalCount] 
 		
 	}
 	
