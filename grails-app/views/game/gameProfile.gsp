@@ -364,6 +364,7 @@ $('.ui.rating')
 .rating('setting', 'onRate', function(value) {
     var rating = value;
     var gameId = ${game.id}	
+    alert("Wow");
     ${remoteFunction(controller: 'game' , update: 'updateMe',  action: 'rating', params: '\'rating=\' + rating +  \'&gameId=\' + gameId')}
 });
 

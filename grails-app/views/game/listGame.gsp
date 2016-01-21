@@ -16,7 +16,9 @@
 	href="${resource(dir:'dist', file:'semantic.css')}">
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'dist', file:'bg.css')}">
-<script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
+<script src="${resource(dir:'dist', file:'semantic.js')}"></script>
+<script src="${resource(dir:'dist', file:'jquery-2.1.4.min.js')}"></script>
+<script src="${resource(dir:'js', file:'javascript.js') }"></script>
 
 </head>
 <body>
@@ -53,7 +55,7 @@
 					</div>
 					<g:if test="${gameCount > 0 }">
 						<div class="ui segment" style="width: 770px; height: auto;">
-
+							
 							<div class="ui cards"
 								style="margin-bottom: 20px; margin-left: 50px; margin-right: 50px; margin-top: 20px;">
 
@@ -112,31 +114,62 @@
 							<div style="text-align: left;">
 								<h3>Sort By:</h3>
 							</div>
-							<div class="segment"
-								style="border: 1px solid lightgray; margin-top: 10px; padding: 5px;">
-								<p>
-									<g:input type="what" name="gender" value="male" checked>
-									A-Z<br>
-										<g:input type="what" name="gender" value="female">
-									Price<br>
-											<g:input type="what" name="gender" value="other">
-									Rating<br>
-												<g:input type="what" name="gender" value="other">
-									Release Date
-								
-								
-								</p>
-							</div>
-							<div class="segment"
-								style="border: 1px solid lightgray; margin-top: 10px; padding: 5px;">
-								<g:input type="radio" name="how" value="Ascend" checked>Ascend<br>
-								<g:input type="radio" name="how" value="Descend"> Descend<br>
+							<div id="sort">
+								<div class="segment"
+									style="border: 1px solid lightgray; margin-top: 10px; padding: 5px;">
+									<p>
+										<g:radio name="what" value="gameTitle" onClick="myFunc();"
+											checked="true" />
+										A-Z<br>
+										<g:radio name="what" value="gamePrice" onClick="myFunc();" />
+										Price<br>
+										<g:radio name="what" value="averageRating" onClick="myFunc();" />
+										Rating<br>
+										<g:radio name="what" value="releaseDate" onClick="myFunc();" />
+										Release Date<br>
+									</p>
+								</div>
+								<div class="segment"
+									style="border: 1px solid lightgray; margin-top: 10px; padding: 5px;">
+									<g:radio name="how" value="asc" checked="true"
+										onClick="myFunc();" />
+									Ascending<br>
+									<g:radio name="how" value="desc" onClick="myFunc();" />
+									Descending<br>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
+<div id="updateThis">
+								${games }
+							</div>
 		</div>
+
+		<script>
+		function myFunc(){
+			var categoryName = "${currentCategory}";
+			var what = document.getElementsByName('what');
+			var what_value;
+			for(var i = 0; i < what.length; i++){
+			    if(what[i].checked){
+			    	what_value = what[i].value;
+			    }
+			}
+			var what = document.getElementsByName('how');
+			var how_value;
+			for(var i = 0; i < how.length; i++){
+			    if(how[i].checked){
+			    	how_value = how[i].value;
+			    }
+			}
+			console.log(categoryName)
+			console.log(how_value)
+			console.log(what_value)
+			
+${remoteFunction(controller: 'game', update: 'updateThis', action: 'listGame', params: '\'what=\' + what_value+ \'&how=\' +how_value+  \'&categoryName=\' + categoryName ')}
+			};
+		</script>
 </body>
 </html>
