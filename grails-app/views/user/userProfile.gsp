@@ -46,8 +46,12 @@
 
 		<div class="ui two column stackable grid">
 			<div class="row" style="margin-left: 0px;">
+<<<<<<< HEAD
+				<div class="ui segment" style="height: 500px; overflow-x: disabled; overflow-y: auto;">
+=======
 				<div class="ui segment"
 					style="height: 500px; overflow-x: disabled; overflow-y: auto;">
+>>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
 					<div class="ui grid" style="width: 800px; padding: 20px;">
 						<h3>Reviews</h3>
 					</div>
@@ -60,7 +64,7 @@
 									</a>
 								</div>
 								<g:link controller="game" action="gameProfile"
-							params="${[gameTitle:"${review.game.gameTitle}"] }">
+								params="${[gameTitle:"${review.game.gameTitle}"] }">
 								<div class="ui grid">
 									<div class="one wide column"></div>
 

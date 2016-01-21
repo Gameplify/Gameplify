@@ -73,7 +73,7 @@
 										<g:form controller="user" action="ignoreReport">
 											<g:hiddenField name="reportId" value="${report.id}" />
 											<g:submitButton class="ui centered mini red button"
-												style="margin-left:6px;" value="IGNORE" name="ignore"
+												style="position:fixed;" value="IGNORE" name="ignore"
 												onclick="return confirm('Are you sure you want to ignore this report?')" />
 										</g:form>
 									</div>
@@ -87,7 +87,11 @@
 					</div>
 
 				</div>
+<<<<<<< HEAD
+				<div class="ui two row stackable grid" >
+=======
 				<div class="ui two row stackable grid">
+>>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
 					<div class="column">
 						<div class="row">
 							<g:include controller="user" action="showUserAuthentication" />

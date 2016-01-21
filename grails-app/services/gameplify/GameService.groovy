@@ -6,41 +6,34 @@ import grails.transaction.Transactional
 
 @Transactional
 class GameService {
-	
+
 	def userService
 
-	def listGame(currentCategory, chosenPlatform, max, offset){
-		def games
-		if(chosenPlatform){
-			games = Game.where {
-				categories.categoryName == currentCategory
-				platform.platformName == chosenPlatform
-				status == "okay"
-			}.list(max: max, offset: offset)
-		} else if(!chosenPlatform){
-			games = Game.where {
-				categories.categoryName == currentCategory
-				status == "okay"
-			}.list(max: max, offset: offset)
-		}
-		return games
-	}
+
 
 	def report(type,userId){
-		def user = User.get(userId)
-		Date date = new Date()
-		Report report = new Report(
-			date:date,
-			type:type,
-			user:user,
-			status:"okay",
-			numberOfReports:1
-		)
-		report.save()
-		user.addToReports(report)
-		user.save(flush:true)
+		def rep = Report.find{user.id == userId}
+		if(rep){
+			def curRep = Report.get(rep.id)
+			numberOfReports:curRep.numberOfReports++
+			status:"okay"
+			curRep.save(flush:true)
+		} else {
+			def user = User.get(userId)
+			Date date = new Date()
+			Report report = new Report(
+					date:date,
+					type:type,
+					user:user,
+					status:"okay",
+					numberOfReports:1
+					)
+			report.save()
+			user.addToReports(report)
+			user.save(flush:true)
+		}
 	}
-	
+
 	def getUserRating(gameId, userId){
 		def rating = Rating.find{
 			game.id == gameId
@@ -111,10 +104,11 @@ class GameService {
 				status == "okay"
 			}.list(max: max, offset: offset)
 		} else if(!chosenPlatform){
-			games = Game.where { status == "okay" }.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
+			games = Game.where {
+				 status == "okay"
+		    }.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
 		}
 		return games
-		
 	}
 
 	def getReview(reviewId){
@@ -131,11 +125,13 @@ class GameService {
 				status == "okay"
 			}.list(max: max, offset: offset)
 		} else if(!chosenPlatform){
-			games = Game.where { status == "okay" }.list(sort: 'averageRating', order: 'desc', max: max, offset: offset)
+			games = Game.where { 
+				status == "okay" 
+			}.list(sort: 'averageRating', order: 'desc', max: max, offset: offset)
 		}
 		return games
 	}
-	
+
 	def editReview(newReview, reviewId){
 		def review = Review.get(reviewId)
 		review.review = newReview
@@ -213,12 +209,12 @@ class GameService {
 				)
 		game.save(failOnError: true)
 		Screenshots ss = new Screenshots(
-			photo:"ss1.jpg",
-			game:game
-			)
+				photo:"ss1.jpg",
+				game:game
+				)
 		ss.save()
 		game.addToScreenshot(ss)
-		game.save(flush:true)		
+		game.save(flush:true)
 		platform.addToGame(game)
 		log.println (categories)
 		categories.each {
@@ -259,7 +255,7 @@ class GameService {
 		}
 		platform.save(flush:true)
 		log.println(platform.platformName)
-		
+
 		userService.addAdminActivity(adminId,"edited " +gameTitle)
 	}
 
@@ -300,8 +296,144 @@ class GameService {
 
 		return allReviews
 	}
-	
-	
+
+
+
+
+	def listGame(currentCategory, chosenPlatform, max, offset, what, how){
+		def games
+		def h = how
+		def w = what
+		if (how == 'asc'){
+			games = sortByAsc(currentCategory, chosenPlatform, max, offset, what)
+		} else if (how == 'desc'){
+			games = sortByDesc(currentCategory, chosenPlatform, max, offset, what)
+		}
+
+		return games
+	}
+
+	def sortByAsc(currentCategory, chosenPlatform, max, offset, what){
+		def games
+		if(what == 'gameTitle'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gameTitle', order: "asc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gameTitle', order: "asc", max: max, offset: offset)
+			}
+		} else if (what == 'gamePrice'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			}
+		} else if (what == 'averageRating'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			}
+		} else {
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+			}
+		}
+		log.println("ni sud sa ascend")
+		return games
+	}
+
+	def sortByDesc(currentCategory, chosenPlatform, max, offset, what){
+		def games
+		if(what == 'gameTitle'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gameTitle', order: "desc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gameTitle', order: "desc", max: max, offset: offset)
+			}
+		} else if (what == 'gamePrice'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			}
+		} else if (what == 'averageRating'){
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			}
+		} else {
+			if(chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					platform.platformName == chosenPlatform
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			} else if(!chosenPlatform){
+				games = Game.where {
+					categories.categoryName == currentCategory
+					status == "okay"
+				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+			}
+		}
+		log.println("ni sud sa descend")
+		return games
+	}
+
+
+
+
 	def serviceMethod() {
 	}
 }
