@@ -64,7 +64,7 @@
 									</a>
 								</div>
 								<g:link controller="game" action="gameProfile"
-							params="${[gameTitle:"${review.game.gameTitle}"] }">
+								params="${[gameTitle:"${review.game.gameTitle}"] }">
 								<div class="ui grid">
 									<div class="one wide column"></div>
 
