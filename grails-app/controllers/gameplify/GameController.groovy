@@ -33,7 +33,11 @@ class GameController {
 		log.println("rating: " +rating)
 		log.println("userId: " +user.id)
 		log.println("gameId: " +gameId)
-		gameService.rate(rating,user.id,gameId)	
+		gameService.rate(rating,user.id,gameId)
+		Game game = Game.get(gameId)	
+		def averageRating = game.averageRating
+		log.println(averageRating)
+		[averageRating:averageRating]		
 	}
 	
 	def editReview(){

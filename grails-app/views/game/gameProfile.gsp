@@ -75,8 +75,8 @@
 							style="margin-left: 40px; margin-top: 20px; height: 400px; width: 272px;">
 							<div class="column" style="width: 270px; height: 330px;">
 
-								<div id="updateMe">
-									<a class="ui red ribbon label"> ${game.averageRating}
+								<div >
+									<a id = "updateMe" class="ui red ribbon label"> ${game.averageRating}
 									</a>
 								</div>
 
@@ -93,13 +93,15 @@
 
 									</h5>
 								</div>
-								<g:if test="${session?.user }">
-									<g:if test="${session?.user?.status != "blocked"}">
-										<div class="ui large star rating" data-rating=${rating
-											}
+						
+									<g:if test="${session?.user }">
+										<g:if test="${session?.user?.status != "blocked"}">
+											<div class="ui large star rating" data-rating=${rating
+												}
 									data-max-rating="5"></div>
+										</g:if>
 									</g:if>
-								</g:if>
+							
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
 								</h5>
@@ -183,15 +185,17 @@
 															</div>
 														</g:if>
 														<g:else>
-															<g:if test="${session?.user?.status != "blocked" && session?.user}">
-																<div class = "reportUser">
-																<g:remoteLink url="[controller:'game', action:'report']"
-																	value="Report"
-																	before="if(!confirm('Are you sure you want to report this user?')) return false"
-																	params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
-															</div>
+															<g:if
+																test="${session?.user?.status != "blocked" && session?.user}">
+																<div class="reportUser">
+																	<g:remoteLink
+																		url="[controller:'game', action:'report']"
+																		value="Report"
+																		before="if(!confirm('Are you sure you want to report this user?')) return false"
+																		params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																</div>
 															</g:if>
-															
+
 														</g:else>
 														<ul class="myList">
 															<g:each
@@ -221,16 +225,17 @@
 																		<div class="text">
 																			${comment.comment }
 																		</div>
-																		<g:if test="${session?.user?.status != "blocked" && session?.user}">
+																		<g:if
+																			test="${session?.user?.status != "blocked" && session?.user}">
 																			<g:if
 																				test="${session?.user && "${review.user.role}" != "Admin"}">
-																				<div class = "reportUser">
-																				<g:remoteLink
-																					url="[controller:'game', action:'report']"
-																					value="Report"
-																					before="if(!confirm('Are you sure you want to report this user?')) return false"																				
-																					params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
-																			</div>
+																				<div class="reportUser">
+																					<g:remoteLink
+																						url="[controller:'game', action:'report']"
+																						value="Report"
+																						before="if(!confirm('Are you sure you want to report this user?')) return false"
+																						params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																				</div>
 																			</g:if>
 																		</g:if>
 
@@ -281,7 +286,7 @@
 				</div>
 
 
-			
+
 
 
 				<div class="ui modal addGame">
