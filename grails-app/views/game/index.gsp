@@ -54,7 +54,7 @@
 						<div class="column" style="width: 378px;">
 
 							<div class="ui segment"
-								style=" width: 392px; height: 436px; padding-left: 22px;">
+								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid">
 									<div class="rows" style="width: 325px;">
@@ -69,7 +69,7 @@
 
 												<div class="ui segment"
 													style="height: 104px; width: 347px; padding-top: 14px; margin-top: 14px; margin-bottom: 14px;">
-													<a class="ui red right ribbon label 1" style="left: 251px;">
+													<a class="ui red right ribbon label 1" style="left: 260px;">
 														${game.averageRating }
 													</a>
 													<g:link action="gameProfile"
@@ -113,7 +113,7 @@
 						</div>
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
-								style=" width: 392px; height: 436px; padding-left: 22px;">
+								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid">
 									<div class="rows" style="width: 325px;">
@@ -128,7 +128,7 @@
 
 												<div class="ui segment"
 													style="height: 104px; width: 347px; padding-top: 14px; margin-top: 14px; margin-bottom: 14px;">
-													<a class="ui red right ribbon label 1" style="left: 251px;">
+													<a class="ui red right ribbon label 1" style="left: 260px;">
 														${games.averageRating }
 													</a>
 													<g:link action="gameProfile"

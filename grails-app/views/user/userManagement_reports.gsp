@@ -73,7 +73,7 @@
 										<g:form controller="user" action="ignoreReport">
 											<g:hiddenField name="reportId" value="${report.id}" />
 											<g:submitButton class="ui centered mini red button"
-												style="margin-left:6px;" value="IGNORE" name="ignore"
+												style="position:fixed;" value="IGNORE" name="ignore"
 												onclick="return confirm('Are you sure you want to ignore this report?')" />
 										</g:form>
 									</div>

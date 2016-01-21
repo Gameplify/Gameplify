@@ -6,7 +6,7 @@ import grails.transaction.Transactional
 
 @Transactional
 class GameService {
-	
+
 	def userService
 
 	def listGame(currentCategory, chosenPlatform, max, offset){
@@ -23,24 +23,33 @@ class GameService {
 				status == "okay"
 			}.list(max: max, offset: offset)
 		}
+		
 		return games
 	}
 
 	def report(type,userId){
-		def user = User.get(userId)
-		Date date = new Date()
-		Report report = new Report(
-			date:date,
-			type:type,
-			user:user,
-			status:"okay",
-			numberOfReports:1
-		)
-		report.save()
-		user.addToReports(report)
-		user.save(flush:true)
+		def rep = Report.find{user.id == userId}
+		if(rep){
+			def curRep = Report.get(rep.id)
+			numberOfReports:curRep.numberOfReports++
+			status:"okay"
+			curRep.save(flush:true)
+		} else {
+			def user = User.get(userId)
+			Date date = new Date()
+			Report report = new Report(
+					date:date,
+					type:type,
+					user:user,
+					status:"okay",
+					numberOfReports:1
+					)
+			report.save()
+			user.addToReports(report)
+			user.save(flush:true)
+		}
 	}
-	
+
 	def getUserRating(gameId, userId){
 		def rating = Rating.find{
 			game.id == gameId
@@ -122,7 +131,6 @@ class GameService {
 			games = Game.where { status == "okay" }.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
 		}
 		return games
-		
 	}
 
 	def getReview(reviewId){
@@ -145,7 +153,7 @@ class GameService {
 		}
 		return games
 	}
-	
+
 	def editReview(newReview, reviewId){
 		def review = Review.get(reviewId)
 		review.review = newReview
@@ -223,12 +231,12 @@ class GameService {
 				)
 		game.save(failOnError: true)
 		Screenshots ss = new Screenshots(
-			photo:"ss1.jpg",
-			game:game
-			)
+				photo:"ss1.jpg",
+				game:game
+				)
 		ss.save()
 		game.addToScreenshot(ss)
-		game.save(flush:true)		
+		game.save(flush:true)
 		platform.addToGame(game)
 		log.println (categories)
 		categories.each {
@@ -269,7 +277,7 @@ class GameService {
 		}
 		platform.save(flush:true)
 		log.println(platform.platformName)
-		
+
 		userService.addAdminActivity(adminId,"edited " +gameTitle)
 	}
 
@@ -310,8 +318,8 @@ class GameService {
 
 		return allReviews
 	}
-	
-	
+
+
 	def serviceMethod() {
 	}
 }
