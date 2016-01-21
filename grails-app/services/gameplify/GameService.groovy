@@ -114,21 +114,15 @@ class GameService {
 
 	def listGamePlat( chosenPlatform, max, offset){
 		def games
-		def now = new Date()
-		def dateString = now.format("yyyy-MMM-dd HH:mm:ss a")
-		def lYear = now[Calendar.YEAR] -1
-  	    def lDate = now[Calendar.DATE]
-	    def prevMonth = now[Calendar.MONTH] 
-	    def lastYear=now.updated(year: lYear, date: lDate, month: prevMonth)
-		log.println("lasT" +lastYear)
 		if(chosenPlatform){
 			games = Game.where {
 				platform.platformName == chosenPlatform
 				status == "okay"
-				releaseDate == (releaseDate >= LastYear && releaseDate <= now)
 			}.list(max: max, offset: offset)
 		} else if(!chosenPlatform){
-			games = Game.where { status == "okay" }.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
+			games = Game.where {
+				 status == "okay"
+		    }.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
 		}
 		return games
 	}

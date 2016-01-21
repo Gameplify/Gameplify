@@ -56,7 +56,7 @@
 							<div class="ui segment"
 								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
 
-								<div class="ui three column stackable grid">
+								<div class="ui three column stackable grid" style="height:391px;">
 									<div class="rows" style="width: 325px;">
 									<div class="column" style="width: 378px;">
 										<h3>What's HOT</h3>
@@ -68,7 +68,7 @@
 												params="${[gameTitle: "${game.gameTitle}"]}">
 
 												<div class="ui segment"
-													style="height: 104px; width: 347px; padding-top: 14px; margin-top: 14px; margin-bottom: 14px;">
+													style="height: 104px; width: 339px; padding-top: 14px; margin-top: 14px; margin-bottom: 14px;">
 													<a class="ui red right ribbon label 1" style="left: 253px;">
 														${game.averageRating }
 													</a>
@@ -101,33 +101,37 @@
 										</g:each>
 										 
 									</div>
+									</div>
+									</div>
 
-											<div class="pagination" style="margin-left: 157px;text-align: center;">
+											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
 												<g:paginate action="index" total="${gameCount}" offset="0" max="3" params="${params.max}"/>
 											</div>
 
 
-								</div>
+								
 
-							</div>
+							
 						</div>
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
 								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid">
-									<div class="rows" style="width: 325px;">
+									<div class="rows" style="height: 391px; width: 325px;">
 															
 						<div class="column" style="width: 140px;">
 							<h3>What's NEW</h3>
 						</div>
 										<g:each in="${bb}" status="i" var="games">
 										<g:if test="${(i)<3}">
+										<g:if test="${games.releaseDate >= last}">
+										<g:if test="${games.releaseDate <= now}">
 											<g:link action="gameProfile"
 												params="${[gameTitle: "${games.gameTitle}"]}">
 
 												<div class="ui segment"
-													style="height: 104px; width: 347px; padding-top: 14px; margin-top: 14px; margin-bottom: 14px;">
+													style="height: 104px; width: 339px; padding-top: 14px; margin-top: 14px; margin-bottom: 14px;">
 													<a class="ui red right ribbon label 1" style="left: 253px;">
 														${games.averageRating }
 													</a>
@@ -156,17 +160,20 @@
 
 											</g:link>
 											</g:if>
+											</g:if>
+											</g:if>
 										</g:each>
 										
 									</div>
-									
-											<div class="pagination" style="margin-left: 157px;text-align: center;">
+									</div>
+									</div>
+											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
 												<g:paginate action="index" total="${gameCont}" offset="0" max="3" params="${params}"/>
 											</div>
 
-								</div>
+								
 
-							</div>
+							
 						</div>
 
 					</div>
