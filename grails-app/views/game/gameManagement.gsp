@@ -34,37 +34,37 @@
 							${currentCategory }
 						</h3>
 						<div class="ui grid"
-							style="    margin-left: 545px;  margin-top: -50px;">
+							style="margin-left: 545px; margin-top: -50px;">
 							<g:if test="${flash.message}">
 								<div class="message" style="width: 200px; margin-left: -171px;">
 									${flash.message }
 								</div>
 							</g:if>
-							<div style="margin-top:10px;">
-							<button class="ui inverted icon button" id="addGame"
-								style="height: 28px;     margin-left: -55px; width: 28px; padding: 0;">
-								<i class="big green add square icon"
-									style="height: 28px; width: 28px;"></i>
-							</button>
-							<button class="ui inverted icon button" id="deleteGame"
-								style="height: 28px; width: 28px;      margin-left: -35px;padding: 0;">
-								<i class="big red trash icon" style="height: 28px; width: 28px;"></i>
-							</button>
-						
+							<div style="margin-top: 10px;">
+								<button class="ui inverted icon button" id="addGame"
+									style="height: 28px; margin-left: -55px; width: 28px; padding: 0;">
+									<i class="big green add square icon"
+										style="height: 28px; width: 28px;"></i>
+								</button>
+								<button class="ui inverted icon button" id="deleteGame"
+									style="height: 28px; width: 28px; margin-left: -35px; padding: 0;">
+									<i class="big red trash icon"
+										style="height: 28px; width: 28px;"></i>
+								</button>
 
-						<div class="ui grid"
-							style=" margin-top: -45px;">
-							<g:each in="${platforms }" var="platform">
-								<g:link action="gameManagement"
-									params="${[ platform:platform.platformName, categoryName: currentCategory] }">
-									<button class="ui icon button">
-										<img class="platformpic"
-											src="${resource(dir: 'images', file: "${platform.pic}")}">
-									</button>
-								</g:link>
-							</g:each>
-						</div>
-						</div>
+
+								<div class="ui grid" style="margin-top: -45px;">
+									<g:each in="${platforms }" var="platform">
+										<g:link action="gameManagement"
+											params="${[ platform:platform.platformName, categoryName: currentCategory] }">
+											<button class="ui icon button">
+												<img class="platformpic"
+													src="${resource(dir: 'images', file: "${platform.pic}")}">
+											</button>
+										</g:link>
+									</g:each>
+								</div>
+							</div>
 						</div>
 						</h3>
 					</div>
@@ -77,7 +77,8 @@
 									params="${[gameTitle: "${game.gameTitle}"]}">
 									<div class="ui segment"
 										style="height: 120px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top: 0px;">
-										<img class="ui tiny left floated image" style="width: 70px; height: 70px;"
+										<img class="ui tiny left floated image"
+											style="width: 70px; height: 70px;"
 											src="${resource(dir: 'images', file: "${game.gameLogo}")}">
 										<div class="ui 3 column stackable grid"
 											style="margin-left: 62px; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
@@ -94,8 +95,17 @@
 										</div>
 									</div>
 								</g:link>
+								<%--
+								<g:form controller="game"action="deleteGame">
+								<g:hiddenField name="gameTitle" value="${game.id}"/>
+								<g:hiddenField name="categoryName" value="${currentCategory}"/>
+								<g:hiddenField name="gameCategory" value="${game.categories}"/>
+								<g:submitButton class class="ui icon button delete" id="delete"
+										style="display: none; padding: 0; margin-top: 4px; margin-left: -267px;" value="" name=""></g:submitButton>
+								</g:form>--%>
 								<g:link action="deleteGame"
-									params="${[gameTitle:"${game.id}",categoryName:currentCategory, gameCategory:"${game.categories}"] }">
+									params="${[gameTitle:"${game.id}",categoryName:currentCategory, gameCategory:"${game.categories}"] }"
+									onclick="return confirm('Are you sure you want to ignore this report?')">
 									<button class="ui icon button delete" id="delete"
 										style="display: none; padding: 0; margin-top: 4px; margin-left: -267px;">
 										<i class="small red delete icon"></i>
