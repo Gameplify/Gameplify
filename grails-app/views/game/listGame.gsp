@@ -54,8 +54,9 @@
 						</h3>
 					</div>
 					<g:if test="${gameCount > 0 }">
-						<div class="ui segment" style="width: 770px; height: auto;">
-							
+						<div id="updateThis" class="ui segment"
+							style="width: 770px; height: auto;">
+
 							<div class="ui cards"
 								style="margin-bottom: 20px; margin-left: 50px; margin-right: 50px; margin-top: 20px;">
 
@@ -71,6 +72,8 @@
 												style="margin-left: 62px; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
 												<h5 style="padding-left: 10px; margin-bottom: 0px;">
 													${game.gameTitle }
+													<br>$
+													${game.gamePrice }
 												</h5>
 												<div class="row"
 													style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
@@ -142,9 +145,6 @@
 					</div>
 				</div>
 			</div>
-<div id="updateThis">
-								${games }
-							</div>
 		</div>
 
 		<script>
@@ -168,7 +168,7 @@
 			console.log(how_value)
 			console.log(what_value)
 			
-${remoteFunction(controller: 'game', update: 'updateThis', action: 'listGame', params: '\'what=\' + what_value+ \'&how=\' +how_value+  \'&categoryName=\' + categoryName ')}
+${remoteFunction(controller: 'game', update: 'updateThis', action: 'sortList', params: '\'what=\' + what_value+ \'&how=\' +how_value+  \'&categoryName=\' + categoryName ')}
 			};
 		</script>
 </body>

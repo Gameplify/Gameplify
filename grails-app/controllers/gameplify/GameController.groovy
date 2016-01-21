@@ -121,30 +121,42 @@ class GameController {
 			flash.message = "You do not have permission to access this page"
 			redirect(controller:"game", action: "index")
 		} else {
+			def how = 'asc'
+			def what = 'gameTitle'
 			def platforms = gameService.listPlatform()
 			def currentCategory = params.categoryName
 			def max = params.max ?: 10
 			def categories = gameCategoryService.listGame()
 			def offset = params.offset ?: 0
 			def chosenPlatform = params.platform
-			def games = gameService.listGame(currentCategory, chosenPlatform, max, offset)
+			def games = gameService.listGame(currentCategory, chosenPlatform, max, offset,what, how)
 			[currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount,categories:categories]
 		}
 	}
 
 	def listGame(){
+		def how = 'asc'
+		def what = 'gameTitle'
+		def platforms = gameService.listPlatform()
+		def currentCategory = params.categoryName
+		def max = params.max ?: 10
+		def offset = params.offset ?: 0
+		def chosenPlatform = params.platform
+		def games = gameService.listGame(currentCategory, chosenPlatform, max, offset, what, how)
+		log.println(games)
+		[currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
+	}
+
+	def sortList(){
 		def how
 		def what
 		if(params.how){
-			 how = params.how
-			 what = params.what
+			how = params.how
+			what = params.what
 		} else {
-			how = 'desc'
+			how = 'asc'
 			what = 'gameTitle'
 		}
-		log.println(how)
-		log.println(what)
-		log.println(params.categoryName)
 		def platforms = gameService.listPlatform()
 		def currentCategory = params.categoryName
 		def max = params.max ?: 10
