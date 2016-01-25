@@ -102,6 +102,14 @@ $(document).ready(function()  {
 	    {
 	        $("#counter").css("color","black");
 	    }
+	    $("#whitespace").css("color","red");
+            if ($.trim($('#text').val()) == "") {
+		$("#whitespace").html(" Please input any alphanumeric character");
+			document.getElementById("reviewButton").disabled = true;
+		} else {
+			$("#whitespace").html("");
+		}
+
 	});
 
  

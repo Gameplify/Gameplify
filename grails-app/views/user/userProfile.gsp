@@ -46,15 +46,16 @@
 
 		<div class="ui two column stackable grid">
 			<div class="row" style="margin-left: 0px;">
-<<<<<<< HEAD
-				<div class="ui segment" style="height: 500px; overflow-x: disabled; overflow-y: auto;">
-=======
+
 				<div class="ui segment"
 					style="height: 500px; overflow-x: disabled; overflow-y: auto;">
->>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
+
 					<div class="ui grid" style="width: 800px; padding: 20px;">
 						<h3>Reviews</h3>
 					</div>
+					<g:if test="!${user.reviews }">
+						No reviews
+					</g:if>
 					<g:each in="${user.reviews}" status="i" var="review">
 						
 							<div class="ui segment"
@@ -132,7 +133,7 @@
 								</div>
 								<div class="center aligned column">
 									<h4 style="text-align: center">
-										${user.username }
+										${user.name }
 									</h4>
 									<div style="text-align: center !important;">
 										${user.totalNumberOfReviews }

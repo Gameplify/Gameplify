@@ -87,11 +87,8 @@
 					</div>
 
 				</div>
-<<<<<<< HEAD
-				<div class="ui two row stackable grid" >
-=======
+
 				<div class="ui two row stackable grid">
->>>>>>> 6d98908a68f5cef5cb60c29c7f760b922e54542b
 					<div class="column">
 						<div class="row">
 							<g:include controller="user" action="showUserAuthentication" />
@@ -102,8 +99,6 @@
 			</div>
 		</div>
 	</div>
-	<g:javascript>
 
-	</g:javascript>
 </body>
 </html>
