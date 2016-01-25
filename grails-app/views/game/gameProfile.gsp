@@ -156,7 +156,7 @@
 														</a>
 													</g:if>
 													<g:else>
-														<img class="ui tiny left floated image"
+														<img class="avatar"
 															style="width: 70px;"
 															src="${resource(dir: 'images', file: "nan.jpg")}">
 													</g:else>
