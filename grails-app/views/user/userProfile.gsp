@@ -53,6 +53,9 @@
 					<div class="ui grid" style="width: 800px; padding: 20px;">
 						<h3>Reviews</h3>
 					</div>
+					<g:if test="!${user.reviews }">
+						No reviews
+					</g:if>
 					<g:each in="${user.reviews}" status="i" var="review">
 						
 							<div class="ui segment"
