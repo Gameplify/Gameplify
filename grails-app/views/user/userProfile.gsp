@@ -133,7 +133,7 @@
 								</div>
 								<div class="center aligned column">
 									<h4 style="text-align: center">
-										${user.username }
+										${user.name }
 									</h4>
 									<div style="text-align: center !important;">
 										${user.totalNumberOfReviews }
