@@ -36,6 +36,7 @@
 				<div class="ui segment" style="width: 800px; height: auto">
 					<div class="ui three column stackable grid">
 						<div class="column" style="    width: 98.333333%;">
+						<g:if test="${flash.reg}">${flash.reg}</g:if>
 							<div class="ui grid" style="float: right">
 
 								<g:each in="${platforms }" var="platform">
@@ -52,7 +53,7 @@
 					</div>
 					<div class="ui two column stackable grid">
 						<div class="column" style="width: 378px;">
-
+							
 							<div class="ui segment"
 								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
 
@@ -200,6 +201,7 @@
 								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid">
+								
 									<div class="rows" style="height: 391px; width: 325px;">
 															
 						<div class="column" style="width: 140px;">

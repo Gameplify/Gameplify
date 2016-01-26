@@ -259,21 +259,27 @@
 															<div class="loadMore" onclick="myFunc()"
 																style="text-align: center; visibility: hidden;">Load
 																more</div>
+															
 														</g:else>
-
+														<g:if test="${ review.comment.size() == 0}">
+														
+														<div style="    text-align: center; font-style: italic; color: dimgrey;">	
+															---------- No existing comments. ----------
+															</div>
+															</g:if>
 														<g:if test="${session?.user}">
 															<g:if test="${session?.user?.status != "blocked"}">
 																<g:form class="ui comment form">
 																	<div class="field">
-																		<g:textArea name="comment" required="" />
+																		<g:textArea id="textbox" name="comment" required="" maxlength="100"/>
 																		<g:hiddenField name="gameId" value="${game.id}" />
 																		<g:hiddenField name="gameTitle"
 																			value="${game.gameTitle}" />
 																		<g:hiddenField name="reviewId" value="${review.id}" />
 																	</div>
-
+																
 																	<g:actionSubmit action="addComment" value=" Comment"
-																		class="ui blue labeled submit icon button">
+																	id="commentButton"	class="ui blue labeled submit icon button" disabled="">
 
 
 																	</g:actionSubmit>
@@ -428,7 +434,7 @@ $('.myList').each(function() {
   	
 	
     });
-
+ 
 </script>
 </body>
 </html>

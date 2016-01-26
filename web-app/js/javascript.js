@@ -109,9 +109,19 @@ $(document).ready(function()  {
 		} else {
 			$("#whitespace").html("");
 		}
+          
 
 	});
+	
+	$("#textbox").keyup(function(){
 
+        if ($.trim($('#textbox').val()) == "") {
+			document.getElementById("commentButton").disabled = true;
+		}else{
+			document.getElementById("commentButton").disabled = false;
+			
+		}
+	});
  
 
 });

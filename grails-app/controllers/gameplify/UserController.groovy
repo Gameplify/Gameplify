@@ -103,7 +103,7 @@ def avatar_image() {
 				flash.message = "Password mismatch."
 				count=1
 			}
-			
+			flash.cnt= count
 			if(count){
 			redirect(action:'register')
 			}else{
@@ -115,7 +115,7 @@ def avatar_image() {
 			} else {
 				// validate/save ok, store user in session, redirect to homepage
 				session.user = u
-				log.error "You have successfully registered."
+				flash.reg= "You have successfully registered."
 				u.errors.allErrors.each {log.error it.defaultMessage}
 				redirect(controller:"game", action: "index")
 
@@ -179,7 +179,7 @@ def avatar_image() {
 
 	def logout = {
 		session.invalidate()
-		redirect(uri: request.getHeader('referer') )
+		redirect(controller: "game", action:"index" )
 	}
 
 	def userManagement_reports(){
