@@ -5,7 +5,7 @@
 		<input name="gameId" value="${game.id}" type="hidden" /> <input
 			name="gameTitle" value="${game.gameTitle}" type="hidden" />
 	</div>
-	<div id="counter"></div>
+	<div id="counter"></div><div id ="whitespace"></div>
 	<g:actionSubmit id="reviewButton" action="addReview" value="Review"
 		class="ui blue labeled submit icon button">
 

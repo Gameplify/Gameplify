@@ -87,6 +87,7 @@
 					</div>
 
 				</div>
+
 				<div class="ui two row stackable grid">
 					<div class="column">
 						<div class="row">
@@ -98,8 +99,6 @@
 			</div>
 		</div>
 	</div>
-	<g:javascript>
 
-	</g:javascript>
 </body>
 </html>
