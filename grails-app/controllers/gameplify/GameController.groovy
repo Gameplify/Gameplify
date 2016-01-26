@@ -176,10 +176,10 @@ class GameController {
 		def platform = gameService.listPlatform()
 		def max = params.max ?: 10
 		def offset = params.offset ?: 0
-		def chosenPlatfrm = params.platform
-		def taskList = gameService.listGamePlat(chosenPlatfrm,max,offset)
-		def taskL = gameService.whatsHot(chosenPlatfrm,max,offset)
-
+		def chosenPlatform = params.platform
+		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
+		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
+		def bool= params.bool
 		def now = new Date()
 		def dateString = now.toTimestamp()
 		def lYear = now[Calendar.YEAR] -1
@@ -187,7 +187,7 @@ class GameController {
 		def prevMonth = now[Calendar.MONTH]
 		def lastYear=now.updated(year: lYear, date: lDate, month: prevMonth)
 		def dateStrng = lastYear.toTimestamp()
-		[now: dateString, last:dateStrng, games:taskL, bb:taskList, chosenPlatform:chosenPlatfrm, platforms:platform, gameCount:taskL.totalCount, gameCont:taskList.totalCount] 
+		[now: dateString,bool:bool, last:dateStrng, games:taskL, bb:taskList, chosenPlatform:chosenPlatform, platforms:platform, gameCount:taskL.totalCount, gameCont:taskList.totalCount] 
 		
 
 	}
@@ -198,6 +198,7 @@ class GameController {
 				ilike("gameTitle", "%${params.query}%")
 				and { eq("status", "okay") }
 			}
+			
 			order("gameTitle", "asc")
 		}
 

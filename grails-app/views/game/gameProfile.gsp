@@ -101,6 +101,11 @@
 									data-max-rating="5"></div>
 									</g:if>
 								</g:if>
+								<h5 class="title">
+										$
+										${game.numberOfRaters }
+
+									</h5>
 
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
