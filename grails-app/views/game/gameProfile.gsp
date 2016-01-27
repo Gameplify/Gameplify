@@ -159,7 +159,7 @@
 																	class="avatar">
 													<g:if test="${review.user.avatar }">
 														<img
-															src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
+															src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
 													</g:if>
 													<g:else>
 														<img class="photo"

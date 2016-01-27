@@ -27,18 +27,7 @@ def avatar_image() {
 		  }
 		
 		def upload_avatar() {
-			
-			print "wew"
-
-			def f = request.getFile('avatar')
-		  
-			if(f){
-				print "yow"
-			} else {
-				print "you fail fucker"
-			}
-			
-			
+			def f = request.getFile('avatar') 		
 			if (!okcontents.contains(f.getContentType())) {
 			  flash.message = "Avatar must be one of: ${okcontents}"
 			  redirect(uri: request.getHeader('referer') )
@@ -47,9 +36,9 @@ def avatar_image() {
 		  
 			
 			if(!userService.uploadAvatar(session.user.id, f)){
-			render(view:'select_avatar', model:[user:user])
-			print "too big"
-			return
+			flash.message = "Image too big"
+			  redirect(uri: request.getHeader('referer') )
+			  return
 		}
 			
 			redirect(uri: request.getHeader('referer') )
