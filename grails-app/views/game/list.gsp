@@ -29,7 +29,7 @@
  
         <div class="ui two column stackable grid">
               <div class="row" style="margin-left: 0px;">
-                      <div class="ui segment" style="width:802px; height: auto">
+                      <div class="ui segment" style="width: 802px;height: 687px;">
                       <h3 style="margin-bottom: 57px;margin-top: 10px;">Search Results</h3>
                                    <div class="ui grid" style="margin-left: 610px; margin-top: -35px;">
                                                   			
@@ -47,13 +47,29 @@
                                 	     <g:if test="${taskInstanceTotal >0}">
                                 	      <div class="ui two column stackable grid">
 			                                   			<div class="column" style="width: 378px;" >
-			                                                            <div class="ui segment" style="overflow: scroll; width: 392px;height: 436px; padding-left: 22px;">
+			                                                            <div class="ui segment" style="overflow:scroll; width: 392px;height: 567px; padding-left: 22px;">
 																						<h3>Games Found</h3>
 			                                                                            <div class="ui three column stackable grid">
-			                                                                                     <div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">
+			                                                                                     <div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;height: 453px;">
 																                                 	 	<g:each in="${games}" status="i" var="game">
 																	                                 	<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">                             		
-																												 <div class="ui segment" style=" height: 104px; width: 270px; padding-top: 14px; margin-left: 0px; margin-top:0px; margin-bottom:0px; ">
+																												 <div class="ui segment" style="width: 314px;height: auto; padding-left: 22px;margin-top: 0px;margin-bottom: 0px;left: -18px; ">
+																	                                              		<g:each in="${gamess}" status="t" var="ss">
+																															<g:set var="ga" value="${game.gameTitle}" />
+																															<g:if test="${ss.gameTitle==ga }">
+																																<img class="ui tiny centered image"
+																																style="width: 25px;height: 25px;left: 108px;top: -2px;"
+																																src="${resource(dir: '../images', file: "hot.png")}">
+																															</g:if>
+																														</g:each>
+																														<g:each in="${bb}" status="t" var="aa">
+																															<g:set var="da" value="${game.gameTitle}" />
+																															<g:if test="${aa.gameTitle==da }">
+																																<img class="ui tiny centered image"
+																																style="width: 25px;height: 25px;left: 82px;top: -27px;"
+																																src="${resource(dir: '../images', file: "neww.png")}">
+																															</g:if>
+																														</g:each> 
 																	                                              		<img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${game.gameLogo}")}">
 																	                                                    <h5 style="    padding-left: 10px; margin-top: 0px; margin-bottom: 0px;">${game.gameTitle }</h5>
 																	                                                    <div class="row" style="padding-bottom: 13px;padding-top: 5px;border-top-width: 5px;margin-top: 0px;margin-left: 3px;">
@@ -70,7 +86,7 @@
 			                                                            </div> 
 			                                  			</div>
 			                                 			 <div class="column" style="width: 378px;" >
-			                                                            <div class="ui segment" style="overflow: scroll; width: 392px;height: 436px;padding-left: 22px;">
+			                                                            <div class="ui segment" style=" overflow:scroll; width: 378px;height: 567px;padding-left: 22px;left: 14px;">
 			                                                                  <h3>User's Found</h3>
 			                                                                             <div class="ui three column stackable grid">
 			                                                                                     <div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">
@@ -104,11 +120,12 @@
 			                                 	 	<g:each in="${users}" status="i" var="user">
 				                                 	<g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${user.id}"]}">                               		
 															 <div class="ui segment" style="  height: 120px; width: 270px; padding-top: 14px; margin-left: 0px; margin-top:0px;">
-				                                                    <g:if test="${user.avatar}"><img class="ui tiny left floated image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
+				                                                    <g:if test="${user.avatar}">
+				                                                    	<img class="ui tiny left floated image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
 				                                                    </g:if>
 				                                                    <g:else>
-															    <img class="ui tiny left floated image" src="${resource(dir: 'images', file: "nan.jpg")}">
-															    </g:else>
+																    	<img class="ui tiny left floated image" src="${resource(dir: 'images', file: "nan.jpg")}">
+																    </g:else>
 				                                                    <h5 style="    padding-left: 10px; margin-top: 0px; margin-bottom: 0px;">${user.name }</h5>
 				                                                    <div class="row" style="padding-bottom: 13px;padding-top: 5px;border-top-width: 5px;margin-top: 0px;margin-left: 3px;">
 	                                 								 </div>   
@@ -116,9 +133,8 @@
 				                                    </g:link>
 				                                   </g:each>
                                            </div>
-                                   
 											<div class="pagination" style="text-align: center;">
-												<g:paginate total="${usert}"  params="${params}"/>
+												<g:paginate total="${usert}" max="10" offset="0"  params="${params}"/>
 											</div>
 									</div>	
 									</div>
@@ -130,8 +146,24 @@
 	                                      <div class="ui segment"  style="width: 770px; height: auto;">
 	                                     		<div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">
 				                                 	 	<g:each in="${gam}" status="i" var="game">
-					                                 	<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">                             		
-																 <div class="ui segment" style="  height: 120px; width: 270px; padding-top: 14px; margin-left: 0px; margin-top:0px;">
+					                                 	<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}"> 
+					                                 	 <div class="ui segment" style="  height: auto;width: 313px; padding-top: 14px; margin-left: 0px; margin-top:0px;">
+					                                              		<g:each in="${gamess}" status="t" var="ss">
+																			<g:set var="ga" value="${game.gameTitle}" />
+																			<g:if test="${ss.gameTitle==ga }">
+																				<img class="ui tiny centered image"
+																				style="width: 25px;height: 25px;left: 108px;top: -2px;"
+																				uri="../images/hot.png">
+																			</g:if>
+																		</g:each>
+																		<g:each in="${bb}" status="t" var="aa">
+																			<g:set var="da" value="${game.gameTitle}" />
+																			<g:if test="${aa.gameTitle==da }">
+																				<img class="ui tiny centered image"
+																				style="width: 25px;height: 25px;left: 82px;top: -27px;"
+																				uri="../images/new.png">
+																			</g:if>
+																		</g:each> 
 					                                              		<img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${game.gameLogo}")}">
 					                                                    <h5 style="    padding-left: 10px; margin-top: 0px; margin-bottom: 0px;">${game.gameTitle }</h5>
 					                                                    <div class="row" style="padding-bottom: 13px;padding-top: 5px;border-top-width: 5px;margin-top: 0px;margin-left: 3px;">
@@ -145,7 +177,7 @@
 	                                           </div>
 	                                   
 												<div class="pagination" style="text-align: center;">
-													<g:paginate total="${gamet}"  params="${params}"/>
+													<g:paginate total="${gamet}" max="10" offset="0" params="${params}"/>
 												</div>	
 												</div>
 										</div>

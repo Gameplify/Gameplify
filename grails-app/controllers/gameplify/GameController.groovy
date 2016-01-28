@@ -67,6 +67,13 @@ class GameController {
 	def gameProfile(){
 		def rating
 		def currentUser
+		def platform = gameService.listPlatform()
+		def chosenPlatform = params.platform
+		def max = params.max ?: 10
+		def offset = params.offset ?: 0
+		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
+		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
+		
 		def game = gameService.listGameInfo(params.gameTitle)
 		if(session.user){
 			currentUser = userService.findUser(session.user.id)
@@ -82,7 +89,7 @@ class GameController {
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
 		def platforms = gameService.listPlatform()
 		def categories = gameCategoryService.listGame()
-		[game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories, rating:rating]
+		[ games:taskL, bb:taskList, chosenPlatform:chosenPlatform, game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories, rating:rating]
 	}
 
 	def addGame(){
@@ -180,19 +187,20 @@ class GameController {
 		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
 		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
 		def bool= params.bool
-		def now = new Date()
-		def dateString = now.toTimestamp()
-		def lYear = now[Calendar.YEAR] -1
-		def lDate = now[Calendar.DATE]
-		def prevMonth = now[Calendar.MONTH]
-		def lastYear=now.updated(year: lYear, date: lDate, month: prevMonth)
-		def dateStrng = lastYear.toTimestamp()
-		[now: dateString,bool:bool, last:dateStrng, games:taskL, bb:taskList, chosenPlatform:chosenPlatform, platforms:platform, gameCount:taskL.totalCount, gameCont:taskList.totalCount] 
+		[bool:bool, games:taskL, bb:taskList, chosenPlatform:chosenPlatform, platforms:platform, gameCount:taskL.totalCount, gameCont:taskList.totalCount]
 		
-
 	}
+	
+	
 
 	def list() {
+		def platform = gameService.listPlatform()
+		def chosenPlatform = params.platform
+		def max = params.max ?: 10
+		def offset = params.offset ?: 0
+		def taskLisst = gameService.listGamePlat(chosenPlatform,max,offset)
+		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
+		
 		def taskList = Game.createCriteria().list(params){
 			if ( params.query) {
 				ilike("gameTitle", "%${params.query}%")
@@ -201,7 +209,7 @@ class GameController {
 			
 			order("gameTitle", "asc")
 		}
-
+		
 		def userList = User.createCriteria().list(params){
 			if ( params.query) {
 				ilike("name", "%${params.query}%")
@@ -234,6 +242,6 @@ class GameController {
 
 		def total= userList.totalCount + taskList.totalCount
 
-		[ gam:ggg, gamet: ggg.totalCount , uses:uuu, usert: uuu.totalCount ,users:userList, totals:total,  userInstanceTotal: userList.totalCount, games: taskList, taskInstanceTotal: taskList.totalCount]
+		[gamess:taskL, bb:taskLisst, chosenPlatform:chosenPlatform, gam:ggg, gamet: ggg.totalCount , uses:uuu, usert: uuu.totalCount ,users:userList, totals:total,  userInstanceTotal: userList.totalCount, games: taskList, taskInstanceTotal: taskList.totalCount]
 	}
 }

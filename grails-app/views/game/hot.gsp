@@ -63,7 +63,7 @@
 										</div>
 											
 										<g:if test="${bool=='true' }">
-										<g:each in="${games}" status="i" var="game">
+										<g:each in="${games}" status="i" var="games">
 										<g:if test="${(i)<3}">
 										<g:if test="${game.averageRating != 0 }">
 											<g:link action="gameProfile"
@@ -188,9 +188,9 @@
 								</div>
 
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
-												<g:link action="index" params="${[chosenPlatform:"${chosenPlatform}", bool:"true"]}">First</g:link>
-												<g:paginate action="index" total="${gameCount}"  offset="0" max="3" params="${[chosenPlatform:"${chosenPlatform}", bool:"true"]}"/>
-												<g:link action="index" params="${[chosenPlatform:"${chosenPlatform}", bool:"false"]}">Last</g:link>
+												<g:link action="hot" params="${[chosenPlatform:"${chosenPlatform}", bool:"true"]}">First</g:link>
+												<g:paginate action="hot" total="${gameCount}"  offset="0" max="3" params="${[chosenPlatform:"${chosenPlatform}", bool:"true"]}"/>
+												<g:link action="hot" params="${[chosenPlatform:"${chosenPlatform}", bool:"false",paginate:"Bar"]}">Last</g:link>
 											</div>
 						</div>
 						
@@ -328,8 +328,8 @@
 									</div>
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
 												<g:link action="index" params="${[chosenPlatform:"${chosenPlatform}", bool:"true"]}">First</g:link>
-												<g:paginate action="index" total="${gameCont}"  offset="0" max="3" params="${[chosenPlatform:"${chosenPlatform}"]}"/>
-												<g:link action="index" params="${[chosenPlatform:"${chosenPlatform}", bool:"false"]}">Last</g:link>
+												<g:paginate action="index" total="${gameCont}"  offset="0" max="3" params="${[chosenPlatform:"${chosenPlatform}",, bool:"true"]}"/>
+												<g:link action="index" params="${[chosenPlatform:"${chosenPlatform}", bool:"false",paginate:"Bar"]}">Last</g:link>
 											</div>
 
 								
