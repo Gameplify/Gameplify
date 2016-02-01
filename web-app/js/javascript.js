@@ -66,7 +66,7 @@ $(document).ready(function()  {
 
 	$("#counter").css("color","red");
 	document.getElementById("reviewButton").disabled = true;
-	var reviewLength = $("#text").val().length;
+	var reviewLength = $("#text").val().trim().length;
 	if(reviewLength < 100){
 		document.getElementById("reviewButton").disabled = true;
 	}
