@@ -7,8 +7,9 @@ class UserController {
 
 	def userProfile(){
 		def user = userService.findUser(params.userId)
+		log.println(params.userId)
 		if (user.role == "Admin"){
-			redirect(action:"adminProfile" ,parameters:[admin:user])
+			redirect(action:"adminProfile" ,params:[adminId:params.userId])
 		}
 		[user:user]
 	}
@@ -155,15 +156,10 @@ def avatar_image() {
 			flash.message = "You do not have permission to access this page"
 			redirect(controller:"game", action: "index")
 		} else {
-			def admin = params.admin
+			def admin = userService.findUser(params.adminId)			
 			def admins = userService.listAdmins()
 			[admin:admin, admins:admins]
 		}
-	}
-
-
-	def admin={
-
 	}
 
 	def logout = {
