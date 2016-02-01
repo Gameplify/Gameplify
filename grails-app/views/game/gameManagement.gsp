@@ -172,6 +172,10 @@
 					</g:each>
 				</div>
 			</div>
+			<div class="field" style="margin-top:20px;">
+				<label for="screenshot">Screenshot/s</label>
+				<g:field type="file" name="screenshots" accept="image/*" required="" multiple="multiple" style="margin: 10px;"/>
+			</div>
 			<div class="actions" style="text-align: center; margin-top: 30px;">
 				<g:submitButton class="ui button" name="addButton" value="Add Game"
 					style="margin-left: -1.75em;"></g:submitButton>

@@ -203,7 +203,7 @@ class GameService {
 	}
 
 
-	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories,adminId){
+	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, adminId, screenshots){
 		Platform platform = Platform.get(platformId)
 		Game game = new Game(
 				gameTitle:gameTitle,
@@ -222,6 +222,13 @@ class GameService {
 				game:game
 				)
 		ss.save()
+		screenshots.each{
+			Screenshots slist = new Screenshots(
+				photo:it,
+				game:game
+				)
+			slist.save()
+		}
 		game.addToScreenshot(ss)
 		game.save(flush:true)
 		platform.addToGame(game)

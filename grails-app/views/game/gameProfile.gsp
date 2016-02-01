@@ -155,21 +155,14 @@
 										<g:each in="${reviews}" status="i" var="review">
 											<li>
 												<div class="comment">
-													<<<<<<< HEAD <a class="avatar"> <g:if
+													<a class="avatar"> <g:if
 															test="${review.user.avatar }">
 															<img
 																src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
 														</g:if> <g:else>
 															<img class="photo"
 																src="${resource(dir: 'images', file: "nan.jpg")}">
-														</g:else> ======= <a class="avatar"> <g:if
-																test="${review.user.avatar }">
-																<img
-																	src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
-															</g:if> <g:else>
-																<img class="photo"
-																	src="${resource(dir: 'images', file: "nan.jpg")}">
-															</g:else> >>>>>>> 08e195ebcd1a5ec14bb48ff1c04c5940187e29e7
+														</g:else>
 													</a>
 														<div class="content">
 															<g:link class="author" controller="user"
