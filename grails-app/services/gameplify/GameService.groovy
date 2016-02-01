@@ -243,7 +243,7 @@ class GameService {
 		log.println(platform.platformName)
 		userService.addAdminActivity(adminId,"added " +gameTitle)
 	}
-	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, removeCat, adminId){
+	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, removeCat, adminId,screenshots){
 		Platform platform = Platform.get(platformId)
 		Game game = Game.get(gameId)
 		game.gameTitle = gameTitle
@@ -262,7 +262,15 @@ class GameService {
 			gameCategory.removeFromGames(game)
 			gameCategory.save(flush:true)
 		}
-
+		if(sreenshots){
+			screenshots.each {
+				Screenshots slist = new Screenshots(
+					photo:it,
+					game:game
+					)
+				slist.save()
+			}
+		}
 		categories.each {
 			GameCategory gameCategory = GameCategory.get(it.id)
 			log.println(gameCategory.categoryName)
