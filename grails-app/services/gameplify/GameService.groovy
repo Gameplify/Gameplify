@@ -140,8 +140,10 @@ class GameService {
 	}
 
 	def editReview(newReview, reviewId){
+		Date date = new Date()
 		def review = Review.get(reviewId)
 		review.review = newReview
+		review.date = date
 		review.save(flush:true)
 	}
 

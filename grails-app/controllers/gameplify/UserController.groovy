@@ -7,8 +7,9 @@ class UserController {
 
 	def userProfile(){
 		def user = userService.findUser(params.userId)
+		log.println(params.userId)
 		if (user.role == "Admin"){
-			redirect(action:"adminProfile" ,parameters:[admin:user])
+			redirect(action:"adminProfile" ,params:[adminId:params.userId])
 		}
 		[user:user]
 	}
@@ -27,18 +28,7 @@ def avatar_image() {
 		  }
 		
 		def upload_avatar() {
-			
-			print "wew"
-
-			def f = request.getFile('avatar')
-		  
-			if(f){
-				print "yow"
-			} else {
-				print "you fail fucker"
-			}
-			
-			
+			def f = request.getFile('avatar') 		
 			if (!okcontents.contains(f.getContentType())) {
 			  flash.message = "Avatar must be one of: ${okcontents}"
 			  redirect(uri: request.getHeader('referer') )
@@ -47,9 +37,9 @@ def avatar_image() {
 		  
 			
 			if(!userService.uploadAvatar(session.user.id, f)){
-			render(view:'select_avatar', model:[user:user])
-			print "too big"
-			return
+			flash.message = "Image too big"
+			  redirect(uri: request.getHeader('referer') )
+			  return
 		}
 			
 			redirect(uri: request.getHeader('referer') )
@@ -103,7 +93,7 @@ def avatar_image() {
 				flash.message = "Password mismatch."
 				count=1
 			}
-			
+			flash.cnt= count
 			if(count){
 			redirect(action:'register')
 			}else{
@@ -115,7 +105,7 @@ def avatar_image() {
 			} else {
 				// validate/save ok, store user in session, redirect to homepage
 				session.user = u
-				log.error "You have successfully registered."
+				flash.reg= "You have successfully registered."
 				u.errors.allErrors.each {log.error it.defaultMessage}
 				redirect(controller:"game", action: "index")
 
@@ -166,20 +156,15 @@ def avatar_image() {
 			flash.message = "You do not have permission to access this page"
 			redirect(controller:"game", action: "index")
 		} else {
-			def admin = params.admin
+			def admin = userService.findUser(params.adminId)			
 			def admins = userService.listAdmins()
 			[admin:admin, admins:admins]
 		}
 	}
 
-
-	def admin={
-
-	}
-
 	def logout = {
 		session.invalidate()
-		redirect(uri: request.getHeader('referer') )
+		redirect(controller: "game", action:"index" )
 	}
 
 	def userManagement_reports(){

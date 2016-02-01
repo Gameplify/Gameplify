@@ -155,128 +155,146 @@
 										<g:each in="${reviews}" status="i" var="review">
 											<li>
 												<div class="comment">
-													<a class="avatar"> <g:if test="${review.user.avatar }">
+													<<<<<<< HEAD <a class="avatar"> <g:if
+															test="${review.user.avatar }">
 															<img
 																src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
 														</g:if> <g:else>
 															<img class="photo"
 																src="${resource(dir: 'images', file: "nan.jpg")}">
-														</g:else>
+														</g:else> ======= <a class="avatar"> <g:if
+																test="${review.user.avatar }">
+																<img
+																	src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
+															</g:if> <g:else>
+																<img class="photo"
+																	src="${resource(dir: 'images', file: "nan.jpg")}">
+															</g:else> >>>>>>> 08e195ebcd1a5ec14bb48ff1c04c5940187e29e7
 													</a>
-													<div class="content">
-														<g:link class="author" controller="user"
-															action="userProfile"
-															params="${[userId:"${review.user.id}"]}">
-															${review.user.name }
-														</g:link>
-														<div class="metadata">
-															<span class="date"> ${review.date }
-															</span>
-														</div>
-														<div class="text">
-															<p>
-																${review.review }
-															</p>
-														</div>
-														<g:if test="${"${review.user}" == "${session?.user }"}">
-															<div class="actions">
-																<g:remoteLink
-																	url="[controller:'game', action:'editReview']"
-																	update="reviewForm" value="Edit"
-																	params="${[reviewId:"${review.id}"]}"
-																	onSuccess="focusDiv();">edit</g:remoteLink>
+														<div class="content">
+															<g:link class="author" controller="user"
+																action="userProfile"
+																params="${[userId:"${review.user.id}"]}">
+																${review.user.name }
+															</g:link>
+															<div class="metadata">
+																<span class="date"> ${review.date }
+																</span>
 															</div>
-														</g:if>
-														<g:else>
-															<g:if
-																test="${session?.user?.status != "blocked" && session?.user}">
-																<div class="reportUser">
+															<div class="text">
+																<p>
+																	${review.review }
+																</p>
+															</div>
+															<g:if test="${"${review.user}" == "${session?.user }"}">
+																<div class="actions">
 																	<g:remoteLink
-																		url="[controller:'game', action:'report']"
-																		value="Report"
-																		before="if(!confirm('Are you sure you want to report this user?')) return false"
-																		params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																		url="[controller:'game', action:'editReview']"
+																		update="reviewForm" value="Edit"
+																		params="${[reviewId:"${review.id}"]}"
+																		onSuccess="focusDiv();">edit</g:remoteLink>
 																</div>
 															</g:if>
-														</g:else>
-														<ul class="myList">
-															<g:each
-																in="${review.comment.sort{it.date}.reverse(true)}"
-																status="k" var="comment">
-																<li class="comment" style="display: none;"><a
-																	class="avatar"> <g:if test="${review.user.avatar }">
-																			<img
-																				src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
-																		</g:if> <g:else>
-																			<img class="photo"
-																				src="${resource(dir: 'images', file: "nan.jpg")}">
-																		</g:else>
-
-																</a>
-																	<div class="content">
-																		<g:link class="author" controller="user"
-																			action="userProfile"
-																			params="${[userId:"${comment.user.id}"]}">
-																			${comment.user.name }
-																		</g:link>
-
-																		<div class="metadata">
-																			<span class="date"> ${comment.date }
-																			</span>
-																		</div>
-																		<div class="text">
-																			${comment.comment }
-																		</div>
-																		<g:if
-																			test="${session?.user?.status != "blocked" && session?.user}">
-																			<g:if
-																				test="${session?.user && "${review.user.role}" != "Admin"}">
-																				<div class="reportUser">
-																					<g:remoteLink
-																						url="[controller:'game', action:'report']"
-																						value="Report"
-																						before="if(!confirm('Are you sure you want to report this user?')) return false"
-																						params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
-																				</div>
-																			</g:if>
-																		</g:if>
-
-																	</div></li>
-															</g:each>
-														</ul>
-														<g:if test="${ review.comment.size() > 3}">
-
-
-
-															<div class="loadMore" onclick="myFunc()"
-																style="text-align: center;">Load more</div>
-														</g:if>
-														<g:else>
-															<div class="loadMore" onclick="myFunc()"
-																style="text-align: center; visibility: hidden;">Load
-																more</div>
-														</g:else>
-
-														<g:if test="${session?.user}">
-															<g:if test="${session?.user?.status != "blocked"}">
-																<g:form class="ui comment form">
-																	<div class="field">
-																		<g:textArea name="comment" required="" />
-																		<g:hiddenField name="gameId" value="${game.id}" />
-																		<g:hiddenField name="gameTitle"
-																			value="${game.gameTitle}" />
-																		<g:hiddenField name="reviewId" value="${review.id}" />
+															<g:else>
+																<g:if
+																	test="${session?.user?.status != "blocked" && session?.user}">
+																	<div class="reportUser">
+																		<g:remoteLink
+																			url="[controller:'game', action:'report']"
+																			value="Report"
+																			before="if(!confirm('Are you sure you want to report this user?')) return false"
+																			params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
 																	</div>
+																</g:if>
+															</g:else>
+															<ul class="myList">
+																<g:each
+																	in="${review.comment.sort{it.date}.reverse(true)}"
+																	status="k" var="comment">
+																	<li class="comment" style="display: none;"><a
+																		class="avatar"> <g:if
+																				test="${review.user.avatar }">
+																				<img
+																					src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
+																			</g:if> <g:else>
+																				<img class="photo"
+																					src="${resource(dir: 'images', file: "nan.jpg")}">
+																			</g:else>
 
-																	<g:actionSubmit action="addComment" value=" Comment"
-																		class="ui blue labeled submit icon button">
+																	</a>
+																		<div class="content">
+																			<g:link class="author" controller="user"
+																				action="userProfile"
+																				params="${[userId:"${comment.user.id}"]}">
+																				${comment.user.name }
+																			</g:link>
+
+																			<div class="metadata">
+																				<span class="date"> ${comment.date }
+																				</span>
+																			</div>
+																			<div class="text">
+																				${comment.comment }
+																			</div>
+																			<g:if
+																				test="${session?.user?.status != "blocked" && session?.user}">
+																				<g:if
+																					test="${session?.user && "${review.user.role}" != "Admin"}">
+																					<div class="reportUser">
+																						<g:remoteLink
+																							url="[controller:'game', action:'report']"
+																							value="Report"
+																							before="if(!confirm('Are you sure you want to report this user?')) return false"
+																							params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																					</div>
+																				</g:if>
+																			</g:if>
+
+																		</div></li>
+																</g:each>
+															</ul>
+															<g:if test="${ review.comment.size() > 3}">
 
 
-																	</g:actionSubmit>
-																</g:form>
+
+																<div class="loadMore" onclick="myFunc()"
+																	style="text-align: center;">Load more</div>
 															</g:if>
-														</g:if>
-													</div>
+															<g:else>
+																<div class="loadMore" onclick="myFunc()"
+																	style="text-align: center; visibility: hidden;">Load
+																	more</div>
+
+															</g:else>
+															<g:if test="${ review.comment.size() == 0}">
+
+																<div
+																	style="text-align: center; font-style: italic; color: dimgrey;">
+																	---------- No existing comments. ----------</div>
+															</g:if>
+															<g:if test="${session?.user}">
+																<g:if test="${session?.user?.status != "blocked"}">
+																	<g:form class="ui comment form">
+																		<div class="field">
+																			<g:textArea id="textbox" name="comment" required=""
+																				maxlength="100" />
+																			<g:hiddenField name="gameId" value="${game.id}" />
+																			<g:hiddenField name="gameTitle"
+																				value="${game.gameTitle}" />
+																			<g:hiddenField name="reviewId" value="${review.id}" />
+																		</div>
+
+																		<g:actionSubmit action="addComment" value=" Comment"
+																			id="commentButton"
+																			class="ui blue labeled submit icon button"
+																			disabled="">
+
+
+																		</g:actionSubmit>
+																	</g:form>
+																</g:if>
+															</g:if>
+														</div>
 												</div>
 											</li>
 										</g:each>
@@ -286,12 +304,6 @@
 						</div>
 					</div>
 				</div>
-
-
-				<<<<<<< HEAD ======= >>>>>>>
-				54859c6b53e4fc8af847c15070d8da162087e01d
-
-
 				<div class="ui modal addGame">
 					<i class="close icon"></i>
 					<g:form class="ui equal width form" id="form" style="padding:20px"
@@ -425,7 +437,7 @@ $('.myList').each(function() {
   	
 	
     });
-
+ 
 </script>
 </body>
 </html>

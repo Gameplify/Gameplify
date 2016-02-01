@@ -64,10 +64,9 @@ $(document).ready(function()  {
 	    });
    
 
-
 	$("#counter").css("color","red");
 	document.getElementById("reviewButton").disabled = true;
-	var reviewLength = $("#text").val().length;
+	var reviewLength = $("#text").val().trim().length;
 	if(reviewLength < 100){
 		document.getElementById("reviewButton").disabled = true;
 	}
@@ -85,16 +84,16 @@ $(document).ready(function()  {
 	$("#counter").append("<strong>"+reviewLength+"</strong> characters ");
 
 	$("#text").keyup(function(){
-
-	    var reviewLength = $(this).val().length;
+	
+	    var reviewLength = $(this).val().trim().length;	
 	    $("#counter").html(" <strong>"+  reviewLength+"</strong> characters");
-	    if(reviewLength < 100){
+	    if(reviewLength < 100 || reviewLength > 500){
 	    	document.getElementById("reviewButton").disabled = true;
 	    }
-	    if(reviewLength >= 100){
+	    if(reviewLength >= 100 && reviewLength <= 500){
 	    	document.getElementById("reviewButton").disabled = false;
 	    }
-	    if(reviewLength <= 100)
+	    if(reviewLength <= 100 || reviewLength > 500)
 	    {
 	        $("#counter").css("color","red");
 	    }
@@ -105,13 +104,24 @@ $(document).ready(function()  {
 	    $("#whitespace").css("color","red");
             if ($.trim($('#text').val()) == "") {
 		$("#whitespace").html(" Please input any alphanumeric character");
-			document.getElementById("reviewButton").disabled = true;
+			
 		} else {
 			$("#whitespace").html("");
+			
 		}
+          
 
 	});
+	
+	$("#textbox").keyup(function(){
 
+        if ($.trim($('#textbox').val()) == "") {
+			document.getElementById("commentButton").disabled = true;
+		}else{
+			document.getElementById("commentButton").disabled = false;
+			
+		}
+	});
  
 
 });
