@@ -181,16 +181,61 @@ class GameController {
 
 	def index() {
 		def platform = gameService.listPlatform()
-		def max = params.max ?: 10
-		def offset = params.offset ?: 0
 		def chosenPlatform = params.platform
-		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
-		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
-		def bool= params.bool
-		[bool:bool, games:taskL, bb:taskList, chosenPlatform:chosenPlatform, platforms:platform, gameCount:taskL.totalCount, gameCont:taskList.totalCount]
+		def now = new Date()
+		def dateString = now.toTimestamp()
+		def lYear = now[Calendar.YEAR] -1
+		def lDate = now[Calendar.DATE]
+		def prevMonth = now[Calendar.MONTH]
+		def lastYear=now.updated(year: lYear, date: lDate, month: prevMonth)
+		def dateStrng = lastYear.toTimestamp()
 		
+		 if (params.paginate == 'Foo') {
+	      def fooPagination = [max: params.max, offset: params.offset]
+	      session.fooPagination = fooPagination
+	    } 
+		 if (params.paginate == 'Bar') {
+	      def barPagination = [max: params.max, offset: params.offset]
+	      session.barPagination = barPagination
+	    }
+		
+	    def barList = Game.createCriteria().list(session.barPagination ?: [max: 10, offset: 0]){
+			if(chosenPlatform){
+							createAlias("platform","p")
+							eq("p.platformName",chosenPlatform)
+							and{
+								eq("status", "okay")
+								between("releaseDate", dateString, dateStrng)
+							}
+			} else if(!chosenPlatform){
+					eq("status", "okay")
+					and{
+						between("releaseDate", dateStrng, dateString)
+					}
+			}
+			
+			order("releaseDate", "desc")
+		}
+		
+	    def fooList = Game.createCriteria().list(session.fooPagination ?: [max: 10, offset: 0]){
+			if(chosenPlatform){
+							createAlias("platform","p")
+							eq("p.platformName",chosenPlatform)
+							and {
+								eq("status", "okay")
+								def c=max("averageRating")
+								between("averageRating",1,c)
+							}
+			} else if(!chosenPlatform){
+					eq("status", "okay")
+			}
+			order("averageRating", "desc")
+		}
+	    //This is to stop the paginate using params.offset/max to calculate current step and use the offset/max attributes instead    
+	    params.offset = null
+	    params.max = null
+	    [chosenPlatform:chosenPlatform,fooList: fooList, platforms:platform, totalFoos: fooList.totalCount, totalBars: barList.totalCount, barList: barList]
 	}
-	
 	
 
 	def list() {

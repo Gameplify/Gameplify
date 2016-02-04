@@ -21,7 +21,7 @@ class User {
 	}
 	
     static constraints = {
-        name 			blank:false
+        name 			blank:false, size:5..50
         emailAddress  	blank:false, email:true
         username  		blank:false, size:5..50, matches:/[\S]+/
         password  		blank:false, size:5..50, matches:/[\S]+/

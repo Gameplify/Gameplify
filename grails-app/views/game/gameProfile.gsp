@@ -72,7 +72,7 @@
 
 						</div>
 						<div class="ui segment"
-							style="margin-left: 40px; margin-top: 20px; height: 400px; width: 272px;">
+							style="margin-left: 40px; margin-top: 20px; height: auto; width: 278px;">
 							<div class="column" style="width: 270px; height: auto;">
 
 								<div>
@@ -83,7 +83,7 @@
 										<g:if test="${ss.gameTitle==ga }">
 											<img class="ui tiny centered image"
 											style="width: 25px;height: 25px;left: 100px;top: -19px;"
-											src="${resource(dir: '../images', file: "hot.png")}">
+											src="${resource(dir: '../../../web-app/images', file: "hot.png")}">
 										</g:if>
 									</g:each>
 									<g:each in="${bb}" status="i" var="aa">
@@ -91,7 +91,7 @@
 										<g:if test="${aa.gameTitle==da }">
 											<img class="ui tiny centered image"
 											style="width: 25px;height: 25px;left: 76px;t;top: -44px;"
-											src="${resource(dir: '../images', file: "neww.png")}">
+											src="${resource(dir: '../../../web-app/images', file: "neww.png")}">
 										</g:if>
 									</g:each>
 								</div>
@@ -130,11 +130,13 @@
 										style="margin-left: 92px;">Edit</button>
 								</g:if>
 								<div class="ui two column stackable grid"
-									style="margin: auto; display: block;">
-									<div class="row">
+									style="margin: auto;display: table-cell;padding: -10px;padding-top: 0px;">
+									<div class="row"
+									style=" width: 270px;height: auto;padding-top: 0px;bottom: 5px;top: 5px;">
 
 										<g:each in="${game.categories}" status="i" var="cat">
-											<label class="ui blue label"> ${cat.categoryName }
+											<label class="ui blue label"
+											style="padding-top: 7px;bottom: 13px;margin-bottom: 5px;"> ${cat.categoryName }
 											</label>
 
 
@@ -174,7 +176,7 @@
 																	class="avatar">
 													<g:if test="${review.user.avatar }">
 														<img
-															src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
+															src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
 													</g:if>
 													<g:else>
 														<img class="photo"
@@ -274,21 +276,27 @@
 															<div class="loadMore" onclick="myFunc()"
 																style="text-align: center; visibility: hidden;">Load
 																more</div>
+															
 														</g:else>
-
+														<g:if test="${ review.comment.size() == 0}">
+														
+														<div style="    text-align: center; font-style: italic; color: dimgrey;">	
+															---------- No existing comments. ----------
+															</div>
+															</g:if>
 														<g:if test="${session?.user}">
 															<g:if test="${session?.user?.status != "blocked"}">
 																<g:form class="ui comment form">
 																	<div class="field">
-																		<g:textArea name="comment" required="" />
+																		<g:textArea id="textbox" name="comment" required="" maxlength="100"/>
 																		<g:hiddenField name="gameId" value="${game.id}" />
 																		<g:hiddenField name="gameTitle"
 																			value="${game.gameTitle}" />
 																		<g:hiddenField name="reviewId" value="${review.id}" />
 																	</div>
-
+																
 																	<g:actionSubmit action="addComment" value=" Comment"
-																		class="ui blue labeled submit icon button">
+																	id="commentButton"	class="ui blue labeled submit icon button" disabled="">
 
 
 																	</g:actionSubmit>
@@ -443,7 +451,7 @@ $('.myList').each(function() {
   	
 	
     });
-
+ 
 </script>
 </body>
 </html>

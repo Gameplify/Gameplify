@@ -53,28 +53,28 @@
 			                                                                                     <div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;height: 453px;">
 																                                 	 	<g:each in="${games}" status="i" var="game">
 																	                                 	<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">                             		
-																												 <div class="ui segment" style="width: 314px;height: auto; padding-left: 22px;margin-top: 0px;margin-bottom: 0px;left: -18px; ">
-																	                                              		<g:each in="${gamess}" status="t" var="ss">
-																															<g:set var="ga" value="${game.gameTitle}" />
-																															<g:if test="${ss.gameTitle==ga }">
-																																<img class="ui tiny centered image"
-																																style="width: 25px;height: 25px;left: 108px;top: -2px;"
-																																src="${resource(dir: '../images', file: "hot.png")}">
-																															</g:if>
-																														</g:each>
-																														<g:each in="${bb}" status="t" var="aa">
-																															<g:set var="da" value="${game.gameTitle}" />
-																															<g:if test="${aa.gameTitle==da }">
-																																<img class="ui tiny centered image"
-																																style="width: 25px;height: 25px;left: 82px;top: -27px;"
-																																src="${resource(dir: '../images', file: "neww.png")}">
-																															</g:if>
-																														</g:each> 
-																	                                              		<img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${game.gameLogo}")}">
-																	                                                    <h5 style="    padding-left: 10px; margin-top: 0px; margin-bottom: 0px;">${game.gameTitle }</h5>
-																	                                                    <div class="row" style="padding-bottom: 13px;padding-top: 5px;border-top-width: 5px;margin-top: 0px;margin-left: 3px;">
+																												 <div class="ui segment" style="width: 314px;height: 142px; padding-left: 22px;margin-top: 0px;margin-bottom: 8px;left: -18px;">
+																		                                              		<g:each in="${gamess}" status="t" var="ss">
+																																<g:set var="ga" value="${game.gameTitle}" />
+																																<g:if test="${ss.gameTitle==ga }">
+																																	<img class="ui tiny centered image"
+																																	style="width: 25px;height: 25px;left: 132px;top: -2px;"
+																																	src="${resource(dir: 'images', file: "hot.png")}">
+																																</g:if>
+																															</g:each>
+																															<g:each in="${bb}" status="t" var="aa">
+																																<g:set var="da" value="${game.gameTitle}" />
+																																<g:if test="${aa.gameTitle==da }">
+																																	<img class="ui tiny centered image"
+																																	style="width: 25px;height: 25px;left: 108px;top: -27px;"
+																																	src="${resource(dir: 'images', file: "neww.png")}">
+																																</g:if>
+																															</g:each> 
+																	                                              		<img class="ui tiny left floated image" style="top:-35px;" src="${resource(dir: 'images', file: "${game.gameLogo}")}">
+																	                                                    <h5 style="margin-top: -16px;">${game.gameTitle }</h5>
+																	                                                    <div class="row" style="">
 														                                 									<g:each var="category" in="${game.categories}">
-														                                 									<a  style="margin-bottom: 5px;margin-left: 7px;"> ${category.categoryName }</a> 
+														                                 									<a  style=""> ${category.categoryName }</a> 
 														                                                                    </g:each>
 														                                                                </div>   
 																	                                              </div> 
@@ -118,8 +118,9 @@
 									   <div class="ui segment"  style="width: 770px; height: auto;">
                                      		<div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">
 			                                 	 	<g:each in="${users}" status="i" var="user">
+			                                 	 	<g:if test="${(i)<10}">
 				                                 	<g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${user.id}"]}">                               		
-															 <div class="ui segment" style="  height: 120px; width: 270px; padding-top: 14px; margin-left: 0px; margin-top:0px;">
+															 <div class="ui segment" style="  height: 120px; width: 270px; padding-top: 14px;margin-left: 7px; margin-top:0px;">
 				                                                    <g:if test="${user.avatar}">
 				                                                    	<img class="ui tiny left floated image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
 				                                                    </g:if>
@@ -131,6 +132,7 @@
 	                                 								 </div>   
 				                                              </div> 
 				                                    </g:link>
+				                                    </g:if>
 				                                   </g:each>
                                            </div>
 											<div class="pagination" style="text-align: center;">
@@ -146,14 +148,16 @@
 	                                      <div class="ui segment"  style="width: 770px; height: auto;">
 	                                     		<div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">
 				                                 	 	<g:each in="${gam}" status="i" var="game">
+				                                 	 	<g:if test="${(i)<10}">
 					                                 	<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}"> 
-					                                 	 <div class="ui segment" style="  height: auto;width: 313px; padding-top: 14px; margin-left: 0px; margin-top:0px;">
+					                                 	 <div class="ui segment" style="height: 162px;width: 313px; padding-top: 14px;margin-left: 7px; margin-top:0px;">
+																	<div class="ui two column stackable grid">
 					                                              		<g:each in="${gamess}" status="t" var="ss">
 																			<g:set var="ga" value="${game.gameTitle}" />
 																			<g:if test="${ss.gameTitle==ga }">
 																				<img class="ui tiny centered image"
 																				style="width: 25px;height: 25px;left: 108px;top: -2px;"
-																				uri="../images/hot.png">
+																				src="${resource(dir: '../../../web-app/images', file: "hot.png")}">
 																			</g:if>
 																		</g:each>
 																		<g:each in="${bb}" status="t" var="aa">
@@ -161,9 +165,10 @@
 																			<g:if test="${aa.gameTitle==da }">
 																				<img class="ui tiny centered image"
 																				style="width: 25px;height: 25px;left: 82px;top: -27px;"
-																				uri="../images/new.png">
+																				src="${resource(dir: '../../../web-app/images', file: "neww.png")}">
 																			</g:if>
 																		</g:each> 
+																	</div>
 					                                              		<img class="ui tiny left floated image" src="${resource(dir: 'images', file: "${game.gameLogo}")}">
 					                                                    <h5 style="    padding-left: 10px; margin-top: 0px; margin-bottom: 0px;">${game.gameTitle }</h5>
 					                                                    <div class="row" style="padding-bottom: 13px;padding-top: 5px;border-top-width: 5px;margin-top: 0px;margin-left: 3px;">
@@ -173,6 +178,7 @@
 		                                                                </div>   
 					                                              </div> 
 					                                    </g:link>
+					                                    </g:if>
 					                                   </g:each>
 	                                           </div>
 	                                   

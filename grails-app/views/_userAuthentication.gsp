@@ -48,12 +48,12 @@
 						</g:if>
 						<div class="field">
 							<label for="username">User name</label>
-							<g:textField name="username" required="" />
+							<g:textField name="username" required="" maxlength="50" />
 
 						</div>
 						<div class="field">
 							<label for="password">Password</label>
-							<g:passwordField name="password" required="" />
+							<g:passwordField name="password" required="" maxlength="50"/>
 
 						</div>
 						<g:submitButton class="ui fluid large blue submit button"

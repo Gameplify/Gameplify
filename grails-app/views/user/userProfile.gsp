@@ -53,18 +53,16 @@
 					<div class="ui grid" style="width: 800px; padding: 20px;">
 						<h3>Reviews</h3>
 					</div>
-					<g:if test="!${user.reviews }">
-						No reviews
-					</g:if>
+					<g:if test="${user.reviews}">
 					<g:each in="${user.reviews}" status="i" var="review">
-						
-							<div class="ui segment"
-								style="width: 770px; height: auto; margin-top: 10px">
-								<div>
-									<a class="ui red ribbon label"> ${review.game.averageRating}
-									</a>
-								</div>
-								<g:link controller="game" action="gameProfile"
+
+						<div class="ui segment"
+							style="width: 770px; height: auto; margin-top: 10px">
+							<div>
+								<a class="ui red ribbon label"> ${review.game.averageRating}
+								</a>
+							</div>
+							<g:link controller="game" action="gameProfile"
 								params="${[gameTitle:"${review.game.gameTitle}"] }">
 								<div class="ui grid">
 									<div class="one wide column"></div>
@@ -92,9 +90,12 @@
 
 
 								</div>
-							</div>
+						</div>
 						</g:link>
 					</g:each>
+					</g:if><g:else>
+						No Reviews
+					</g:else>
 				</div>
 				<div class="ui two row stackable grid">
 					<div class="column">
@@ -102,19 +103,27 @@
 							<g:include controller="user" action="showUserAuthentication" />
 						</div>
 						<div class="ui segment"
-							style="margin-left: 40px; margin-top: 20px; height: 344px; width: 272px;">
+							style="margin-left: 40px; height: 360px; width: 272px;">
 							<div class="column">
+								<g:if test="${flash.message}">
+								<div class="err">
+									<div class="message" style="display: block">
+									</div>
+										${flash.message}
+									</div>
+								</g:if>
 								<div style="position: relative">
 									<g:if test="${user.avatar }">
-										<img style="height: 170px; width: 170px; margin: 35px; border:1px solid lightgray;"
+										<img
+											style=" margin-top:5px; height: 170px; width: 170px; margin: 35px; border: 1px solid lightgray;"
 											class="ui image"
 											src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
 									</g:if>
 									<g:else>
-										<img class="photo" style="border:1px solid lightgray;"
+										<img class="photo" style="border: 1px solid lightgray;"
 											src="${resource(dir: 'images', file: "nan.jpg")}">
 									</g:else>
-
+									
 
 									<div style="position: absolute; bottom: 0; right: 0">
 										<g:if test="${session?.user?.id == user.id}">

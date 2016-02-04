@@ -1,3 +1,4 @@
+<g:if test="${activities }">
 <g:each in="${activities}" status="i" var="activity">
 
 	<div class="ui segment"
@@ -12,3 +13,5 @@
 		</div>
 	</div>
 </g:each>
+</g:if>
+<g:else>No Activities</g:else>
