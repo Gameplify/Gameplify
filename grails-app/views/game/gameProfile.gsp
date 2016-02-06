@@ -317,7 +317,7 @@
 							</div>
 							<div class="field">
 								<label for="price">Price*</label>
-								<g:field type="number" name="gamePrice" required=""
+								<g:field type="number" name="gamePrice" required="" min="0"
 									value="${game.gamePrice }" style="font-size: 14px;" />
 							</div>
 							<div class="field">

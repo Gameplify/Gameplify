@@ -36,7 +36,7 @@
 						<div class="ui grid"
 							style="margin-left: 545px; margin-top: -50px;">
 							<g:if test="${flash.message}">
-								<div class="message" style="width: 200px; margin-left: -171px;">
+								<div class="err" style="margin-top: 25px;width: 200px;position: absolute;margin-left: -300px;">
 									${flash.message }
 								</div>
 							</g:if>
@@ -128,7 +128,7 @@
 	<div class="ui modal addGame">
 		<i class="close icon"></i>
 		<g:form class="ui equal width form" id="form" style="padding:10px"
-			controller='game' action='addGame'>
+			controller='game' action='addGame'  onsubmit="return check()">
 			<img class="ui centered small image" id="image" src="#"
 				alt="Game Logo">
 			<g:field type="file" name="gameLogo" accept="image/*" required="" style="    margin: 10px;"/>
@@ -145,7 +145,7 @@
 				</div>
 				<div class="field">
 					<label for="price">Price*</label>
-					<g:field type="number" name="gamePrice" required="" style="font-size:14px;" />
+					<g:field type="number" name="gamePrice" min="0" required="" style="font-size:14px;" />
 				</div>
 				<div class="field">
 					<label for="platform">Platform</label>
@@ -164,7 +164,7 @@
 						<div class="four wide column"
 							style="padding: 0px; margin-left: 10px; margin-top: 12px;">
 							<div class="ui checkbox">
-								<g:checkBox name="category" value="${cat.id}" checked="false" />
+								<g:checkBox name="category" value="${cat.id}" checked="false"/>
 								<label> ${cat.categoryName}
 								</label>
 							</div>
@@ -177,7 +177,7 @@
 				<g:field type="file" name="screenshots" accept="image/*" required="" multiple="multiple" style="margin: 10px;"/>
 			</div>
 			<div class="actions" style="text-align: center; margin-top: 30px;">
-				<g:submitButton class="ui button" name="addButton" value="Add Game"
+				<g:submitButton class="ui button" name="addButton" id="addButton" value="Add Game"
 					style="margin-left: -1.75em;"></g:submitButton>
 			</div>
 		</g:form>
@@ -199,7 +199,18 @@
 			$('#deleteGame').click(function() {
 				$('.ui.icon.button.delete').toggle();
 			});
-	<%--$('#form').on('submit', function (e) {			
+			
+			<%--var checkedAtLeastOne = false;
+			 $('input[type="checkbox"]').each(function() {
+			     if ($(this).is(":checked")) {
+			         checkedAtLeastOne = true;
+			     }
+			 });
+			 if(checkedAtLeastOne){
+					document.getElementById("addButton").disabled = false;
+				 }
+			 
+	$('#form').on('submit', function (e) {			
 		if (document.getElementsByName("category").length === 0) {
 			e.preventDefault();
 			alert('Select at least one category');
@@ -207,6 +218,22 @@
 		}
 	});	--%>
 		});
+		function check(){
+			var checkboxs=document.getElementsByName("category");
+		    var okay=false;
+		    for(var i=0,l=checkboxs.length;i<l;i++)
+		    {
+		        if(checkboxs[i].checked)
+		        {
+		            okay=true;
+		            break;
+		        }
+		    }
+		    if(!okay){
+			    alert("Please check a checkbox");
+		    	return false;
+		    }
+		}
 	</script>
 </body>
 </html>
