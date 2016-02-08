@@ -36,6 +36,7 @@
 				<div class="ui segment" style="width: 800px; height: auto">
 					<div class="ui three column stackable grid">
 						<div class="column" style="    width: 98.333333%;">
+						<g:if test="${flash.reg}">${flash.reg}</g:if>
 							<div class="ui grid" style="float: right">
 
 								<g:each in="${platforms }" var="platform">
@@ -51,20 +52,19 @@
 						</div>
 					</div>
 					<div class="ui two column stackable grid">
-					     <div class="column" style="width: 378px;">
-								
+						<div class="column" style="width: 378px;">
+							
 							<div class="ui segment"
 								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid" style="height:391px;">
 									<div class="rows" style="width: 325px;">
-										<div class="column" style="width: 378px;">
-											<h3>What's HOT</h3>
-										</div>
-											
+									<div class="column" style="width: 378px;">
+										<h3>What's HOT</h3>
+									</div>
 										<g:if test="${bool=='true' }">
-										<g:each in="${games}" status="i" var="games">
-										<g:if test="${(i)<3}">
+										<g:each in="${games}" status="i" var="game">
+										<g:if test="${(i)<3}" >
 										<g:if test="${game.averageRating != 0 }">
 											<g:link action="gameProfile"
 												params="${[gameTitle: "${game.gameTitle}"]}">
@@ -149,6 +149,7 @@
 										<g:if test="${game.averageRating != 0 }">
 											<g:link action="gameProfile"
 												params="${[gameTitle: "${game.gameTitle}"]}">
+
 												<div class="ui segment"
 													style="height: 104px; width: 339px; padding-top: 14px; margin-top: 14px; margin-bottom: 14px;">
 													<a class="ui red right ribbon label 1" style="left: 253px;">
@@ -182,25 +183,25 @@
 											</g:if>
 										</g:each>
 											</g:else>
-
-										</div>
+										 
 									</div>
-								</div>
+									</div>
+									</div>
 
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
-												<g:link action="hot" params="${[chosenPlatform:"${chosenPlatform}", bool:"true"]}">First</g:link>
-												<g:paginate action="hot" total="${gameCount}"  offset="0" max="3" params="${[chosenPlatform:"${chosenPlatform}", bool:"true"]}"/>
-												<g:link action="hot" params="${[chosenPlatform:"${chosenPlatform}", bool:"false",paginate:"Bar"]}">Last</g:link>
+												<g:link action="index" params="${[chosenPlatform:"${chosenPlatform}", bool:"true"]}">First</g:link>
+												<g:paginate action="index" total="${gameCount}"  offset="0" max="3" params="${[chosenPlatform:"${chosenPlatform}", bool:"true"]}"/>
+												<g:link action="index" params="${[chosenPlatform:"${chosenPlatform}", bool:"false"]}">Last</g:link>
 											</div>
+
+
 						</div>
-						
-						
-						
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
 								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid">
+								
 									<div class="rows" style="height: 391px; width: 325px;">
 															
 						<div class="column" style="width: 140px;">
@@ -328,8 +329,8 @@
 									</div>
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
 												<g:link action="index" params="${[chosenPlatform:"${chosenPlatform}", bool:"true"]}">First</g:link>
-												<g:paginate action="index" total="${gameCont}"  offset="0" max="3" params="${[chosenPlatform:"${chosenPlatform}",, bool:"true"]}"/>
-												<g:link action="index" params="${[chosenPlatform:"${chosenPlatform}", bool:"false",paginate:"Bar"]}">Last</g:link>
+												<g:paginate action="index" total="${gameCount}"  offset="0" max="3" params="${[chosenPlatform:"${chosenPlatform}", bool:"true"]}"/>
+												<g:link action="index" params="${[chosenPlatform:"${chosenPlatform}", bool:"false"]}">Last</g:link>
 											</div>
 
 								
