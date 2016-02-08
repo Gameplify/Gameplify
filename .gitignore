@@ -19,3 +19,9 @@ stacktrace.log
 /.link_to_grails_plugins/
 /target-eclipse/
 *.class
+
+grails-app/services/gameplify/GameService.groovy
+
+grails-app/controllers/gameplify/UserController.groovy
+
+grails-app/views/game/index.gsp

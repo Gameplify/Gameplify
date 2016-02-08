@@ -72,14 +72,33 @@
 
 						</div>
 						<div class="ui segment"
-							style="margin-left: 40px; margin-top: 20px; height: 400px; width: 272px;">
-							<div class="column" style="width: 270px; height: 330px;">
+							style="margin-left: 40px; margin-top: 20px; height: auto; width: 278px;">
+							<div class="column" style="width: 258px; height: auto;">
 
 								<div>
 									<a id="updateMe" class="ui red ribbon label"> ${game.averageRating}
 									</a>
+																											<div class="ui grid" style="float:right;margin-right: 1px;margin-top: 0px;">
+																		                                              		 	<g:each in="${games}" status="g" var="ss">
+																		                                              		 	<g:if test="${ss.averageRating >0}">
+																																	<g:set var="ga" value="${game.gameTitle}" />
+																																	<g:if test="${ss.gameTitle==ga }">
+																																		<img class="ui tiny centered image"
+																																		style="width: 25px;height: 25px;padding-right: 0px;"
+																																		src="${resource(dir: '../../../web-app/images', file: "hot.png")}"/>
+																																	</g:if>
+																																</g:if>
+																																</g:each>
+																																<g:each in="${bb}" status="h" var="aa">
+																																	<g:set var="da" value="${game.gameTitle}" />
+																																	<g:if test="${aa.gameTitle==da }">
+																																		<img class="ui tiny centered image"
+																																		style="width: 25px;height: 25px;padding-right: 0px;"
+																																		src="${resource(dir: 'images', file: "neww.png")}"/>
+																																	</g:if>
+																																</g:each>
+																											</div>
 								</div>
-
 								<img class="ui tiny centered image"
 									style="width: 150px; height: 150px;"
 									src="${resource(dir: 'images', file: "$game.gameLogo")}">
@@ -92,8 +111,12 @@
 										${game.gamePrice }
 
 									</h5>
-								</div>
+									<h5 class="title">
+										${game.numberOfRaters }
 
+									</h5>
+								</div>
+									
 								<g:if test="${session?.user }">
 									<g:if test="${session?.user?.status != "blocked"}">
 										<div class="ui large star rating" data-rating=${rating
@@ -101,11 +124,7 @@
 									data-max-rating="5"></div>
 									</g:if>
 								</g:if>
-								<h5 class="title">
-										$
-										${game.numberOfRaters }
-
-									</h5>
+								
 
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
@@ -115,11 +134,13 @@
 										style="margin-left: 92px;">Edit</button>
 								</g:if>
 								<div class="ui two column stackable grid"
-									style="margin: auto; display: block;">
-									<div class="row">
+									style="margin: auto;display: table-cell;padding: -10px;padding-top: 0px;">
+									<div class="row"
+									style=" width: 270px;height: auto;padding-top: 0px;bottom: 5px;top: 5px;">
 
 										<g:each in="${game.categories}" status="i" var="cat">
-											<label class="ui blue label"> ${cat.categoryName }
+											<label class="ui blue label"
+											style="padding-top: 7px;bottom: 13px;margin-bottom: 5px;"> ${cat.categoryName }
 											</label>
 
 
