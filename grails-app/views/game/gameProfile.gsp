@@ -102,10 +102,10 @@
 									</g:if>
 								</g:if>
 								<h5 class="title">
-										$
-										${game.numberOfRaters }
+									$
+									${game.numberOfRaters }
 
-									</h5>
+								</h5>
 
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
@@ -155,16 +155,13 @@
 										<g:each in="${reviews}" status="i" var="review">
 											<li>
 												<div class="comment">
-												<a
-																	class="avatar">
-													<g:if test="${review.user.avatar }">
-														<img
-															src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
-													</g:if>
-													<g:else>
-														<img class="photo"
-															src="${resource(dir: 'images', file: "nan.jpg")}">
-													</g:else>
+													<a class="avatar"> <g:if test="${review.user.avatar }">
+															<img
+																src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
+														</g:if> <g:else>
+															<img class="photo"
+																src="${resource(dir: 'images', file: "nan.jpg")}">
+														</g:else>
 													</a>
 													<div class="content">
 														<g:link class="author" controller="user"
@@ -201,7 +198,6 @@
 																		params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
 																</div>
 															</g:if>
-
 														</g:else>
 														<ul class="myList">
 															<g:each
@@ -259,27 +255,29 @@
 															<div class="loadMore" onclick="myFunc()"
 																style="text-align: center; visibility: hidden;">Load
 																more</div>
-															
+
 														</g:else>
 														<g:if test="${ review.comment.size() == 0}">
-														
-														<div style="    text-align: center; font-style: italic; color: dimgrey;">	
-															---------- No existing comments. ----------
-															</div>
-															</g:if>
+
+															<div
+																style="text-align: center; font-style: italic; color: dimgrey;">
+																---------- No existing comments. ----------</div>
+														</g:if>
 														<g:if test="${session?.user}">
 															<g:if test="${session?.user?.status != "blocked"}">
 																<g:form class="ui comment form">
 																	<div class="field">
-																		<g:textArea id="textbox" name="comment" required="" maxlength="100"/>
+																		<g:textArea id="textbox" name="comment" required=""
+																			maxlength="100" />
 																		<g:hiddenField name="gameId" value="${game.id}" />
 																		<g:hiddenField name="gameTitle"
 																			value="${game.gameTitle}" />
 																		<g:hiddenField name="reviewId" value="${review.id}" />
 																	</div>
-																
+
 																	<g:actionSubmit action="addComment" value=" Comment"
-																	id="commentButton"	class="ui blue labeled submit icon button" disabled="">
+																		id="commentButton"
+																		class="ui blue labeled submit icon button" disabled="">
 
 
 																	</g:actionSubmit>
@@ -296,15 +294,10 @@
 						</div>
 					</div>
 				</div>
-
-
-
-
-
 				<div class="ui modal addGame">
 					<i class="close icon"></i>
 					<g:form class="ui equal width form" id="form" style="padding:20px"
-						controller='game' action='editGame'>
+						controller='game' action='editGame' onsubmit="return checkEdit();">
 						<img class="ui centered small image" id="image"
 							src="${resource(dir: 'images', file: "$game.gameLogo")}"
 							alt="Game Logo">
@@ -324,7 +317,7 @@
 							</div>
 							<div class="field">
 								<label for="price">Price*</label>
-								<g:field type="number" name="gamePrice" required=""
+								<g:field type="number" name="gamePrice" required="" min="0"
 									value="${game.gamePrice }" style="font-size: 14px;" />
 							</div>
 							<div class="field">
@@ -362,9 +355,14 @@
 								</g:each>
 							</div>
 						</div>
+						<div class="field" style="margin-top: 20px;">
+							<label for="screenshot">Screenshot/s</label>
+							<g:field type="file" name="screenshots" accept="image/*"
+								required="" multiple="multiple" style="margin: 10px;" />
+						</div>
 						<div class="actions" style="text-align: center; margin-top: 30px;">
 							<g:submitButton class="ui button" name="addButton"
-								value="Add Game" style="margin-left: -1.75em;"></g:submitButton>
+								value="Edit Game" style="margin-left: -1.75em;"></g:submitButton>
 						</div>
 					</g:form>
 				</div>

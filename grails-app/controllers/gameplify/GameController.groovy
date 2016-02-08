@@ -89,6 +89,7 @@ class GameController {
 		def checkedCategory = params.list('category')
 		def categories = GameCategory.getAll(checkedCategory)
 		def checkGame = gameService.listGameInfo(params.gameTitle)
+		def screenshots = params.list('screenshots')
 		if(checkGame != null && checkGame.status != "deleted"){
 			flash.message = "Game already exist"
 			//		} else if(checkGame.status == "deleted"){
@@ -97,7 +98,7 @@ class GameController {
 		else if(categories.isEmpty()) {
 			flash.message = "You must select at least one category"
 		} else {
-			gameService.addGame(params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories, session.user.id)
+			gameService.addGame(params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories, session.user.id, screenshots)
 		}
 		redirect(action:"gameManagement", params:[categoryName:params.currentCategory])
 	}
@@ -106,10 +107,11 @@ class GameController {
 		def checkedCategory = params.list('newCategory')
 		def categories = GameCategory.getAll(checkedCategory)
 		def removeCat = GameCategory.getAll(uncheckedCategory)
+		def screenshots = params.list('screenshots')
 		if(categories.isEmpty()) {
 			flash.message = "You must select at least one category"
 		} else {
-			gameService.editGame(params.gameId, params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories, removeCat, session.user.id)
+			gameService.editGame(params.gameId, params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories, removeCat, session.user.id,screenshots)
 		}
 		redirect(action:"gameProfile", params:[gameTitle:params.gameTitle])
 	}

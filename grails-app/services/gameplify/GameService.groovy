@@ -9,8 +9,6 @@ class GameService {
 
 	def userService
 
-
-
 	def report(type,userId){
 		def rep = Report.find{user.id == userId}
 		if(rep){
@@ -205,7 +203,7 @@ class GameService {
 	}
 
 
-	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories,adminId){
+	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, adminId, screenshots){
 		Platform platform = Platform.get(platformId)
 		Game game = new Game(
 				gameTitle:gameTitle,
@@ -224,6 +222,13 @@ class GameService {
 				game:game
 				)
 		ss.save()
+		screenshots.each{
+			Screenshots slist = new Screenshots(
+				photo:it,
+				game:game
+				)
+			slist.save()
+		}
 		game.addToScreenshot(ss)
 		game.save(flush:true)
 		platform.addToGame(game)
@@ -238,7 +243,7 @@ class GameService {
 		log.println(platform.platformName)
 		userService.addAdminActivity(adminId,"added " +gameTitle)
 	}
-	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, removeCat, adminId){
+	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, removeCat, adminId,screenshots){
 		Platform platform = Platform.get(platformId)
 		Game game = Game.get(gameId)
 		game.gameTitle = gameTitle
@@ -257,7 +262,15 @@ class GameService {
 			gameCategory.removeFromGames(game)
 			gameCategory.save(flush:true)
 		}
-
+		if(sreenshots){
+			screenshots.each {
+				Screenshots slist = new Screenshots(
+					photo:it,
+					game:game
+					)
+				slist.save()
+			}
+		}
 		categories.each {
 			GameCategory gameCategory = GameCategory.get(it.id)
 			log.println(gameCategory.categoryName)
@@ -307,9 +320,6 @@ class GameService {
 
 		return allReviews
 	}
-
-
-
 
 	def listGame(currentCategory, chosenPlatform, max, offset, what, how){
 		def games
@@ -441,9 +451,6 @@ class GameService {
 		log.println("ni sud sa descend")
 		return games
 	}
-
-
-
 
 	def serviceMethod() {
 	}
