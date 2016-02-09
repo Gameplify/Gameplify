@@ -69,11 +69,11 @@
 											</a>
 										</div>
 									</div>
-									<div style="position: fixed; margin-top: 5px; width: 80;">
+									<div style="margin-top: 5px; width: 80;">
 										<g:form controller="user" action="ignoreReport">
 											<g:hiddenField name="reportId" value="${report.id}" />
 											<g:submitButton class="ui centered mini red button"
-												style="position:fixed;" value="IGNORE" name="ignore"
+												style="position:absolute;" value="IGNORE" name="ignore"
 												onclick="return confirm('Are you sure you want to ignore this report?')" />
 										</g:form>
 									</div>
