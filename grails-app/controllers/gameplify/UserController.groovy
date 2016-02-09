@@ -172,7 +172,7 @@ def avatar_image() {
 			flash.message = "You do not have permission to access this page"
 			redirect(controller:"game", action: "index")
 		} else {
-			def max = params.max ?: 3
+			def max = params.max ?: 20
 			def offset = params.offset ?: 0
 			def reports = userService.listReports(max, offset)
 			log.println(reports.user.id)
@@ -190,7 +190,7 @@ def avatar_image() {
 			flash.message = "You do not have permission to access this page"
 			redirect(controller:"game", action: "index")
 		} else {
-			def max = params.max ?: 3
+			def max = params.max ?: 20
 			def offset = params.offset ?: 0
 			def blocked = userService.listBlocked(max, offset)
 			if(blocked){
