@@ -143,19 +143,3 @@ $(document).ready(function()  {
      $('#texts').val("");
      $('#text').val("");
    }
-function checkEdit(){
-		var checkboxs=document.getElementsByName("newCategory");
-	    var okay=false;
-	    for(var i=0,l=checkboxs.length;i<l;i++)
-	    {
-	        if(checkboxs[i].checked)
-	        {
-	            okay=true;
-	            break;
-	        }
-	    }
-	    if(!okay){
-		    alert("Please check a checkbox");
-	    	return false;
-	    }
-	}

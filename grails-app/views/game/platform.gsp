@@ -40,7 +40,7 @@
 							<div class="ui grid" style="float: right;margin-top: 0px;">
 								<g:each in="${platform }" var="plat">
 									<g:link action="platform"
-										params="${[ platform:plat.platformName, paginates:'Foo', paginate:'Bar']}">
+										params="${[ platform:plat.platformName,paginates:'Foo', paginate:'Bar']}">
 										<button class="ui icon button">
 											<img class="platformpic"
 												src="${resource(dir: 'images', file: "${plat.pic}")}">
@@ -48,6 +48,7 @@
 									</g:link>
 								</g:each>
 							</div>
+							
 							
 						</div>
 					</div>
@@ -107,7 +108,7 @@
 								</div>
 
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
-												<g:paginate total="${totalFoos}" max="3" offset="${session.fooPagination?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginate:'Foo']}"/>
+												<g:paginate total="${totalFoos}" max="3" offset="${session.fooPaginations?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginates:'Foo']}"/>
 											</div>
 						</div>
 						
@@ -166,7 +167,7 @@
 									</div>
 									</div>
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
-											  <g:paginate total="${totalBars}" max="3" offset="${session.barPagination?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
+											  <g:paginate total="${totalBars}" max="3" offset="${session.barPaginations?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
 											</div>
 
 								
