@@ -1,6 +1,5 @@
+devDb.lock.db
 *.iws
-*Db.properties
-*Db.script
 .settings
 .idea
 eclipse
@@ -9,6 +8,8 @@ stacktrace.log
 /plugin.xml
 /*.log
 /*DB.*
+*Db.properties
+*Db.script
 /cobertura.ser
 .DS_Store
 /target/
