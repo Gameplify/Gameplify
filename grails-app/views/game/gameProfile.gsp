@@ -75,8 +75,8 @@
 							style="margin-left: 40px; margin-top: 20px; height: auto; width: 278px;">
 							<div class="column" style="width: 258px; height: auto;">
 
-								<div>
-									<a id="updateMe" class="ui red ribbon label"> ${game.averageRating}
+								<div id="updateMe">
+									<a class="ui red ribbon label"> ${game.averageRating}
 									</a>
 									<div class="ui grid"
 										style="float: right; margin-right: 1px; margin-top: 0px;">
@@ -99,25 +99,25 @@
 											</g:if>
 										</g:each>
 									</div>
+
+									<img class="ui tiny centered image"
+										style="width: 150px; height: 150px;"
+										src="${resource(dir: 'images', file: "$game.gameLogo")}">
+									<div class="center aligned column">
+										<h4 class="title">
+											${game.gameTitle }
+										</h4>
+										<h5 class="price">
+											$
+											${game.gamePrice }
+
+										</h5>
+										<h5 class="title">
+											${game.numberOfRaters }
+
+										</h5>
+									</div>
 								</div>
-								<img class="ui tiny centered image"
-									style="width: 150px; height: 150px;"
-									src="${resource(dir: 'images', file: "$game.gameLogo")}">
-								<div class="center aligned column">
-									<h4 class="title">
-										${game.gameTitle }
-									</h4>
-									<h5 class="price">
-										$
-										${game.gamePrice }
-
-									</h5>
-									<h5 class="title">
-										${game.numberOfRaters }
-
-									</h5>
-								</div>
-
 								<g:if test="${session?.user }">
 									<g:if test="${session?.user?.status != "blocked"}">
 										<div class="ui large star rating" data-rating=${rating
