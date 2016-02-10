@@ -213,13 +213,14 @@
 														</g:if>
 														<g:else>
 															<g:if
-																test="${session?.user?.status != "blocked" && session?.user}">
+																test="${session?.user?.status != "blocked" && session?.user != "${review.user.id}" 
+																	&& session?.user && "${review.user.role}" != "Admin"}">
 																<div class="reportUser">
 																	<g:remoteLink
 																		url="[controller:'game', action:'report']"
 																		value="Report"
 																		before="if(!confirm('Are you sure you want to report this user?')) return false"
-																		params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																		params="${[type:"${review.review}", userId:"${review.user.id}"]}">Report</g:remoteLink>
 																</div>
 															</g:if>
 
@@ -253,7 +254,7 @@
 																			${comment.comment }
 																		</div>
 																		<g:if
-																			test="${session?.user?.status != "blocked" && session?.user}">
+																			test="${session?.user?.status != "blocked" && session?.user != "Admin"}">
 																			<g:if
 																				test="${session?.user && "${review.user.role}" != "Admin"}">
 																				<div class="reportUser">
@@ -261,7 +262,7 @@
 																						url="[controller:'game', action:'report']"
 																						value="Report"
 																						before="if(!confirm('Are you sure you want to report this user?')) return false"
-																						params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																						params="${[type:"${comment.comment}", userId:"${comment.user.id}"]}">Report</g:remoteLink>
 																				</div>
 																			</g:if>
 																		</g:if>
