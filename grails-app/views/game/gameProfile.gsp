@@ -290,17 +290,20 @@
 															</g:if>
 														<g:if test="${session?.user}">
 															<g:if test="${session?.user?.status != "blocked"}">
-																<g:form class="ui comment form" >
+																<g:form class="ui comment form">
 																	<div class="field">
-																		<g:textArea class="textbox" name="comment" required="" maxlength="100"/>
+																		<g:textArea id="textbox" name="comment" required="" maxlength="100"/>
 																		<g:hiddenField name="gameId" value="${game.id}" />
 																		<g:hiddenField name="gameTitle"
 																			value="${game.gameTitle}" />
 																		<g:hiddenField name="reviewId" value="${review.id}" />
 																	</div>
+																
 																	<g:actionSubmit action="addComment" value=" Comment"
-																	 class="ui blue labeled submit icon button" disabled=""/>
+																	id="commentButton"	class="ui blue labeled submit icon button" disabled="">
 
+
+																	</g:actionSubmit>
 																</g:form>
 															</g:if>
 														</g:if>
