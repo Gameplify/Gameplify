@@ -83,9 +83,18 @@ $(document).ready(function()  {
 	}
 	$("#counter").append("<strong>"+reviewLength+"</strong> characters ");
 
-	$("#text").keyup(function(){
+	$("#text").keyup(function(e){
+		 var reviewLength = $(this).val().trim().length;	
+		
+		if(reviewLength == 500){
+			e.preventDefault();
+		}
+		else   if(reviewLength > 500){
+			   this.value = this.value.substring(0, this.value.length-1);
+			  
+		    }
 	
-	    var reviewLength = $(this).val().trim().length;	
+	   
 	    $("#counter").html(" <strong>"+  reviewLength+"</strong> characters");
 	    if(reviewLength < 100 || reviewLength > 500){
 	    	document.getElementById("reviewButton").disabled = true;
@@ -97,6 +106,8 @@ $(document).ready(function()  {
 	    {
 	        $("#counter").css("color","red");
 	    }
+		
+	 
 	    else
 	    {
 	        $("#counter").css("color","black");
@@ -112,6 +123,8 @@ $(document).ready(function()  {
           
 
 	});
+	
+
 	
 	$("#textbox").keyup(function(){
 
