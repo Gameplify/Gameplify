@@ -75,49 +75,48 @@
 							style="margin-left: 40px; margin-top: 20px; height: auto; width: 278px;">
 							<div class="column" style="width: 258px; height: auto;">
 
-								<div id="updateMe">
-									<a class="ui red ribbon label"> ${game.averageRating}
+								<div>
+									<a id="updateMe" class="ui red ribbon label"> ${game.averageRating}
 									</a>
-									<div class="ui grid"
-										style="float: right; margin-right: 1px; margin-top: 0px;">
-										<g:each in="${games}" status="g" var="ss">
-											<g:if test="${ss.averageRating >0}">
-												<g:set var="ga" value="${game.gameTitle}" />
-												<g:if test="${ss.gameTitle==ga }">
-													<img class="ui tiny centered image"
-														style="width: 25px; height: 25px; padding-right: 0px;"
-														src="${resource(dir: '../../../web-app/images', file: "hot.png")}" />
-												</g:if>
-											</g:if>
-										</g:each>
-										<g:each in="${bb}" status="h" var="aa">
-											<g:set var="da" value="${game.gameTitle}" />
-											<g:if test="${aa.gameTitle==da }">
-												<img class="ui tiny centered image"
-													style="width: 25px; height: 25px; padding-right: 0px;"
-													src="${resource(dir: 'images', file: "neww.png")}" />
-											</g:if>
-										</g:each>
-									</div>
-
-									<img class="ui tiny centered image"
-										style="width: 150px; height: 150px;"
-										src="${resource(dir: 'images', file: "$game.gameLogo")}">
-									<div class="center aligned column">
-										<h4 class="title">
-											${game.gameTitle }
-										</h4>
-										<h5 class="price">
-											$
-											${game.gamePrice }
-
-										</h5>
-										<h5 class="title">
-											${game.numberOfRaters }
-
-										</h5>
-									</div>
+																											<div class="ui grid" style="float:right;margin-right: 1px;margin-top: 0px;">
+																		                                              		 	<g:each in="${games}" status="g" var="ss">
+																		                                              		 	<g:if test="${ss.averageRating >0}">
+																																	<g:set var="ga" value="${game.gameTitle}" />
+																																	<g:if test="${ss.gameTitle==ga }">
+																																		<img class="ui tiny centered image"
+																																		style="width: 25px;height: 25px;padding-right: 0px;"
+																																		src="${resource(dir: '../../../web-app/images', file: "hot.png")}"/>
+																																	</g:if>
+																																</g:if>
+																																</g:each>
+																																<g:each in="${bb}" status="h" var="aa">
+																																	<g:set var="da" value="${game.gameTitle}" />
+																																	<g:if test="${aa.gameTitle==da }">
+																																		<img class="ui tiny centered image"
+																																		style="width: 25px;height: 25px;padding-right: 0px;"
+																																		src="${resource(dir: 'images', file: "neww.png")}"/>
+																																	</g:if>
+																																</g:each>
+																											</div>
 								</div>
+								<img class="ui tiny centered image"
+									style="width: 150px; height: 150px;"
+									src="${resource(dir: 'images', file: "$game.gameLogo")}">
+								<div class="center aligned column">
+									<h4 class="title">
+										${game.gameTitle }
+									</h4>
+									<h5 class="price">
+										$
+										${game.gamePrice }
+
+									</h5>
+									<h5 class="title">
+										${game.numberOfRaters }
+
+									</h5>
+								</div>
+									
 								<g:if test="${session?.user }">
 									<g:if test="${session?.user?.status != "blocked"}">
 										<div class="ui large star rating" data-rating=${rating
@@ -125,7 +124,7 @@
 									data-max-rating="5"></div>
 									</g:if>
 								</g:if>
-
+								
 
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
@@ -135,14 +134,13 @@
 										style="margin-left: 92px;">Edit</button>
 								</g:if>
 								<div class="ui two column stackable grid"
-									style="margin: auto; display: table-cell; padding: -10px; padding-top: 0px;">
+									style="margin: auto;display: table-cell;padding: -10px;padding-top: 0px;">
 									<div class="row"
-										style="width: 270px; height: auto; padding-top: 0px; bottom: 5px; top: 5px;">
+									style=" width: 270px;height: auto;padding-top: 0px;bottom: 5px;top: 5px;">
 
 										<g:each in="${game.categories}" status="i" var="cat">
 											<label class="ui blue label"
-												style="padding-top: 7px; bottom: 13px; margin-bottom: 5px;">
-												${cat.categoryName }
+											style="padding-top: 7px;bottom: 13px;margin-bottom: 5px;"> ${cat.categoryName }
 											</label>
 
 
@@ -178,13 +176,16 @@
 										<g:each in="${reviews}" status="i" var="review">
 											<li>
 												<div class="comment">
-													<a class="avatar"> <g:if test="${review.user.avatar }">
-															<img
-																src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
-														</g:if> <g:else>
-															<img class="photo"
-																src="${resource(dir: 'images', file: "nan.jpg")}">
-														</g:else>
+												<a
+																	class="avatar">
+													<g:if test="${review.user.avatar }">
+														<img
+															src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
+													</g:if>
+													<g:else>
+														<img class="photo"
+															src="${resource(dir: 'images', file: "nan.jpg")}">
+													</g:else>
 													</a>
 													<div class="content">
 														<g:link class="author" controller="user"
@@ -212,14 +213,13 @@
 														</g:if>
 														<g:else>
 															<g:if
-																test="${session?.user?.status != "blocked" && session?.user != "${review.user}" 
-																	&& session?.user && "${review.user.role}" != "Admin"}">
+																test="${session?.user?.status != "blocked" && session?.user}">
 																<div class="reportUser">
 																	<g:remoteLink
 																		url="[controller:'game', action:'report']"
 																		value="Report"
 																		before="if(!confirm('Are you sure you want to report this user?')) return false"
-																		params="${[type:"${review.review}", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																		params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
 																</div>
 															</g:if>
 
@@ -253,17 +253,18 @@
 																			${comment.comment }
 																		</div>
 																		<g:if
-																			test="${session?.user?.status != "blocked" && session?.user != "${comment.user}" 
-																	&& session?.user && "${comment.user.role}" != "Admin"}">
-																			<div class="reportUser">
-																				<g:remoteLink
-																					url="[controller:'game', action:'report']"
-																					value="Report"
-																					before="if(!confirm('Are you sure you want to report this user?')) return false"
-																					params="${[type:"${comment.comment}", userId:"${comment.user.id}"]}">Report</g:remoteLink>
-																			</div>
+																			test="${session?.user?.status != "blocked" && session?.user}">
+																			<g:if
+																				test="${session?.user && "${review.user.role}" != "Admin"}">
+																				<div class="reportUser">
+																					<g:remoteLink
+																						url="[controller:'game', action:'report']"
+																						value="Report"
+																						before="if(!confirm('Are you sure you want to report this user?')) return false"
+																						params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																				</div>
+																			</g:if>
 																		</g:if>
-
 
 																	</div></li>
 															</g:each>
@@ -279,32 +280,29 @@
 															<div class="loadMore" onclick="myFunc()"
 																style="text-align: center; visibility: hidden;">Load
 																more</div>
-
+															
 														</g:else>
 														<g:if test="${ review.comment.size() == 0}">
-
-															<div
-																style="text-align: center; font-style: italic; color: dimgrey;">
-																---------- No existing comments. ----------</div>
-														</g:if>
+														
+														<div style="    text-align: center; font-style: italic; color: dimgrey;">	
+															---------- No existing comments. ----------
+															</div>
+															</g:if>
 														<g:if test="${session?.user}">
 															<g:if test="${session?.user?.status != "blocked"}">
 																<g:form class="ui comment form">
 																	<div class="field">
-																		<g:textArea id="textbox" name="comment" required=""
-																			maxlength="100" />
+																		<g:textArea class="textbox" name="comment" required="" maxlength="100"/>
 																		<g:hiddenField name="gameId" value="${game.id}" />
 																		<g:hiddenField name="gameTitle"
 																			value="${game.gameTitle}" />
 																		<g:hiddenField name="reviewId" value="${review.id}" />
 																	</div>
-
+																
 																	<g:actionSubmit action="addComment" value=" Comment"
 																		id="commentButton"
-																		class="ui blue labeled submit icon button" disabled="">
+																		class="ui blue labeled submit icon button" disabled=""/>
 
-
-																	</g:actionSubmit>
 																</g:form>
 															</g:if>
 														</g:if>
