@@ -68,6 +68,7 @@
 																																</g:if>
 																																</g:each>
 																															</div>
+																															
 																	                                              		<img class="ui tiny left floated image" style="margin-top: 3px;" src="${resource(dir: 'images', file: "${game.gameLogo}")}">
 																	                                                    <h5 >${game.gameTitle }</h5>
 																	                                                    <div class="row" style="">
