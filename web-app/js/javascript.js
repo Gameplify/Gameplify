@@ -113,13 +113,17 @@ $(document).ready(function()  {
 
 	});
 	
-	$("#textbox").keyup(function(){
+	$(".textbox").keyup(function(){
+		var x = document.getElementsByClassName("ui blue labeled submit icon button");
+		var y= document.getElementsByClassName("textbox");
+		
+        if ($.trim(y[$('.textbox').index(this)].value) == "") {
+        	x[$('.textbox').index(this)+1].disabled = true;
 
-        if ($.trim($('#textbox').val()) == "") {
-			document.getElementById("commentButton").disabled = true;
-		}else{
-			document.getElementById("commentButton").disabled = false;
-			
+        }else{
+
+			x[$('.textbox').index(this)+1].disabled = false;
+		
 		}
 	});
  
