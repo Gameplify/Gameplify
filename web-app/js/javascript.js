@@ -119,9 +119,7 @@ $(document).ready(function()  {
 		} else {
 			$("#whitespace").html("");
 			
-		}
-          
-
+		}        
 	});
 	
 
@@ -135,8 +133,8 @@ $(document).ready(function()  {
 		         if ($.trim(y[$('.textbox').index(this)].value) == "") {
 		         	x[$('.textbox').index(this)+1].disabled = true;
 		 }else{
-			 +
-			 +			x[$('.textbox').index(this)+1].disabled = false;
+			 
+			 			x[$('.textbox').index(this)+1].disabled = false;
 			
 		}
 	});
