@@ -141,9 +141,13 @@
 									</div>
 								</div>
 								<div class="center aligned column">
-									<h4 style="text-align: center">
+									<h4 style="text-align: center; margin-bottom:0px;">
+										${user.username }
+									</h4>
+									<h4 style="text-align: center; margin-top:0px;">
 										${user.name }
 									</h4>
+									
 									<div style="text-align: center !important;">
 										${user.totalNumberOfReviews }
 										Reviews
