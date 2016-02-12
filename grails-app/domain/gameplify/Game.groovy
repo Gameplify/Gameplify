@@ -13,6 +13,7 @@ class Game{
 	String toString(){
 		"${gameTitle}"
 	}
+	
 	static hasMany = [categories: GameCategory , screenshot: Screenshots , platform:Platform, reviews:Review, comment:Comment,rating:Rating]
 	static belongsTo = [GameCategory ,Platform]  
 	 static constraints = {

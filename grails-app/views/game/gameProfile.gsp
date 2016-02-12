@@ -72,28 +72,52 @@
 
 						</div>
 						<div class="ui segment"
-							style="margin-left: 40px; margin-top: 20px; height: 400px; width: 272px;">
-							<div class="column" style="width: 270px; height: 330px;">
+							style="margin-left: 40px; margin-top: 20px; height: auto; width: 278px;">
+							<div class="column" style="width: 258px; height: auto;">
 
-								<div>
-									<a id="updateMe" class="ui red ribbon label"> ${game.averageRating}
+								<div id="updateMe">
+									<a class="ui red ribbon label"> ${game.averageRating}
 									</a>
+									<div class="ui grid"
+										style="float: right; margin-right: 1px; margin-top: 0px;">
+										<g:each in="${games}" status="g" var="ss">
+											<g:if test="${ss.averageRating >0}">
+												<g:set var="ga" value="${game.gameTitle}" />
+												<g:if test="${ss.gameTitle==ga }">
+													<img class="ui tiny centered image"
+														style="width: 25px; height: 25px; padding-right: 0px;"
+														src="${resource(dir: 'images', file: "hot.png")}"/>
+												</g:if>
+											</g:if>
+										</g:each>
+										<g:each in="${bb}" status="h" var="aa">
+											<g:set var="da" value="${game.gameTitle}" />
+											<g:if test="${aa.gameTitle==da }">
+												<img class="ui tiny centered image"
+													style="width: 25px; height: 25px; padding-right: 0px;"
+													src="${resource(dir: 'images', file: "neww.png")}" />
+											</g:if>
+										</g:each>
+									</div>
+
+									<img class="ui tiny centered image"
+										style="width: 150px; height: 150px;"
+										src="${resource(dir: 'images', file: "$game.gameLogo")}">
+									<div class="center aligned column">
+										<h4 class="title">
+											${game.gameTitle }
+										</h4>
+										<h5 class="price">
+											$
+											${game.gamePrice }
+
+										</h5>
+										<h5 class="title">
+											${game.numberOfRaters }
+
+										</h5>
+									</div>
 								</div>
-
-								<img class="ui tiny centered image"
-									style="width: 150px; height: 150px;"
-									src="${resource(dir: 'images', file: "$game.gameLogo")}">
-								<div class="center aligned column">
-									<h4 class="title">
-										${game.gameTitle }
-									</h4>
-									<h5 class="price">
-										$
-										${game.gamePrice }
-
-									</h5>
-								</div>
-
 								<g:if test="${session?.user }">
 									<g:if test="${session?.user?.status != "blocked"}">
 										<div class="ui large star rating" data-rating=${rating
@@ -101,11 +125,7 @@
 									data-max-rating="5"></div>
 									</g:if>
 								</g:if>
-								<h5 class="title">
-									$
-									${game.numberOfRaters }
 
-								</h5>
 
 								<h5 class="published">
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
@@ -115,11 +135,14 @@
 										style="margin-left: 92px;">Edit</button>
 								</g:if>
 								<div class="ui two column stackable grid"
-									style="margin: auto; display: block;">
-									<div class="row">
+									style="margin: auto; display: table-cell; padding: -10px; padding-top: 0px;">
+									<div class="row"
+										style="width: 270px; height: auto; padding-top: 0px; bottom: 5px; top: 5px;">
 
 										<g:each in="${game.categories}" status="i" var="cat">
-											<label class="ui blue label"> ${cat.categoryName }
+											<label class="ui blue label"
+												style="padding-top: 7px; bottom: 13px; margin-bottom: 5px;">
+												${cat.categoryName }
 											</label>
 
 
@@ -157,7 +180,7 @@
 												<div class="comment">
 													<a class="avatar"> <g:if test="${review.user.avatar }">
 															<img
-																src="${createLink(controller:'user', action:'avatar_image', id:"${comment.user.id}" )}" />
+																src="${createLink(controller:'user', action:'avatar_image', id:"${review.user.id}" )}" />
 														</g:if> <g:else>
 															<img class="photo"
 																src="${resource(dir: 'images', file: "nan.jpg")}">
@@ -189,15 +212,17 @@
 														</g:if>
 														<g:else>
 															<g:if
-																test="${session?.user?.status != "blocked" && session?.user}">
+																test="${session?.user?.status != "blocked" && session?.user != "${review.user}" 
+																	&& session?.user && "${review.user.role}" != "Admin"}">
 																<div class="reportUser">
 																	<g:remoteLink
 																		url="[controller:'game', action:'report']"
 																		value="Report"
 																		before="if(!confirm('Are you sure you want to report this user?')) return false"
-																		params="${[type:"Review", userId:"${review.user.id}"]}">Report</g:remoteLink>
+																		params="${[type:"${review.review}", userId:"${review.user.id}"]}">Report</g:remoteLink>
 																</div>
 															</g:if>
+
 														</g:else>
 														<ul class="myList">
 															<g:each
@@ -228,18 +253,17 @@
 																			${comment.comment }
 																		</div>
 																		<g:if
-																			test="${session?.user?.status != "blocked" && session?.user}">
-																			<g:if
-																				test="${session?.user && "${review.user.role}" != "Admin"}">
-																				<div class="reportUser">
-																					<g:remoteLink
-																						url="[controller:'game', action:'report']"
-																						value="Report"
-																						before="if(!confirm('Are you sure you want to report this user?')) return false"
-																						params="${[type:"Comment", userId:"${review.user.id}"]}">Report</g:remoteLink>
-																				</div>
-																			</g:if>
+																			test="${session?.user?.status != "blocked" && session?.user != "${comment.user}" 
+																	&& session?.user && "${comment.user.role}" != "Admin"}">
+																			<div class="reportUser">
+																				<g:remoteLink
+																					url="[controller:'game', action:'report']"
+																					value="Report"
+																					before="if(!confirm('Are you sure you want to report this user?')) return false"
+																					params="${[type:"${comment.comment}", userId:"${comment.user.id}"]}">Report</g:remoteLink>
+																			</div>
 																		</g:if>
+
 
 																	</div></li>
 															</g:each>
@@ -267,8 +291,7 @@
 															<g:if test="${session?.user?.status != "blocked"}">
 																<g:form class="ui comment form">
 																	<div class="field">
-																		<g:textArea id="textbox" name="comment" required=""
-																			maxlength="100" />
+																		<g:textArea class="textbox" name="comment" required="" maxlength="100"/>
 																		<g:hiddenField name="gameId" value="${game.id}" />
 																		<g:hiddenField name="gameTitle"
 																			value="${game.gameTitle}" />
@@ -277,10 +300,10 @@
 
 																	<g:actionSubmit action="addComment" value=" Comment"
 																		id="commentButton"
-																		class="ui blue labeled submit icon button" disabled="">
+ 																		class="ui blue labeled submit icon button" disabled=""/>
 
 
-																	</g:actionSubmit>
+																	
 																</g:form>
 															</g:if>
 														</g:if>
@@ -294,10 +317,15 @@
 						</div>
 					</div>
 				</div>
+
+
+
+
+
 				<div class="ui modal addGame">
 					<i class="close icon"></i>
 					<g:form class="ui equal width form" id="form" style="padding:20px"
-						controller='game' action='editGame' onsubmit="return checkEdit();">
+						controller='game' action='editGame'>
 						<img class="ui centered small image" id="image"
 							src="${resource(dir: 'images', file: "$game.gameLogo")}"
 							alt="Game Logo">
@@ -320,7 +348,7 @@
 							</div>
 							<div class="field">
 								<label for="price">Price*</label>
-								<g:field type="number" name="gamePrice" required="" min="0"
+								<g:field type="number" name="gamePrice" required=""
 									value="${game.gamePrice }" style="font-size: 14px;" />
 							</div>
 							<div class="field">
@@ -389,11 +417,7 @@
 			</div>
 		</div>
 	</div>
-
-
-	<script>
-
-	
+<script>
 $('.ui.rating')
 .rating('setting', 'onRate', function(value) {
     var rating = value;
@@ -401,18 +425,15 @@ $('.ui.rating')
     ${remoteFunction(controller: 'game' , update: 'updateMe',  action: 'rating', params: '\'rating=\' + rating +  \'&gameId=\' + gameId')}
 });
 
-
-
-i=0;
-w=0;
-x=0;
-
+var i=0;
+var w=0;
+var x=0;
 var Arr= new Array();
 var myArr = new Array();
-size_li=0;
-	
-$('.myList').each(function() {
-    var count = $('> li', this).length;
+var size_li=0;
+
+$('.myList').each(function(){
+	var count = $('> li', this).length;
 
     myArr.push(count); //number of comments per review
     
@@ -421,39 +442,18 @@ $('.myList').each(function() {
     w+= myArr[i]; 
    	i++;
 });
+$("#gameTitle").keyup(function(){
 
-  $('.loadMore').click(function () {
-   start=0;
-   val=$('.loadMore').index(this);
-   val2=val;
-
-	end= myArr[val];  
-	while(val>0){
-		val--;
-		start+= myArr[val]; //0 4 8 12 17
-		end+= myArr[val]; //4 8 12 17
-
-	}
-  
-	  if(start<end){
-				start+=Arr[val2];
-				diff=end-start;
-			   	$('.myList li').slice(start, start+3).show();
-		  		if(start+3>=end)
-		  			 $('.loadMore').eq($('.loadMore').index(this)).hide();	
-				if(diff<3)
-					Arr[val2]+=diff;
-				else
-				
-					Arr[val2]+=3;
+    if ($.trim($('#gameTitle').val()) == "" && $.trim($('#gameDesc').val()) == "" ) {
+			document.getElementById("addButton").disabled = true;
+		}else{
+			document.getElementById("addButton").disabled = false;
 			
-	  }
-  	
-	
-    });
-  $("#gameTitle").keyup(function(){
+		}
+	});
+$("#gameDesc").keyup(function(){
 
-      if ($.trim($('#gameTitle').val()) == "" && $.trim($('#gameDesc').val()) == "" ) {
+    if ($.trim($('#gameTitle').val()) == "" && $.trim($('#gameDesc').val()) == "" ) {
 			document.getElementById("addButton").disabled = true;
 		}else{
 			document.getElementById("addButton").disabled = false;
@@ -461,26 +461,15 @@ $('.myList').each(function() {
 		}
 	});
 	
-	$("#gameDesc").keyup(function(){
-
-      if ($.trim($('#gameTitle').val()) == "" && $.trim($('#gameDesc').val()) == "" ) {
-			document.getElementById("addButton").disabled = true;
-		}else{
-			document.getElementById("addButton").disabled = false;
-			
-		}
-	});
-	
-	$('.ui.small.modal').modal('show');
-
-	function assDate() {
-		var date1 = document.getElementById("datePicker").value;
-		document.getElementById("releaseDate").value = date1;
-		var date2 = document.getElementById("releaseDate").value;
-		console.log(date1);
-		console.log(date2);
-	}
- 
+$('.ui.small.modal').modal('show');
+function assDate() {
+	var date1 = document.getElementById("datePicker").value;
+	document.getElementById("releaseDate").value = date1;
+	var date2 = document.getElementById("releaseDate").value;
+	console.log(date1);
+	console.log(date2);
+}
 </script>
 </body>
 </html>
+	

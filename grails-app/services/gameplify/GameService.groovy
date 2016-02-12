@@ -9,6 +9,8 @@ class GameService {
 
 	def userService
 
+
+
 	def report(type,userId){
 		def rep = Report.find{user.id == userId}
 		if(rep){
@@ -74,6 +76,7 @@ class GameService {
 					)
 			rate.save()
 			game.addToRating(rate)
+			game.numberOfRaters += 1
 			user.addToRating(rate)
 			user.save(flush:true)
 			game.save(flush:true)
@@ -94,7 +97,7 @@ class GameService {
 		return (sum/x)
 	}
 
-	def listGamePlat( chosenPlatform, max, offset){
+	def listGamePlat( chosenPlatform,max,offset){
 		def games
 		def now = new Date()
 		def dateString = now.toTimestamp()
@@ -108,12 +111,12 @@ class GameService {
 				platform.platformName == chosenPlatform
 				status == "okay"
 				releaseDate>=dateStrng && releaseDate<=dateString
-			}.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
+			}.list(sort: 'averageRating', order: 'desc',max: max, offset: offset  )
 		} else if(!chosenPlatform){
 			games = Game.where {
 				 status == "okay"
 				 releaseDate>=dateStrng && releaseDate<=dateString
-		    }.list(sort: 'releaseDate', order: 'desc', max: max, offset: offset )
+		    }.list(sort: 'averageRating', order: 'desc' ,max: max, offset: offset )
 		}
 		return games
 	}
@@ -123,21 +126,23 @@ class GameService {
 	}
 
 
-
-	def whatsHot( chosenPlatform, max, offset){
+	def whatsHot( chosenPlatform,max,offset){
 		def games
 		if(chosenPlatform){
 			games = Game.where {
 				platform.platformName == chosenPlatform
 				status == "okay"
-			}.list(sort: 'averageRating', order: 'desc', max: max, offset: offset)
+				averageRating>=1
+			}.list(sort: 'averageRating', order: 'desc',max: max, offset: offset )
 		} else if(!chosenPlatform){
 			games = Game.where { 
 				status == "okay" 
-			}.list(sort: 'averageRating', order: 'desc', max: max, offset: offset)
+				averageRating >=1
+			}.list(sort: 'averageRating', order: 'desc',max: max, offset: offset )
 		}
 		return games
 	}
+	
 
 	def editReview(newReview, reviewId){
 		Date date = new Date()
@@ -168,7 +173,7 @@ class GameService {
 		game.save(flush:true)
 		user.save(flush:true)
 	}
-
+	
 	def addComment(comment, gameId, userId, reviewId){
 		log.println("ni sud sa service")
 		User user = User.get(userId)
@@ -203,7 +208,7 @@ class GameService {
 	}
 
 
-	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, adminId, screenshots){
+	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories,adminId){
 		Platform platform = Platform.get(platformId)
 		Game game = new Game(
 				gameTitle:gameTitle,
@@ -222,13 +227,6 @@ class GameService {
 				game:game
 				)
 		ss.save()
-		screenshots.each{
-			Screenshots slist = new Screenshots(
-				photo:it,
-				game:game
-				)
-			slist.save()
-		}
 		game.addToScreenshot(ss)
 		game.save(flush:true)
 		platform.addToGame(game)
@@ -330,6 +328,9 @@ class GameService {
 
 		return allReviews
 	}
+
+
+
 
 	def listGame(currentCategory, chosenPlatform, max, offset, what, how){
 		def games
@@ -461,6 +462,9 @@ class GameService {
 		log.println("ni sud sa descend")
 		return games
 	}
+
+
+
 
 	def serviceMethod() {
 	}

@@ -40,7 +40,7 @@
 							<div class="ui grid" style="float: right;margin-top: 0px;">
 								<g:each in="${platform }" var="plat">
 									<g:link action="platform"
-										params="${[ platform:plat.platformName, paginates:'Foo', paginate:'Bar']}">
+										params="${[ platform:plat.platformName,paginates:'Foo', paginate:'Bar']}">
 										<button class="ui icon button">
 											<img class="platformpic"
 												src="${resource(dir: 'images', file: "${plat.pic}")}">
@@ -49,12 +49,13 @@
 								</g:each>
 							</div>
 							
+							
 						</div>
 					</div>
 					<div class="ui two column stackable grid">
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
-								style="width: 392px;height: 558px; padding-left: 30px;">
+								style=" width: 392px;height: 558px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid" style="height:391px;">
 									<div class="rows" style="width: 325px;">
@@ -108,10 +109,10 @@
 
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
 												<g:if test="${totalFoos<=9}">
-												<g:paginate total="${totalFoos}" max="3" offset="${session.fooPagination?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginate:'Foo']}"/>
+												<g:paginate total="${totalFoos}" max="3" offset="${session.fooPaginations?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginates:'Foo']}"/>
 												</g:if>
 												<g:else>
-												<g:paginate total="9" max="3" offset="${session.fooPagination?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginate:'Foo']}"/>
+												<g:paginate total="9" max="3" offset="${session.fooPaginations?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginates:'Foo']}"/>
 												</g:else>
 											</div>
 						</div>
@@ -120,7 +121,7 @@
 						
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
-								style=" width: 392px;height: 558px; padding-left: 30px;">
+								style="width: 392px;height: 558px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid">
 								
@@ -171,13 +172,12 @@
 									</div>
 									</div>
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
-											<g:if test="${totalBars<=9}">
-											  <g:paginate total="${totalBars}" max="3" offset="${session.barPagination?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
+											 <g:if test="${totalBars<=9}">
+											  <g:paginate total="${totalBars}" max="3" offset="${session.barPaginations?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
 											</g:if>
 											<g:else>
-											<g:paginate total="9" max="3" offset="${session.barPagination?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
+											<g:paginate total="9" max="3" offset="${session.barPaginations?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
 											</g:else>
-											
 											</div>
 
 								
