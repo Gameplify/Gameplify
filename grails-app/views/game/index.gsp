@@ -54,7 +54,7 @@
 					<div class="ui two column stackable grid">
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
-								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
+								style="width: 392px;height: 558px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid" style="height:391px;">
 									<div class="rows" style="width: 325px;">
@@ -107,7 +107,12 @@
 								</div>
 
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
+												<g:if test="${totalFoos<=9}">
 												<g:paginate total="${totalFoos}" max="3" offset="${session.fooPagination?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginate:'Foo']}"/>
+												</g:if>
+												<g:else>
+												<g:paginate total="9" max="3" offset="${session.fooPagination?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginate:'Foo']}"/>
+												</g:else>
 											</div>
 						</div>
 						
@@ -115,7 +120,7 @@
 						
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
-								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
+								style=" width: 392px;height: 558px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid">
 								
@@ -166,7 +171,13 @@
 									</div>
 									</div>
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
+											<g:if test="${totalBars<=9}">
 											  <g:paginate total="${totalBars}" max="3" offset="${session.barPagination?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
+											</g:if>
+											<g:else>
+											<g:paginate total="9" max="3" offset="${session.barPagination?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
+											</g:else>
+											
 											</div>
 
 								

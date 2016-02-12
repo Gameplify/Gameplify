@@ -46,24 +46,29 @@
 																												 <div class="ui segment" style="width: 314px;height: 163px; padding-left: 22px;margin-top: 0px;margin-bottom: 8px;left: -18px;">
 																		                                              		<div class="ui grid" style="float:right;margin-right: 1px;margin-top: 0px;width: 298px;margin-bottom: 7px;">
 																		                                              		 	<g:each in="${gamess}" status="r" var="sss">
+																		                                              		 	<g:if test="${r <10}">
 																		                                              		 	<g:if test="${sss.averageRating >0}">
 																																	<g:set var="gaa" value="${game.gameTitle}" />
 																																	<g:if test="${sss.gameTitle==gaa }">
 																																		<img class="ui tiny centered image"
 																																		style="width: 25px;height: 25px;padding-right: 0px;margin-right: 0px;margin-left: 0px;right: -260px;"
-																																		src="${resource(dir: '../../../web-app/images', file: "hot.png")}"/>
+																																		src="${resource(dir:'images', file: "hot.png")}"/>
 																																	</g:if>
+																																</g:if>
 																																</g:if>
 																																</g:each>
 																																<g:each in="${bb}" status="w" var="aaa">
+																																<g:if test="${w<10}">
 																																	<g:set var="daa" value="${game.gameTitle}" />
 																																	<g:if test="${aaa.gameTitle==daa }">
 																																		<img class="ui tiny centered image"
 																																		style="width: 25px;height: 25px;padding-right: 0px;margin-right: 0px;margin-left: 0px;right: -259px;"
 																																		src="${resource(dir: 'images', file: "neww.png")}"/>
 																																	</g:if>
+																																</g:if>
 																																</g:each>
 																															</div>
+																															
 																	                                              		<img class="ui tiny left floated image" style="margin-top: 3px;" src="${resource(dir: 'images', file: "${game.gameLogo}")}">
 																	                                                    <h5 >${game.gameTitle }</h5>
 																	                                                    <div class="row" style="">
@@ -148,21 +153,25 @@
 														                                              		<div class="ui grid" style=" style="float:right;margin-right: 1px;margin-top: 0px;width: 298px;margin-bottom: 7px;om: 4px;">
 																		                                              		 	<g:each in="${gamess}" status="g" var="ss">
 																		                                              		 	<g:if test="${ss.averageRating >0}">
+																		                                              		 	<g:if test="${gg<10}">
 																																	<g:set var="ga" value="${game.gameTitle}" />
 																																	<g:if test="${ss.gameTitle==ga }">
 																																		<img class="ui tiny centered image"
 																																		style="width: 25px;height: 25px;padding-right: 0px;margin-right: 0px;margin-left: 0px;left: 281px;"
-																																		src="${resource(dir: '../../../web-app/images', file: "hot.png")}"/>
+																																		src="${resource(dir: 'images', file: "hot.png")}"/>
 																																	</g:if>
+																																</g:if>
 																																</g:if>
 																																</g:each>
 																																<g:each in="${bb}" status="h" var="aa">
+																																 <g:if test="${h<10}">
 																																	<g:set var="da" value="${game.gameTitle}" />
 																																	<g:if test="${aa.gameTitle==da }">
 																																		<img class="ui tiny centered image"
 																																		style="width: 25px;height: 25px;padding-right: 0px;margin-right: 0px;margin-left: 0px;left: 232px;"
 																																		src="${resource(dir: 'images', file: "neww.png")}"/>
 																																	</g:if>
+																																 </g:if>
 																																</g:each>
 																											</div>	
 																		<img class="ui tiny left floated image" style="margin-top: 27px;" src="${resource(dir: 'images', file: "${game.gameLogo}")}">

@@ -76,7 +76,6 @@ class GameService {
 					)
 			rate.save()
 			game.addToRating(rate)
-			game.numberOfRaters += 1
 			user.addToRating(rate)
 			user.save(flush:true)
 			game.save(flush:true)
