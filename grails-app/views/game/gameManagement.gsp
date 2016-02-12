@@ -35,16 +35,10 @@
 						</h3>
 						<div class="ui grid"
 							style="margin-left: 545px; margin-top: -50px;">
-<<<<<<< HEAD
 							<g:if test="${flash.success}">
 								<div class="message"
 									style="margin-top: 25px; width: 200px; position: absolute; margin-left: -300px;">
 									${flash.success }
-=======
-							<g:if test="${flash.message}">
-								<div class="message" style="width: 200px; margin-left: -171px;">
-									${flash.message }
->>>>>>> 35fd47eac63074cfd8674cdf6ce1223512c80590
 								</div>
 							</g:if>
 							<div style="margin-top: 10px;">
@@ -135,15 +129,11 @@
 	<div class="ui modal addGame">
 		<i class="close icon"></i>
 		<g:form class="ui equal width form" id="form" style="padding:10px"
-<<<<<<< HEAD
 			controller='game' action='addGame' onsubmit="return check()">
-=======
-			controller='game' action='addGame'>
->>>>>>> 35fd47eac63074cfd8674cdf6ce1223512c80590
 			<img class="ui centered small image" id="image" src="#"
 				alt="Game Logo">
-			<g:field type="file" name="gameLogo" id="img"
-				accept="image/jpeg, image/png, image/jpg" required=""
+			<g:field type="file" name="gameLogo" id="gameLogo"
+				accept="image/jpeg, image/png, im8age/jpg" required=""
 				style="    margin: 10px;" />
 			<div class="field">
 				<g:hiddenField name="currentCategory" value="${currentCategory}" />
@@ -161,12 +151,8 @@
 				</div>
 				<div class="field">
 					<label for="price">Price*</label>
-<<<<<<< HEAD
 					<g:field type="number" name="gamePrice" min="0" required=""
 						style="font-size:14px;" />
-=======
-					<g:field type="number" name="gamePrice" required="" style="font-size:14px;" />
->>>>>>> 35fd47eac63074cfd8674cdf6ce1223512c80590
 				</div>
 				<div class="field">
 					<label for="platform">Platform</label>
@@ -193,7 +179,6 @@
 					</g:each>
 				</div>
 			</div>
-<<<<<<< HEAD
 			<div class="field" style="margin-top: 20px;">
 				<label for="screenshot">Screenshot/s</label>
 				<g:field type="file" name="screenshots" id="img"
@@ -203,11 +188,6 @@
 			<div class="actions" style="text-align: center; margin-top: 30px;">
 				<g:submitButton class="ui button" name="addButton" id="addButton"
 					value="Add Game" style="margin-left: -1.75em;" disabled="true"></g:submitButton>
-=======
-			<div class="actions" style="text-align: center; margin-top: 30px;">
-				<g:submitButton class="ui button" name="addButton" value="Add Game"
-					style="margin-left: -1.75em;"></g:submitButton>
->>>>>>> 35fd47eac63074cfd8674cdf6ce1223512c80590
 			</div>
 		</g:form>
 	</div>
@@ -264,15 +244,6 @@
 					document.getElementById("addButton").disabled = false;
 				}
 			});
-	var checkedAtLeastOne = false;
-			 $('input[type="checkbox"]').each(function() {
-			     if ($(this).is(":checked")) {
-			         checkedAtLeastOne = true;
-			     }
-			 });
-			 if(checkedAtLeastOne){
-					document.getElementById("addButton").disabled = false;
-				 }
 
 	$('#form').on('submit', function (e) {			
 		if (document.getElementsByName("category").length === 0) {
@@ -284,7 +255,7 @@
 		$('.ui.small.modal').modal('show');
 		});
 
-		<%--function check() {
+		function check() {
 			var checkboxs = document.getElementsByName("category");
 			var okay = false;
 			for (var i = 0, l = checkboxs.length; i < l; i++) {
@@ -296,7 +267,8 @@
 			if (!okay) {
 				alert("Please check a checkbox");
 				return false;
-			}--%>
+			}
+		}
 
 			<%--var arrInputs = onForm.getElementsByTagName("input");
 			for (var i = 0; i < arrInputs.length; i++) {
