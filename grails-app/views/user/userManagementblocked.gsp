@@ -8,7 +8,7 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <!-- Site Properities -->
-<title>Reports</title>
+<title>Blocked</title>
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'css', file:'semantic.css')}">
 <link rel="stylesheet" type="text/css"
@@ -18,6 +18,8 @@
 <script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
 <g:javascript library="prototype"></g:javascript>
 </head>
+
+
 <body>
 	<div class="ui fixed inverted menu">
 		<g:include controller="game" action="showNavbar" />
@@ -29,9 +31,9 @@
 			<div class="row" style="margin-left: 0px;">
 				<div class="ui top attached pointing tabular menu"
 					style="height: auto; width: 770px;">
-					<g:link class="item active" id="reports"
-						action="userManagement_reports"> Reports </g:link>
-					<g:link class="item" id="blocked" action="userManagement_blocked">
+					<g:link class="item" id="reports" action="userManagementreports"> Reports </g:link>
+					<g:link class="item active" id="blocked"
+						action="userManagementblocked">
 					Blocked
 				</g:link>
 				</div>
@@ -44,51 +46,40 @@
 								${flash.error }
 							</div>
 						</g:if>
-						<g:each in="${reports}" status="i" var="report">
+						<g:each in="${block}" status="i" var="blocked">
 							<g:remoteLink controller="user" action="showUserInfo"
-								id="${report.user.id }" update="userInfo"
-								params="${[type:"report", userId:report.user.id, reportId:report.id]}">
+								update="userInfo" id="${blocked.user.id}" update="userInfo"
+								params="${[type:"blocked", userId:blocked.user.id, reportId:blocked.id]}">
 								<div class="ui segment"
 									style="height: 160px; width: 640px; padding-top: 20px; margin-top: 0px;">
-									<g:if test="${report.user.avatar}">
+									<g:if test="${blocked.user.avatar}">
 										<img class="ui tiny left floated image"
-											src="${createLink(controller:'user', action:'avatar_image', id:"${report.user.id}" )}" />
+											src="${createLink(controller:'user', action:'avatar_image', id:"${blocked.user.id}" )}" />
 									</g:if>
 									<g:else>
-										<img class="ui tiny left floated image" style="width: 70px;"
+										<img class="ui tiny left floated image"
 											src="${resource(dir: 'images', file: "nan.jpg")}">
 									</g:else>
 									<div class="ui 3 column stackable grid"
 										style="margin-left: 62px; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
 										<h5 style="padding-left: 10px; margin-bottom: 0px;">
-											${report.user.name}
+											${blocked.user.name }
 										</h5>
 										<div class="row"
 											style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
-											<a style="margin-bottom: 5px; margin-left: 7px;"> ${report.type }
-											</a>
+											<a style="margin-bottom: 5px; margin-left: 7px;"> ${blocked.type}</a>
 										</div>
-									</div>
-									<div style="margin-top: 5px; width: 80;">
-										<g:form controller="user" action="ignoreReport">
-											<g:hiddenField name="reportId" value="${report.id}" />
-											<g:submitButton class="ui centered mini red button"
-												style="position:absolute;" value="IGNORE" name="ignore"
-												onclick="return confirm('Are you sure you want to ignore this report?')" />
-										</g:form>
 									</div>
 								</div>
 							</g:remoteLink>
 						</g:each>
 					</div>
-
 					<div class="pagination" style="text-align: center;">
-						<g:paginate action="userManagement_reports" total="${reportCount}"></g:paginate>
+						<g:paginate controller="user" action="userManagementblocked"
+							total="${blockedCount}"></g:paginate>
 					</div>
-
 				</div>
-
-				<div class="ui two row stackable grid">
+				<div class="ui two row stackable grid" >
 					<div class="column">
 						<div class="row">
 							<g:include controller="user" action="showUserAuthentication" />
@@ -99,6 +90,8 @@
 			</div>
 		</div>
 	</div>
+	<g:javascript>
 
+	</g:javascript>
 </body>
 </html>

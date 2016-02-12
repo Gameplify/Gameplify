@@ -15,7 +15,7 @@
 	href="${resource(dir:'dist', file:'semantic.css')}">
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'dist', file:'bg.css')}">
-<script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
+
 </head>
 
 
@@ -35,9 +35,10 @@
 						</h3>
 						<div class="ui grid"
 							style="margin-left: 545px; margin-top: -50px;">
-							<g:if test="${flash.message}">
-								<div class="err" style="margin-top: 25px;width: 200px;position: absolute;margin-left: -300px;">
-									${flash.message }
+							<g:if test="${flash.success}">
+								<div class="message"
+									style="margin-top: 25px; width: 200px; position: absolute; margin-left: -300px;">
+									${flash.success }
 								</div>
 							</g:if>
 							<div style="margin-top: 10px;">
@@ -105,7 +106,7 @@
 								</g:form>--%>
 								<g:link action="deleteGame"
 									params="${[gameTitle:"${game.id}",categoryName:currentCategory, gameCategory:"${game.categories}"] }"
-									onclick="return confirm('Are you sure you want to ignore this report?')">
+									onclick="return confirm('Are you sure you want to delete this game?')">
 									<button class="ui icon button delete" id="delete"
 										style="display: none; padding: 0; margin-top: 4px; margin-left: -267px;">
 										<i class="small red delete icon"></i>
@@ -128,24 +129,30 @@
 	<div class="ui modal addGame">
 		<i class="close icon"></i>
 		<g:form class="ui equal width form" id="form" style="padding:10px"
-			controller='game' action='addGame'  onsubmit="return check()">
+			controller='game' action='addGame' onsubmit="return check()">
 			<img class="ui centered small image" id="image" src="#"
 				alt="Game Logo">
-			<g:field type="file" name="gameLogo" accept="image/*" required="" style="    margin: 10px;"/>
+			<g:field type="file" name="gameLogo" id="img"
+				accept="image/jpeg, image/png, image/jpg" required=""
+				style="    margin: 10px;" />
 			<div class="field">
 				<g:hiddenField name="currentCategory" value="${currentCategory}" />
-				<g:textField placeholder="Game Title*" name="gameTitle" required="" />
+				<g:textField placeholder="Game Title*" id="gameTitle"
+					name="gameTitle" required="" />
 			</div>
 			<div class="fields">
 				<div class="field" style="width: 200px;">
-					<label for="releaseDate">Released On*</label>
-					<g:datePicker name="releaseDate" value="${new Date()}"
+					<label for="releaseDate">Released On*</label> <input type="date"
+						id="datePicker" value="" oninput="assDate();" required />
+					<g:hiddenField name="releaseDate" id="releaseDate" />
+					<%--<g:datePicker name="releaseDate" value="${new Date()}"
 						precision="day"
-						years="${Calendar.instance.get(Calendar.YEAR)..1950}" />
+						years="${Calendar.instance.get(Calendar.YEAR)..1950}" />--%>
 				</div>
 				<div class="field">
 					<label for="price">Price*</label>
-					<g:field type="number" name="gamePrice" min="0" required="" style="font-size:14px;" />
+					<g:field type="number" name="gamePrice" min="0" required=""
+						style="font-size:14px;" />
 				</div>
 				<div class="field">
 					<label for="platform">Platform</label>
@@ -155,7 +162,7 @@
 			</div>
 			<div class="field">
 				<g:textArea rows="3" name="gameDescription"
-					placeholder="Description*" required="" />
+					placeholder="Description*" id="gameDesc" required="" />
 			</div>
 			<div class="field">
 				<label for="category">Category(Select at least one)</label>
@@ -164,7 +171,7 @@
 						<div class="four wide column"
 							style="padding: 0px; margin-left: 10px; margin-top: 12px;">
 							<div class="ui checkbox">
-								<g:checkBox name="category" value="${cat.id}" checked="false"/>
+								<g:checkBox name="category" value="${cat.id}" checked="false" />
 								<label> ${cat.categoryName}
 								</label>
 							</div>
@@ -172,20 +179,32 @@
 					</g:each>
 				</div>
 			</div>
-			<div class="field" style="margin-top:20px;">
+			<div class="field" style="margin-top: 20px;">
 				<label for="screenshot">Screenshot/s</label>
-				<g:field type="file" name="screenshots" accept="image/*" required="" multiple="multiple" style="margin: 10px;"/>
+				<g:field type="file" name="screenshots" id="img"
+					accept="image/jpeg, image/png, image/jpg" required=""
+					multiple="multiple" style="margin: 10px;" />
 			</div>
 			<div class="actions" style="text-align: center; margin-top: 30px;">
-				<g:submitButton class="ui button" name="addButton" id="addButton" value="Add Game"
-					style="margin-left: -1.75em;"></g:submitButton>
+				<g:submitButton class="ui button" name="addButton" id="addButton"
+					value="Add Game" style="margin-left: -1.75em;" disabled="true"></g:submitButton>
 			</div>
 		</g:form>
 	</div>
+	<g:if test="${flash.message}">
+		<div class="ui small modal">
+			<div class="ui negative message">
+				<i class="close icon"></i>
+				<div class="header">
+					${flash.message }
+				</div>
+			</div>
+		</div>
+	</g:if>
 	<script>
 		$(function() {
 			$('#addGame').click(function() {
-				$('.modal').modal('show');
+				$('.modal.addGame').modal('show');
 			});
 			document.getElementById("gameLogo").onchange = function() {
 				var reader = new FileReader();
@@ -199,8 +218,32 @@
 			$('#deleteGame').click(function() {
 				$('.ui.icon.button.delete').toggle();
 			});
-			
-			<%--var checkedAtLeastOne = false;
+
+			$("#gameTitle").keyup(function() {
+
+				var reviewLength = $("#gameDesc").val().trim().length;
+				if ($.trim($('#gameTitle').val()) == "" && reviewLength <= 0) {
+					document.getElementById("addButton").disabled = true;
+				} else if (reviewLength <= 0) {
+					document.getElementById("addButton").disabled = true;
+				} else {
+					document.getElementById("addButton").disabled = false;
+				}
+			});
+
+			$("#gameDesc").keyup(function() {
+
+				var reviewLength = $("#gameTitle").val().trim().length;
+
+				if ($.trim($('#gameDesc').val()) == "") {
+					document.getElementById("addButton").disabled = true;
+				} else if (reviewLength <= 0) {
+					document.getElementById("addButton").disabled = true;
+				} else {
+					document.getElementById("addButton").disabled = false;
+				}
+			});
+	<%--var checkedAtLeastOne = false;
 			 $('input[type="checkbox"]').each(function() {
 			     if ($(this).is(":checked")) {
 			         checkedAtLeastOne = true;
@@ -217,22 +260,61 @@
 			return false;
 		}
 	});	--%>
+		$('.ui.small.modal').modal('show');
 		});
-		function check(){
-			var checkboxs=document.getElementsByName("category");
-		    var okay=false;
-		    for(var i=0,l=checkboxs.length;i<l;i++)
-		    {
-		        if(checkboxs[i].checked)
-		        {
-		            okay=true;
-		            break;
-		        }
-		    }
-		    if(!okay){
-			    alert("Please check a checkbox");
-		    	return false;
-		    }
+
+		function check() {
+			var checkboxs = document.getElementsByName("category");
+			var okay = false;
+			for (var i = 0, l = checkboxs.length; i < l; i++) {
+				if (checkboxs[i].checked) {
+					okay = true;
+					break;
+				}
+			}
+			if (!okay) {
+				alert("Please check a checkbox");
+				return false;
+			}
+
+			<%--var arrInputs = onForm.getElementsByTagName("input");
+			for (var i = 0; i < arrInputs.length; i++) {
+				var oInput = arrInputs[i];
+				if (oInput.type == "file") {
+					var sFileName = oInput.value;
+					if (sFileName.length > 0) {
+						var blnValid = false;
+						for (var j = 0; j < _validFileExtensions.length; j++) {
+							var sCurExtension = _validFileExtensions[j];
+							if (sFileName.substr(
+									sFileName.length - sCurExtension.length,
+									sCurExtension.length).toLowerCase() == sCurExtension
+									.toLowerCase()) {
+								blnValid = true;
+								break;
+							}
+						}
+
+						if (!blnValid) {
+							alert("Sorry, " + sFileName
+									+ " is invalid, allowed extensions are: "
+									+ _validFileExtensions.join(", "));
+							return false;
+						}
+					}
+				}
+			}
+
+			return true;
+
+		}--%>
+
+		function assDate() {
+			var date1 = document.getElementById("datePicker").value;
+			document.getElementById("releaseDate").value = date1;
+			var date2 = document.getElementById("releaseDate").value;
+			console.log(date1);
+			console.log(date2);
 		}
 	</script>
 </body>
