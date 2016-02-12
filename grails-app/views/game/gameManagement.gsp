@@ -132,7 +132,7 @@
 			controller='game' action='addGame' onsubmit="return check()">
 			<img class="ui centered small image" id="image" src="#"
 				alt="Game Logo">
-			<g:field type="file" name="gameLogo" id="gameLogo"
+			<g:field type="file" class="superMegaClass" name="gameLogo" id="gameLogo"
 				accept="image/jpeg, image/png, im8age/jpg" required=""
 				style="    margin: 10px;" />
 			<div class="field">
@@ -181,7 +181,7 @@
 			</div>
 			<div class="field" style="margin-top: 20px;">
 				<label for="screenshot">Screenshot/s</label>
-				<g:field type="file" name="screenshots" id="img"
+				<g:field type="file" name="screenshots" class="superMegaClass"
 					accept="image/jpeg, image/png, image/jpg" required=""
 					multiple="multiple" style="margin: 10px;" />
 			</div>
@@ -244,14 +244,7 @@
 					document.getElementById("addButton").disabled = false;
 				}
 			});
-
-	$('#form').on('submit', function (e) {			
-		if (document.getElementsByName("category").length === 0) {
-			e.preventDefault();
-			alert('Select at least one category');
-			return false;
-		}
-	});	
+	
 		$('.ui.small.modal').modal('show');
 		});
 
@@ -270,7 +263,8 @@
 			}
 		}
 
-			<%--var arrInputs = onForm.getElementsByTagName("input");
+		var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
+			var arrInputs = onForm.getElementsByClassName("superMegaClass");
 			for (var i = 0; i < arrInputs.length; i++) {
 				var oInput = arrInputs[i];
 				if (oInput.type == "file") {
@@ -300,7 +294,7 @@
 
 			return true;
 
-		}--%>
+		}
 
 		function assDate() {
 			var date1 = document.getElementById("datePicker").value;

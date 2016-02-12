@@ -110,6 +110,8 @@ class GameController {
 		def checkGame = gameService.listGameInfo(params.gameTitle.trim())
 		def screenshots = params.list('screenshots')
 		def releaseDate = Date.parse("yyyy-MM-dd",params.releaseDate)
+		log.println(params.gameTitle.trim())
+		log.println(releaseDate)
 		if(checkGame != null && checkGame.status != "deleted"){
 			flash.message = "Game already exist"
 			//		} else if(checkGame.status == "deleted"){
