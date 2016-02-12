@@ -29,15 +29,27 @@ class GameController {
 		def rating = params.rating
 		def user = session.user
 		def gameId = params.gameId
-		log.println("yey ni sud ngari")
-		log.println("rating: " +rating)
-		log.println("userId: " +user.id)
-		log.println("gameId: " +gameId)
+		def currentUser
+		def chosenPlatform
+		def max = params.max ?: 10
+		def offset = params.offset ?: 0
+		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
+		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
 		gameService.rate(rating,user.id,gameId)
-		Game game = Game.get(gameId)	
-		def averageRating = game.averageRating
-		log.println(averageRating)
-		[averageRating:averageRating]		
+		Game game = Game.get(gameId)
+		
+		
+		if(session.user){
+			currentUser = userService.findUser(session.user.id)
+			rating = gameService.getUserRating(game.id,session.user.id)
+			if(rating == null){
+				rating = 0
+			}
+		} else {
+			rating = 0
+		}
+
+		[game:game, rating:rating, games:taskL, bb:taskList]	
 	}
 
 	def editReview(){
