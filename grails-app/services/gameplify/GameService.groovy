@@ -208,7 +208,7 @@ class GameService {
 	}
 
 
-	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories,adminId){
+	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories,adminId, screenshots){
 		Platform platform = Platform.get(platformId)
 		Game game = new Game(
 				gameTitle:gameTitle,
@@ -222,12 +222,15 @@ class GameService {
 				status:"okay"
 				)
 		game.save(failOnError: true)
-		Screenshots ss = new Screenshots(
-				photo:"ss1.jpg",
-				game:game
-				)
-		ss.save()
-		game.addToScreenshot(ss)
+		screenshots.each{
+			Screenshots ss = new Screenshots(
+					photo:it,
+					game:game
+					)
+			ss.save()
+			game.addToScreenshot(ss)
+		}
+		
 		game.save(flush:true)
 		platform.addToGame(game)
 		log.println (categories)
@@ -241,8 +244,7 @@ class GameService {
 		log.println(platform.platformName)
 		userService.addAdminActivity(adminId,"added " +gameTitle)
 	}
-	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, removeCat, adminId){
-		Platform platform = Platform.get(platformId)
+	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, formerPlatformId, platformId, categories, removeCat, adminId, screenshots){
 		Game game = Game.get(gameId)
 		game.gameTitle = gameTitle
 		game.gamePrice = gamePrice.toFloat()
@@ -252,7 +254,20 @@ class GameService {
 			game.gameLogo = gameLogo
 		}
 		game.save(flush: true)
-		platform.addToGame(game)
+		
+		Platform newPlatform = Platform.get(platformId)
+		Platform oldPlatform = Platform.get(formerPlatformId)
+		log.println(formerPlatformId)
+		log.println(platformId)
+		log.println(newPlatform)
+		log.println(oldPlatform)
+		if(newPlatform != oldPlatform){
+			oldPlatform.removeFromGame(game)
+			newPlatform.addToGame(game)
+			oldPlatform.save(flush:true)
+			newPlatform.save(flush:true)
+		}
+
 		log.println (categories)
 		removeCat.each {
 			GameCategory gameCategory = GameCategory.get(it.id)
@@ -260,15 +275,22 @@ class GameService {
 			gameCategory.removeFromGames(game)
 			gameCategory.save(flush:true)
 		}
-
+		if(screenshots){
+			screenshots.each {
+				Screenshots slist = new Screenshots(
+					photo:it,
+					game:game
+					)
+				slist.save()
+				game.addToScreenshot(ss)
+			}
+		}
 		categories.each {
 			GameCategory gameCategory = GameCategory.get(it.id)
 			log.println(gameCategory.categoryName)
 			gameCategory.addToGames(game)
 			gameCategory.save(flush:true)
 		}
-		platform.save(flush:true)
-		log.println(platform.platformName)
 
 		userService.addAdminActivity(adminId,"edited " +gameTitle)
 	}

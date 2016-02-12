@@ -329,19 +329,22 @@
 						<img class="ui centered small image" id="image"
 							src="${resource(dir: 'images', file: "$game.gameLogo")}"
 							alt="Game Logo">
-						<g:field type="file" name="gameLogo" accept="image/*"
+						<g:field type="file" name="gameLogo"
+							accept="image/jpeg, image/png, image/jpg"
 							value="${game.gameLogo}" style="margin: 10px;" />
 						<div class="field">
 							<g:hiddenField name="gameId" value="${game.id }"></g:hiddenField>
-							<g:textField placeholder="Game Title*" name="gameTitle"
-								required="" value="${game.gameTitle}" />
+							<g:hiddenField name="realGameTitle" value="${game.gameTitle }"/>
+							<g:textField placeholder="Game Title*" id="gameTitle"
+								name="gameTitle" required="" value="${game.gameTitle}" />
 						</div>
 						<div class="fields">
 							<div class="field" style="width: 200px;">
-								<label for="releaseDate">Released On*</label>
-								<g:datePicker name="releaseDate" value="${game.releaseDate}"
-									precision="day"
-									years="${Calendar.instance.get(Calendar.YEAR)..1950}" />
+								<label for="releaseDate">Released On*</label> <input type="date"
+									id="datePicker"
+									value="${formatDate(format:'yyyy-MM-dd',date:game.releaseDate) }"
+									oninput="assDate();" required />
+								<g:hiddenField name="releaseDate" id="releaseDate" value="${game.releaseDate }" />
 							</div>
 							<div class="field">
 								<label for="price">Price*</label>
@@ -350,13 +353,19 @@
 							</div>
 							<div class="field">
 								<label for="platform">Platform</label>
+								<g:each in="${platforms}" status="i" var="platform">
+									<g:if test="${platform in game.platform }">
+										<g:hiddenField name="formerPlatformId" value="${platform.id}" />
+									</g:if>
+								</g:each>
+
 								<g:select from="${platforms}" class="ui dropdown"
 									name="platformId" optionKey="id" optionValue="platformName" />
 							</div>
 						</div>
 						<div class="field">
 							<g:textArea rows="3" name="gameDescription"
-								placeholder="Description*" required=""
+								placeholder="Description*" id="gameDesc" required=""
 								value="${game.gameDescription }" />
 						</div>
 						<div class="field">
@@ -383,21 +392,32 @@
 								</g:each>
 							</div>
 						</div>
+						<div class="field" style="margin-top: 20px;">
+							<label for="screenshot">Screenshot/s</label>
+							<g:field type="file" name="screenshots"
+								accept="image/jpeg, image/png, image/jpg" multiple="multiple"
+								style="margin: 10px;" list="${game.screenshot }" />
+						</div>
 						<div class="actions" style="text-align: center; margin-top: 30px;">
-							<g:submitButton class="ui button" name="addButton"
-								value="Add Game" style="margin-left: -1.75em;"></g:submitButton>
+							<g:submitButton class="ui button" name="addButton" id="addButton"
+								value="Edit Game" style="margin-left: -1.75em;"></g:submitButton>
 						</div>
 					</g:form>
 				</div>
-
+				<g:if test="${flash.error }">
+					<div class="ui small modal">
+						<div class="ui negative message">
+						<i class="close icon"></i>
+							<div class="header">
+								${flash.error }
+							</div>
+						</div>
+					</div>
+				</g:if>
 			</div>
 		</div>
 	</div>
-
-
-	<script>
-
-	
+<script>
 $('.ui.rating')
 .rating('setting', 'onRate', function(value) {
     var rating = value;
@@ -405,18 +425,15 @@ $('.ui.rating')
     ${remoteFunction(controller: 'game' , update: 'updateMe',  action: 'rating', params: '\'rating=\' + rating +  \'&gameId=\' + gameId')}
 });
 
-
-
-i=0;
-w=0;
-x=0;
-
+var i=0;
+var w=0;
+var x=0;
 var Arr= new Array();
 var myArr = new Array();
-size_li=0;
-	
-$('.myList').each(function() {
-    var count = $('> li', this).length;
+var size_li=0;
+
+$('.myList').each(function(){
+	var count = $('> li', this).length;
 
     myArr.push(count); //number of comments per review
     
@@ -425,37 +442,34 @@ $('.myList').each(function() {
     w+= myArr[i]; 
    	i++;
 });
+$("#gameTitle").keyup(function(){
 
-  $('.loadMore').click(function () {
-   start=0;
-   val=$('.loadMore').index(this);
-   val2=val;
-
-	end= myArr[val];  
-	while(val>0){
-		val--;
-		start+= myArr[val]; //0 4 8 12 17
-		end+= myArr[val]; //4 8 12 17
-
-	}
-  
-	  if(start<end){
-				start+=Arr[val2];
-				diff=end-start;
-			   	$('.myList li').slice(start, start+3).show();
-		  		if(start+3>=end)
-		  			 $('.loadMore').eq($('.loadMore').index(this)).hide();	
-				if(diff<3)
-					Arr[val2]+=diff;
-				else
-				
-					Arr[val2]+=3;
+    if ($.trim($('#gameTitle').val()) == "" && $.trim($('#gameDesc').val()) == "" ) {
+			document.getElementById("addButton").disabled = true;
+		}else{
+			document.getElementById("addButton").disabled = false;
 			
-	  }
-  	
+		}
+	});
+$("#gameDesc").keyup(function(){
+
+    if ($.trim($('#gameTitle').val()) == "" && $.trim($('#gameDesc').val()) == "" ) {
+			document.getElementById("addButton").disabled = true;
+		}else{
+			document.getElementById("addButton").disabled = false;
+			
+		}
+	});
 	
-    });
- 
+$('.ui.small.modal').modal('show');
+function assDate() {
+	var date1 = document.getElementById("datePicker").value;
+	document.getElementById("releaseDate").value = date1;
+	var date2 = document.getElementById("releaseDate").value;
+	console.log(date1);
+	console.log(date2);
+}
 </script>
 </body>
 </html>
+	

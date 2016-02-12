@@ -1,7 +1,7 @@
 $(document).ready(function()  {
 
 	$('#editGame').click(function(){
-		$('.modal').modal('show');
+		$('.modal.addGame').modal('show');
 	});
 	document.getElementById("gameLogo").onchange = function () {
 	    var reader = new FileReader();
@@ -138,6 +138,31 @@ $(document).ready(function()  {
 			
 		}
 	});
+
+	$("#gameTitle").keyup(function(){
+		
+		var reviewLength = $("#gameDesc").val().trim().length;
+        if ($.trim($('#gameTitle').val()) == "" && reviewLength <=0 ) {
+			document.getElementById("addButton").disabled = true;
+		}else if(reviewLength <=0 ) {
+			document.getElementById("addButton").disabled = true;
+		}else{
+			document.getElementById("addButton").disabled = false;
+		}
+	});
+	
+	$("#gameDesc").keyup(function(){
+
+		var reviewLength = $("#gameTitle").val().trim().length;
+		
+        if ($.trim($('#gameDesc').val()) == "" ) {
+			document.getElementById("addButton").disabled = true;
+		}else if (reviewLength <= 0) {
+			document.getElementById("addButton").disabled = true;
+		}else{
+			document.getElementById("addButton").disabled = false;
+		}
+	});
  
 
 });
@@ -159,3 +184,26 @@ $(document).ready(function()  {
      $('#texts').val("");
      $('#text').val("");
    }
+function checkEdit(){
+		var checkboxs=document.getElementsByName("newCategory");
+	    var okay=false;
+	    for(var i=0,l=checkboxs.length;i<l;i++)
+	    {
+	        if(checkboxs[i].checked)
+	        {
+	            okay=true;
+	            break;
+	        }
+	    }
+	    if(!okay){
+		    alert("Please check a checkbox");
+	    	return false;
+	    }
+	}
+function assDate() {
+	var date1 = document.getElementById("datePicker").value;
+	document.getElementById("releaseDate").value = date1;
+	var date2 = document.getElementById("releaseDate").value;
+	console.log(date1);
+	console.log(date2);
+}

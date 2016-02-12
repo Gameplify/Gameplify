@@ -41,14 +41,17 @@ class UserService {
 
 	def listReports(max, offset){
 		def reports
-		reports = Report.where { status == "okay" }.list(max: max, offset: offset){
-		}.sort{ it.date }.reverse(true)
+		reports = Report.where {
+			  status == "okay"  
+			  }.list(max: max, sort:'date' ,order:"desc", offset: offset)
+		return reports
 	}
 
 	def listBlocked(max, offset){
 		def blocked
 		blocked = Report.where { status == "blocked" }.list(max: max, offset: offset){
 		}.sort{ it.date }.reverse(true)
+		return blocked
 	}
 
 	def blockUser(userId,reportId, adminId){
@@ -77,21 +80,19 @@ class UserService {
 		report.save(flush:true)
 		addAdminActivity(adminId,"Ignored report #" +reportId)
 	}
-	
+
 	def addAdminActivity(adminId, activity){
 		User admin = User.get(adminId)
 		Date date = new Date()
 		AdminActivity aa = new AdminActivity(
-			admin:admin,
-			date:date,
-			action:activity
-			)
+				admin:admin,
+				date:date,
+				action:activity
+				)
 		if(aa.save()){
 			log.println("it fucking worked")
 		}
 		admin.addToAdminActivity(aa)
 		admin.save(flush:true)
-		
 	}
-	
 }

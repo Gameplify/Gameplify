@@ -167,7 +167,7 @@ def avatar_image() {
 		redirect(controller: "game", action:"index" )
 	}
 
-	def userManagement_reports(){
+	def userManagementreports(){
 		if((!(session.user))||session?.user?.role != "Admin"){
 			flash.message = "You do not have permission to access this page"
 			redirect(controller:"game", action: "index")
@@ -185,7 +185,7 @@ def avatar_image() {
 		}
 	}
 
-	def userManagement_blocked(){
+	def userManagementblocked(){
 		if((!(session.user))||session?.user?.role != "Admin"){
 			flash.message = "You do not have permission to access this page"
 			redirect(controller:"game", action: "index")
@@ -205,7 +205,8 @@ def avatar_image() {
 
 	def showUserInfo(){
 		def user = userService.findUser(params.userId)
-		render(template: "userInfo", model:[user:user, type:params.type, report:params.reportId])
+		def report = Report.get(params.reportId)
+		render(template: "userInfo", model:[user:user, type:params.type, report:report])
 	}
 
 	def reportUser(){
@@ -213,17 +214,17 @@ def avatar_image() {
 	}
 	def blockUser(){
 		userService.blockUser(params.userId, params.reportId, session.user.id)
-		redirect(action:"userManagement_reports")
+		redirect(action:"userManagementreports")
 	}
 
 	def ignoreReport(){
 		userService.ignoreReport(params.reportId, session.user.id)
-		redirect(action:"userManagement_reports")
+		redirect(action:"userManagementreports")
 	}
 
 	def unblockUser(){
 		userService.unblockUser(params.userId, params.reportId, session.user.id)
-		redirect(action:"userManagement_blocked")
+		redirect(action:"userManagementblocked")
 	}
 
 
