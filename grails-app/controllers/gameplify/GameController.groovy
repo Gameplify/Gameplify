@@ -110,18 +110,20 @@ class GameController {
 		def checkGame = gameService.listGameInfo(params.gameTitle.trim())
 		def screenshots = params.list('screenshots')
 		def releaseDate = Date.parse("yyyy-MM-dd",params.releaseDate)
-		log.println(params.gameTitle.trim())
-		log.println(releaseDate)
-		if(checkGame != null && checkGame.status != "deleted"){
-			flash.message = "Game already exist"
-			//		} else if(checkGame.status == "deleted"){
-			//			gameService.editGame()
-		}
-		else if(categories.isEmpty()) {
-			flash.message = "You must select at least one category"
-		} else {
-			gameService.addGame(params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.platformId, categories, session.user.id, screenshots)
-			flash.success = "Game successfully added!"
+		if(params.gameTitle.trim()){
+			if(checkGame != null && checkGame.status != "deleted"){
+				flash.message = "Game already exist"
+				//		} else if(checkGame.status == "deleted"){
+				//			gameService.editGame()
+			}
+			else if(categories.isEmpty()) {
+				flash.message = "You must select at least one category"
+			} else {
+				gameService.addGame(params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.platformId, categories, session.user.id, screenshots)
+				flash.success = "Game successfully added!"
+			}
+		} else{
+			flash.message = "Invalid input"
 		}
 		redirect(action:"gameManagement", params:[categoryName:params.currentCategory])
 	}
