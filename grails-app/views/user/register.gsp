@@ -125,6 +125,9 @@
 									<g:submitButton class="ui fluid large blue submit button"
 										name="submitButton" value="Register" />
 								</g:form>
+								
+								
+								
 							</div>
 						</div>
 					</div>

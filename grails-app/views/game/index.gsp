@@ -36,7 +36,9 @@
 				<div class="ui segment" style="width: 800px; height: auto">
 					<div class="ui three column stackable grid">
 						<div class="column" style="    width: 98.333333%;">
-						<g:if test="${flash.reg}">${flash.reg}</g:if>
+						<g:if test="${flash.reg}">
+									<script>alert("You have successfully registered!")</script>
+								</g:if>
 							<div class="ui grid" style="float: right;margin-top: 0px;">
 								<g:each in="${platform }" var="plat">
 									<g:link action="platform"
