@@ -326,7 +326,7 @@
 				<div class="ui modal addGame">
 					<i class="close icon"></i>
 					<g:form class="ui equal width form" id="form" style="padding:20px"
-						controller='game' action='editGame'>
+						controller='game' action='editGame' onsubmit="return check()">
 						<img class="ui centered small image" id="image"
 							src="${resource(dir: 'images', file: "$game.gameLogo")}"
 							alt="Game Logo">
@@ -471,6 +471,7 @@ function assDate() {
 	console.log(date1);
 	console.log(date2);
 }
+
 </script>
 </body>
 </html>

@@ -114,9 +114,9 @@ class GameService {
 			}.list(sort: 'averageRating', order: 'desc',max: max, offset: offset  )
 		} else if(!chosenPlatform){
 			games = Game.where {
-				 status == "okay"
-				 releaseDate>=dateStrng && releaseDate<=dateString
-		    }.list(sort: 'averageRating', order: 'desc' ,max: max, offset: offset )
+				status == "okay"
+				releaseDate>=dateStrng && releaseDate<=dateString
+			}.list(sort: 'averageRating', order: 'desc' ,max: max, offset: offset )
 		}
 		return games
 	}
@@ -135,14 +135,14 @@ class GameService {
 				averageRating>=1
 			}.list(sort: 'averageRating', order: 'desc',max: max, offset: offset )
 		} else if(!chosenPlatform){
-			games = Game.where { 
-				status == "okay" 
+			games = Game.where {
+				status == "okay"
 				averageRating >=1
 			}.list(sort: 'averageRating', order: 'desc',max: max, offset: offset )
 		}
 		return games
 	}
-	
+
 
 	def editReview(newReview, reviewId){
 		Date date = new Date()
@@ -173,7 +173,7 @@ class GameService {
 		game.save(flush:true)
 		user.save(flush:true)
 	}
-	
+
 	def addComment(comment, gameId, userId, reviewId){
 		log.println("ni sud sa service")
 		User user = User.get(userId)
@@ -230,7 +230,7 @@ class GameService {
 			ss.save()
 			game.addToScreenshot(ss)
 		}
-		
+
 		game.save(flush:true)
 		platform.addToGame(game)
 		log.println (categories)
@@ -244,7 +244,7 @@ class GameService {
 		log.println(platform.platformName)
 		userService.addAdminActivity(adminId,"added " +gameTitle)
 	}
-	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, formerPlatformId, platformId, categories, removeCat, adminId, screenshots){
+	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, formerPlatformId, platformId, categories, removeCat, adminId, screenshots, formerCategory){
 		Game game = Game.get(gameId)
 		game.gameTitle = gameTitle
 		game.gamePrice = gamePrice.toFloat()
@@ -254,43 +254,41 @@ class GameService {
 			game.gameLogo = gameLogo
 		}
 		game.save(flush: true)
-		
+
 		Platform newPlatform = Platform.get(platformId)
 		Platform oldPlatform = Platform.get(formerPlatformId)
-		log.println(formerPlatformId)
-		log.println(platformId)
-		log.println(newPlatform)
-		log.println(oldPlatform)
 		if(newPlatform != oldPlatform){
 			oldPlatform.removeFromGame(game)
 			newPlatform.addToGame(game)
 			oldPlatform.save(flush:true)
 			newPlatform.save(flush:true)
 		}
-
+		if(categories!=formerCategory){
+			log.println("bitch")
+			saveNewCategory(game,categories)
+		}
 		log.println (categories)
-		removeCat.each {
-			GameCategory gameCategory = GameCategory.get(it.id)
-			log.println(gameCategory.categoryName)
-			gameCategory.removeFromGames(game)
-			gameCategory.save(flush:true)
+		if(removeCat){
+			removeCat.each {
+				GameCategory gameCategory = GameCategory.get(it.id)
+				log.println(gameCategory.categoryName)
+				gameCategory.removeFromGames(game)
+				gameCategory.save(flush:true)
+			}
 		}
 		if(screenshots){
 			screenshots.each {
 				Screenshots slist = new Screenshots(
-					photo:it,
-					game:game
-					)
-				slist.save()
-				game.addToScreenshot(ss)
+						photo:it,
+						game:game
+						)
+				slist.save(flush:true)
+				game.addToScreenshot(slist)
 			}
 		}
-		categories.each {
-			GameCategory gameCategory = GameCategory.get(it.id)
-			log.println(gameCategory.categoryName)
-			gameCategory.addToGames(game)
-			gameCategory.save(flush:true)
-		}
+		log.println(categories)
+		log.println(formerCategory)
+		
 
 		userService.addAdminActivity(adminId,"edited " +gameTitle)
 	}
@@ -467,7 +465,14 @@ class GameService {
 		return games
 	}
 
-
+	def saveNewCategory(game,categories){
+		categories.each {
+			GameCategory newGameCategory = GameCategory.get(it.id)
+			log.println(newGameCategory)
+			newGameCategory.addToGames(game)
+			newGameCategory.save(flush:true)
+		}
+	}
 
 
 	def serviceMethod() {

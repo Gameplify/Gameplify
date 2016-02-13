@@ -258,7 +258,7 @@
 				}
 			}
 			if (!okay) {
-				alert("Please check a checkbox");
+				alert("Please select a category");
 				return false;
 			}
 		}

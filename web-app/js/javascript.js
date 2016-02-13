@@ -207,3 +207,17 @@ function assDate() {
 	console.log(date1);
 	console.log(date2);
 }
+function check() {
+	var checkboxs = document.getElementsByName("newCategory");
+	var okay = false;
+	for (var i = 0, l = checkboxs.length; i < l; i++) {
+		if (checkboxs[i].checked) {
+			okay = true;
+			break;
+		}
+	}
+	if (!okay) {
+		alert("Please selec a category");
+		return false;
+	}
+}
