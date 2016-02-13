@@ -81,9 +81,9 @@
 							</g:remoteLink>
 						</g:each>
 					</div>
-
+					<%--<g:each in="${reports}" var="report"></g:each>--%>
 					<div class="pagination" style="text-align: center;">
-						<g:paginate action="userManagementreports" total="${reportCount}"></g:paginate>
+						<g:paginate action="userManagementreports" total='${reportCount }'/>
 						${reportCount }
 					</div>
 
