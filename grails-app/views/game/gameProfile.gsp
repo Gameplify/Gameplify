@@ -86,7 +86,7 @@
 												<g:if test="${ss.gameTitle==ga }">
 													<img class="ui tiny centered image"
 														style="width: 25px; height: 25px; padding-right: 0px;"
-														src="${resource(dir: 'images', file: "hot.png")}"/>
+														src="${resource(dir: 'images', file: "hot.png")}" />
 												</g:if>
 											</g:if>
 										</g:each>
@@ -291,7 +291,8 @@
 															<g:if test="${session?.user?.status != "blocked"}">
 																<g:form class="ui comment form">
 																	<div class="field">
-																		<g:textArea class="textbox" name="comment" required="" maxlength="100"/>
+																		<g:textArea class="textbox" name="comment" required=""
+																			maxlength="100" />
 																		<g:hiddenField name="gameId" value="${game.id}" />
 																		<g:hiddenField name="gameTitle"
 																			value="${game.gameTitle}" />
@@ -300,10 +301,10 @@
 
 																	<g:actionSubmit action="addComment" value=" Comment"
 																		id="commentButton"
- 																		class="ui blue labeled submit icon button" disabled=""/>
+																		class="ui blue labeled submit icon button" disabled="" />
 
 
-																	
+
 																</g:form>
 															</g:if>
 														</g:if>
@@ -325,7 +326,7 @@
 				<div class="ui modal addGame">
 					<i class="close icon"></i>
 					<g:form class="ui equal width form" id="form" style="padding:20px"
-						controller='game' action='editGame'>
+						controller='game' action='editGame' onsubmit="return check()">
 						<img class="ui centered small image" id="image"
 							src="${resource(dir: 'images', file: "$game.gameLogo")}"
 							alt="Game Logo">
@@ -334,7 +335,7 @@
 							value="${game.gameLogo}" style="margin: 10px;" />
 						<div class="field">
 							<g:hiddenField name="gameId" value="${game.id }"></g:hiddenField>
-							<g:hiddenField name="realGameTitle" value="${game.gameTitle }"/>
+							<g:hiddenField name="realGameTitle" value="${game.gameTitle }" />
 							<g:textField placeholder="Game Title*" id="gameTitle"
 								name="gameTitle" required="" value="${game.gameTitle}" />
 						</div>
@@ -344,7 +345,8 @@
 									id="datePicker"
 									value="${formatDate(format:'yyyy-MM-dd',date:game.releaseDate) }"
 									oninput="assDate();" required />
-								<g:hiddenField name="releaseDate" id="releaseDate" value="${game.releaseDate }" />
+								<g:hiddenField name="releaseDate" id="releaseDate"
+									value="${game.releaseDate }" />
 							</div>
 							<div class="field">
 								<label for="price">Price*</label>
@@ -359,8 +361,8 @@
 									</g:if>
 								</g:each>
 
-								<g:select from="${platforms}" class="ui dropdown"
-									name="platformId" optionKey="id" optionValue="platformName" />
+								<g:select class="ui dropdown"from="${platforms}" name="platformId" optionKey="id"
+									optionValue="platformName"  value="${game.platform.id }"/>
 							</div>
 						</div>
 						<div class="field">
@@ -396,7 +398,7 @@
 							<label for="screenshot">Screenshot/s</label>
 							<g:field type="file" name="screenshots"
 								accept="image/jpeg, image/png, image/jpg" multiple="multiple"
-								style="margin: 10px;" list="${game.screenshot }" />
+								style="margin: 10px;" value="${game?.screenshot }" />
 						</div>
 						<div class="actions" style="text-align: center; margin-top: 30px;">
 							<g:submitButton class="ui button" name="addButton" id="addButton"
@@ -407,7 +409,7 @@
 				<g:if test="${flash.error }">
 					<div class="ui small modal">
 						<div class="ui negative message">
-						<i class="close icon"></i>
+							<i class="close icon"></i>
 							<div class="header">
 								${flash.error }
 							</div>
@@ -417,7 +419,7 @@
 			</div>
 		</div>
 	</div>
-<script>
+	<script>
 $('.ui.rating')
 .rating('setting', 'onRate', function(value) {
     var rating = value;
@@ -469,7 +471,8 @@ function assDate() {
 	console.log(date1);
 	console.log(date2);
 }
+
 </script>
 </body>
 </html>
-	
+

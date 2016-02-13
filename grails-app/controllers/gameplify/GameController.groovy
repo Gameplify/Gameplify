@@ -128,19 +128,21 @@ class GameController {
 	def editGame(){
 		def uncheckedCategory = params.list('formerCategory') - params.list('newCategory')
 		def checkedCategory = params.list('newCategory')
+		def formerCategory = GameCategory.getAll(params.list('formerCategory'))
 		def categories = GameCategory.getAll(checkedCategory)
 		def removeCat = GameCategory.getAll(uncheckedCategory)
 		def checkGame = gameService.listGameInfo(params.gameTitle.trim())
 		def previousTitle = Game.get(params.gameId)
 		def releaseDate = Date.parse("yyyy-MM-dd", params.releaseDate)
 		def screenshots = params.list('screenshots')
-		log.println(params.formerPlatformId)
-	
+		formerCategory.each{
+			log.println("awer"+it)
+		}
 		if(previousTitle.gameTitle == params.gameTitle.trim()){
 			if(categories.isEmpty()) {
 				flash.error = "You must select at least one category"
 			} else {
-				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots)
+				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
 			}
 		}else if(checkGame != null && checkGame.status != "deleted"){
 			flash.error = "Game title already exist"
@@ -149,7 +151,7 @@ class GameController {
 		}else if(categories.isEmpty()) {
 			flash.error = "You must select at least one category"
 		} else {
-			gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots)
+				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
 		}
 		redirect(action:"gameProfile", params:[gameTitle:params.realGameTitle])
 	}

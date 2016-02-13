@@ -258,12 +258,12 @@
 				}
 			}
 			if (!okay) {
-				alert("Please check a checkbox");
+				alert("Please select a category");
 				return false;
 			}
 		}
 
-		var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
+		<%--var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
 			var arrInputs = onForm.getElementsByClassName("superMegaClass");
 			for (var i = 0; i < arrInputs.length; i++) {
 				var oInput = arrInputs[i];
@@ -294,7 +294,7 @@
 
 			return true;
 
-		}
+		}--%>
 
 		function assDate() {
 			var date1 = document.getElementById("datePicker").value;
