@@ -373,6 +373,38 @@ class GameController {
 		log.println("tsdk" +taskLisst.totalCount)
 		log.println("sdf" +taskL.totalCount)
 		
+		if (params.paginate == 'Bar') {
+			def barPagination = [max: params.max, offset: params.offset]
+			session.barPagination = barPagination
+		}
+		//log.println("SESSION BAR1 " +session.barPagination.offset)
+		
+		if (params.paginate == 'Foo') {
+			def fooPagination = [max: params.max, offset: params.offset]
+			session.fooPagination = fooPagination
+		}
+		
+		
+			def barList = Game.createCriteria().list(session.barPagination ?: [max: 10, offset: 0]){
+				if ( params.query) {
+					ilike("gameTitle", "%${params.query}%")
+					and { eq("status", "okay")
+					}
+				}
+				
+				order("gameTitle", "asc")
+			}
+			
+			def fooList =  User.createCriteria().list(session.fooPagination ?: [max: 10, offset: 0]){
+				if ( params.query) {
+					ilike("name", "%${params.query}%")
+					and {
+						eq("role", "User")
+						eq("status", "okay")
+					}
+				}
+				order("name", "asc")
+			}
 		
 		def taskList = Game.createCriteria().list(params){
 			if ( params.query) {
@@ -417,6 +449,6 @@ class GameController {
 
 		def total= userList.totalCount + taskList.totalCount
 
-		[ gamess:taskL, bb:taskLisst, chosenPlatform:chosenPlatform, gam:ggg, gamet: ggg.totalCount , uses:uuu, usert: uuu.totalCount ,users:userList, totals:total,  userInstanceTotal: userList.totalCount, games: taskList, taskInstanceTotal: taskList.totalCount]
+		[ fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList, gamess:taskL, bb:taskLisst, chosenPlatform:chosenPlatform, gam:ggg, gamet: ggg.totalCount , uses:uuu, usert: uuu.totalCount ,users:userList, totals:total,  userInstanceTotal: userList.totalCount, games: taskList, taskInstanceTotal: taskList.totalCount]
 	}
 }

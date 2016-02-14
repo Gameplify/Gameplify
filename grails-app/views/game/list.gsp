@@ -41,7 +41,8 @@
 																						<h3>Games Found</h3>
 			                                                                            <div class="ui three column stackable grid">
 			                                                                                     <div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;height: 453px;">
-																                                 	 	<g:each in="${games}" status="i" var="game">
+																                                 	 	<g:each in="${barList}" status="i" var="game">
+																                                 	 	<g:if test="${(i)<3}">
 																	                                 	<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}">                             		
 																												 <div class="ui segment" style="width: 314px;height: 163px; padding-left: 22px;margin-top: 0px;margin-bottom: 8px;left: -18px;">
 																		                                              		<div class="ui grid" style="float:right;margin-right: 1px;margin-top: 0px;width: 298px;margin-bottom: 7px;">
@@ -78,20 +79,25 @@
 														                                                                </div>   
 																	                                              </div> 
 																	                                    </g:link>
+																	                                    </g:if>
 																	                                   </g:each>
 													                                           </div>
 			                                                                             </div>
 			                                                                              
 			                                                            </div> 
+			                                                            <div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
+																			<g:paginate total="${totalBars}"  max="3" offset="${session.barPagination?.offset}" params="${[paginate:'Bar']}"/>
+											  							</div>
 			                                  			</div>
 			                                 			 <div class="column" style="width: 378px;" >
 			                                                            <div class="ui segment" style=" overflow:scroll; width: 378px;height: 567px;padding-left: 22px;left: 14px;">
-			                                                                  <h3>User's Found</h3>
+			                                                                  <h3>Users Found</h3>
 			                                                                             <div class="ui three column stackable grid">
 			                                                                                     <div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">
-																	                                 	 	<g:each in="${users}" status="i" var="user">
+																	                                 	 	<g:each in="${fooList}" status="x" var="user">
+																	                                 	 	<g:if test="${(x)<3}">
 																		                                 	<g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${user.id}"]}">                               		
-																													 <div class="ui segment" style="  height:104px; width: 270px; padding-top: 14px; margin-left: 0px; margin-top:0px;">
+																													 <div class="ui segment" style="   height:104px; width: 270px; padding-top: 14px; margin-left: 0px; margin-top:0px;margin-bottom: 13px;">
 																		                                                   <g:if test="${user.avatar}"><img class="ui tiny left floated image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
 																		                                                    </g:if>
 																		                                                    <g:else>
@@ -102,12 +108,15 @@
 															                                 								 </div>   
 																		                                              </div> 
 																		                                    </g:link>
+																		                                    </g:if>
 																		                                   </g:each>
 																                                   </div>
 												                                           </div>
 																						
 			                                                            </div>      
-			                                                              	       
+			                                                              	       <div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
+																							<g:paginate total="${totalFoos}" max="3" offset="${session.fooPagination?.offset}"  params="${[paginate:'Foo']}"/>
+																				   </div>
 			                                     		 </div>
 			                                     		 
 			               	   </div>
