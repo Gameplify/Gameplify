@@ -144,6 +144,9 @@
 									<h4 style="text-align: center">
 										${user.name }
 									</h4>
+									<h4 style="margin-top:0px; text-align: center">
+										[${user.username }]
+									</h4>
 									<div style="text-align: center !important;">
 										${user.totalNumberOfReviews }
 										Reviews

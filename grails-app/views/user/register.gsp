@@ -68,13 +68,9 @@
 								<g:form class="ui tiny form" style="margin-bottom: 19px;"
 									controller='user' action='register'>
 
-								<g:if test="${flash.cnt>0||user}">
+								<g:if test="${flash.cnt>0}">
 									<div class="errors">
-										<g:hasErrors bean="${user}">
-											<div class="moreErr">
-												<g:renderErrors bean="${user}" />
-											</div>
-										</g:hasErrors>
+									
 									
 										<div class="moreErr">
 										<g:if test="${flash.message}">
@@ -110,12 +106,12 @@
 
 									<div class="field">
 										<label for="username">User name</label>
-										<g:textField name="username" required="" maxlength="50"/>
+										<g:textField name="username" required="" minlength= "5" maxlength="50"/>
 									</div>
 
 									<div class="field">
 										<label for="password">Password</label>
-										<g:field type="password" required="" name="password" maxlength="50" />
+										<g:field type="password" required="" name="password" minlength= "5" maxlength="50" />
 									</div>
 
 									<div class="field">
@@ -125,6 +121,9 @@
 									<g:submitButton class="ui fluid large blue submit button"
 										name="submitButton" value="Register" />
 								</g:form>
+								
+								
+								
 							</div>
 						</div>
 					</div>

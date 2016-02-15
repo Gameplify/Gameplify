@@ -61,7 +61,7 @@
 
 					</g:form>
 					Create an account
-					<g:link class="ui fluid large blue submit button" controller="user"
+					<g:link class="ui fluid large blue submit button" controller="user" name="register"
 						action="register">Register</g:link>
 				</div>
 

@@ -21,6 +21,7 @@
 
 
 <body>
+
 	<div class="ui fixed inverted menu">
 		<g:include action="showNavbar" />
 	</div>
@@ -212,7 +213,7 @@
 				</div>
 			</div>
 			<div class="field" style="margin-top: 20px;">
-				<label for="screenshot">Screenshot/s</label>
+				<label for="screenshot">Screenshot(s)</label>
 				<g:field type="file" name="screenshots" class="superMegaClass"
 					accept="image/jpeg, image/png, image/jpg" required=""
 					multiple="multiple" style="margin: 10px;" />
@@ -222,6 +223,9 @@
 					value="Add Game" style="margin-left: -1.75em;" disabled="true"></g:submitButton>
 			</div>
 		</g:form>
+			<g:if test="${flash.success}">
+								<script>alert("Game successfully added!");</script>
+							</g:if>
 	</div>
 	<g:if test="${flash.message}">
 		<div class="ui small modal">
