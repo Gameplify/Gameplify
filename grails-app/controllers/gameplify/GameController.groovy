@@ -375,6 +375,8 @@ class GameController {
 		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList, reg:reg]
 	}
 
+	
+	
 	def list() {
 		def platform = gameService.listPlatform()
 		def chosenPlatform = params.platform
@@ -415,6 +417,10 @@ class GameController {
 				}
 				order("name", "asc")
 			}
+		
+			//This is to stop the paginate using params.offset/max to calculate current step and use the offset/max attributes instead
+			params.offset = null
+			params.max = null
 		
 		def taskList = Game.createCriteria().list(params){
 			if ( params.query) {
