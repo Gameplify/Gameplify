@@ -93,8 +93,9 @@ class GameService {
 			sum += it.rating
 			x++
 		}
-		log.println(x)
-		return (sum/x)
+		def ave = sum/x
+		def ret = Math.round(ave * 100) / 100
+		return ret
 	}
 
 	def listGamePlat( chosenPlatform,max,offset){

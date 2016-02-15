@@ -187,13 +187,16 @@ class GameController {
 		def how = 'asc'
 		def what = 'gameTitle'
 		def platforms = gameService.listPlatform()
+		
+		
 		def currentCategory = params.categoryName
 		def max = params.max ?: 10
 		def offset = params.offset ?: 0
 		def chosenPlatform = params.platform
 		def games = gameService.listGame(currentCategory, chosenPlatform, max, offset, what, how)
-		log.println(games)
-		[currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
+		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
+		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
+		[taskL:taskL, bb:taskList, currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
 	}
 
 	def sortList(){
