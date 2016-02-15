@@ -109,6 +109,7 @@ class GameController {
 		def categories = GameCategory.getAll(checkedCategory)
 		def checkGame = gameService.listGameInfo(params.gameTitle.trim())
 		def screenshots = params.list('screenshots')
+//		log.println(screenshots)
 		def releaseDate = Date.parse("yyyy-MM-dd",params.releaseDate)
 		if(params.gameTitle.trim()){
 			if(checkGame != null && checkGame.status != "deleted"){
@@ -137,9 +138,6 @@ class GameController {
 		def previousTitle = Game.get(params.gameId)
 		def releaseDate = Date.parse("yyyy-MM-dd", params.releaseDate)
 		def screenshots = params.list('screenshots')
-		formerCategory.each{
-			log.println("awer"+it)
-		}
 		if(previousTitle.gameTitle == params.gameTitle.trim()){
 			if(categories.isEmpty()) {
 				flash.error = "You must select at least one category"
@@ -157,7 +155,7 @@ class GameController {
 				flash.success ="Game updated successfully!"
 				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
 		}
-		redirect(action:"gameProfile", params:[gameTitle:params.realGameTitle])
+		redirect(action:"gameProfile", params:[gameTitle:params.gameTitle.trim()])
 	}
 
 	def deleteGame(){

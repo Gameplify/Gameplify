@@ -223,9 +223,6 @@
 					value="Add Game" style="margin-left: -1.75em;" disabled="true"></g:submitButton>
 			</div>
 		</g:form>
-			<g:if test="${flash.success}">
-								<script>alert("Game successfully added!");</script>
-							</g:if>
 	</div>
 	<g:if test="${flash.message}">
 		<div class="ui small modal">
@@ -265,28 +262,37 @@
 				$('.ui.icon.button.delete').toggle();
 			});
 
-			$("#gameTitle").keyup(function() {
-
+			$("#gameTitle").keyup(function(){
+				
 				var reviewLength = $("#gameDesc").val().trim().length;
-				if ($.trim($('#gameTitle').val()) == "" && reviewLength <= 0) {
-					document.getElementById("addButton").disabled = true;
-				} else if (reviewLength <= 0) {
-					document.getElementById("addButton").disabled = true;
+				var reviewTitleLength= $("#gameTitle").val().trim().length;
+				if(reviewTitleLength>0){
+			        if ($.trim($('#gameTitle').val()) == "" && reviewLength <=0 ) {
+						document.getElementById("addButton").disabled = true;
+					}else if(reviewLength <=0 ) {
+						document.getElementById("addButton").disabled = true;
+					}else{
+						document.getElementById("addButton").disabled = false;
+					}
 				} else {
-					document.getElementById("addButton").disabled = false;
+					document.getElementById("addButton").disabled = true;
 				}
 			});
-
-			$("#gameDesc").keyup(function() {
+			
+			$("#gameDesc").keyup(function(){
 
 				var reviewLength = $("#gameTitle").val().trim().length;
-
-				if ($.trim($('#gameDesc').val()) == "") {
+				var reviewDescLength = $("#gameDesc").val().trim().length;
+				if(reviewDescLength>0){
+			        if ($.trim($('#gameDesc').val()) == "" ) {
+						document.getElementById("addButton").disabled = true;
+					}else if (reviewLength <= 0) {
+						document.getElementById("addButton").disabled = true;
+					}else{
+						document.getElementById("addButton").disabled = false;
+					}
+				} else{
 					document.getElementById("addButton").disabled = true;
-				} else if (reviewLength <= 0) {
-					document.getElementById("addButton").disabled = true;
-				} else {
-					document.getElementById("addButton").disabled = false;
 				}
 			});
 

@@ -398,7 +398,7 @@
 							<label for="screenshot">Screenshot/s</label>
 							<g:field type="file" name="screenshots"
 								accept="image/jpeg, image/png, image/jpg" multiple="multiple"
-								style="margin: 10px;" value="${game?.screenshot }" />
+								style="margin: 10px;" />
 						</div>
 						<div class="actions" style="text-align: center; margin-top: 30px;">
 							<g:submitButton class="ui button" name="editGame" id="editButton"
