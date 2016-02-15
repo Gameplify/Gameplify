@@ -20,6 +20,7 @@
 
 
 <body>
+
 	<div class="ui fixed inverted menu">
 		<g:include action="showNavbar" />
 	</div>
@@ -35,12 +36,7 @@
 						</h3>
 						<div class="ui grid"
 							style="margin-left: 545px; margin-top: -50px;">
-							<g:if test="${flash.success}">
-								<div class="message"
-									style="margin-top: 25px; width: 200px; position: absolute; margin-left: -300px;">
-									${flash.success }
-								</div>
-							</g:if>
+							
 							<div style="margin-top: 10px;">
 								<button class="ui inverted icon button" id="addGame"
 									style="height: 28px; margin-left: -55px; width: 28px; padding: 0;">
@@ -180,7 +176,7 @@
 				</div>
 			</div>
 			<div class="field" style="margin-top: 20px;">
-				<label for="screenshot">Screenshot/s</label>
+				<label for="screenshot">Screenshot(s)</label>
 				<g:field type="file" name="screenshots" class="superMegaClass"
 					accept="image/jpeg, image/png, image/jpg" required=""
 					multiple="multiple" style="margin: 10px;" />
@@ -190,6 +186,9 @@
 					value="Add Game" style="margin-left: -1.75em;" disabled="true"></g:submitButton>
 			</div>
 		</g:form>
+			<g:if test="${flash.success}">
+								<script>alert("Game successfully added!");</script>
+							</g:if>
 	</div>
 	<g:if test="${flash.message}">
 		<div class="ui small modal">
