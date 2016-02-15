@@ -101,7 +101,7 @@
 												<div class="row"
 													style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
 													<g:each var="category" in="${game.categories}">
-														<a style="margin-bottom: 5px; margin-left: 7px;"> ${category.categoryName }</a>
+														<a style="margin-bottom: 1px; margin-left: 5px;"> ${category.categoryName }</a>
 
 													</g:each>
 												</div>

@@ -60,6 +60,10 @@ def avatar_image() {
 	def showUserAuthentication(){
 		render(template: '../userAuthentication')
 	}
+	
+	def registerTemplate(){
+		render(template: '../registerTemplate')
+	}
 
 	
 	def register = {

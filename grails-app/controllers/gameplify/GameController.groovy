@@ -219,7 +219,9 @@ class GameController {
 		def chosenPlatform = params.platform
 		def games = gameService.listGame(currentCategory, chosenPlatform, max, offset, what, how)
 		log.println(games)
-		[currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
+		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
+		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
+		[taskL:taskL, bb:taskList,currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
 	}
 	def resetList () {
 		def fooPagination = [max: 3, offset: 0]
@@ -253,7 +255,7 @@ class GameController {
 			session.fooPaginations = fooPagination
 		  } 
 	   
-			def barList = Game.createCriteria().list(session.barPaginations ?: [max: 9, offset: 0]){
+			def barList = Game.createCriteria().list(session.barPaginations ?: [max: 10, offset: 0]){
 				 if(chosenPlatform){
 							 createCriteria("platform","p")
 							eq("p.platformName",chosenPlatform)
@@ -271,18 +273,18 @@ class GameController {
 				 
 				 order("releaseDate", "desc")
 			 }
-			 def fooList = Game.createCriteria().list(session.fooPaginations ?: [max: 9, offset: 0]){
+			 def fooList = Game.createCriteria().list(session.fooPaginations ?: [max: 10, offset: 0]){
 				 if(chosenPlatform){
 					 createCriteria("platform","p")
 					 eq("p.platformName",chosenPlatform)
 					 and{
 						 eq("status", "okay")
-						 def ave= 0.0f
+						 def ave= 4.5f
 						 gt("averageRating",ave)
 					 }
 				 }else{
 						 eq("status", "okay")
-						 def ave= 0.0f
+						 def ave= 4.5f
 						 gt("averageRating",ave)
 				 }
 				 order("averageRating", "desc")
@@ -303,6 +305,8 @@ class GameController {
 	}
 	
 	def index() {
+		def reg = params.reg
+		log.println(reg)
 		def platform = gameService.listPlatform()
 		def chosenPlatform =params.platform
 		def now = new Date()
@@ -324,7 +328,7 @@ class GameController {
 	    } 
 		
 		
-			def barList = Game.createCriteria().list(session.barPagination ?: [max: 9, offset: 0]){
+			def barList = Game.createCriteria().list(session.barPagination ?: [max: 10, offset: 0]){
 				 if(chosenPlatform){
 							 createCriteria("platform","p")
 							eq("p.platformName",chosenPlatform)
@@ -342,18 +346,18 @@ class GameController {
 				 
 				 order("releaseDate", "desc")
 			 }
-			 def fooList = Game.createCriteria().list(session.fooPagination ?: [max: 9, offset: 0]){
+			 def fooList = Game.createCriteria().list(session.fooPagination ?: [max: 10, offset: 0]){
 				 if(chosenPlatform){
 					 createCriteria("platform","p")
 					 eq("p.platformName",chosenPlatform)
 					 and{
 						 eq("status", "okay")
-						 def ave= 0.0f
+						 def ave= 4.5f
 						 gt("averageRating",ave)
 					 }
 				 }else{
 						 eq("status", "okay")
-						 def ave= 0.0f
+						 def ave= 4.5f
 						 gt("averageRating",ave)
 				 }
 				 order("averageRating", "desc")
@@ -370,14 +374,14 @@ class GameController {
 		log.println("NOW " +dateString)
 		log.println("LAST YEAR " +dateStrng)
 		
-		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList]
+		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList, reg:reg]
 	}
 
 	def list() {
 		def platform = gameService.listPlatform()
 		def chosenPlatform = params.platform
-		def taskLisst = gameService.listGamePlat(chosenPlatform,9,0)
-		def taskL = gameService.whatsHot(chosenPlatform,9,0)
+		def taskLisst = gameService.listGamePlat(chosenPlatform,10,0)
+		def taskL = gameService.whatsHot(chosenPlatform,10,0)
 		log.println("tsdk" +taskLisst.totalCount)
 		log.println("sdf" +taskL.totalCount)
 		
