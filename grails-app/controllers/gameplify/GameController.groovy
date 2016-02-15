@@ -49,7 +49,7 @@ class GameController {
 			rating = 0
 		}
 
-		[game:game, rating:rating, games:taskL, bb:taskList]		
+		[game:game, rating:rating, games:taskL, bb:taskList]	
 	}
 
 	def editReview(){
@@ -86,7 +86,6 @@ class GameController {
 		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
 		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
 		
-		
 		def game = gameService.listGameInfo(params.gameTitle)
 		if(session.user){
 			currentUser = userService.findUser(session.user.id)
@@ -108,35 +107,63 @@ class GameController {
 	def addGame(){
 		def checkedCategory = params.list('category')
 		def categories = GameCategory.getAll(checkedCategory)
-		def checkGame = gameService.listGameInfo(params.gameTitle)
-		if(checkGame != null && checkGame.status != "deleted"){
-			flash.message = "Game already exist"
-			//		} else if(checkGame.status == "deleted"){
-			//			gameService.editGame()
-		}
-		else if(categories.isEmpty()) {
-			flash.message = "You must select at least one category"
-		} else {
-			gameService.addGame(params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories, session.user.id)
+		def checkGame = gameService.listGameInfo(params.gameTitle.trim())
+		def screenshots = params.list('screenshots')
+		def releaseDate = Date.parse("yyyy-MM-dd",params.releaseDate)
+		if(params.gameTitle.trim()){
+			if(checkGame != null && checkGame.status != "deleted"){
+				flash.message = "Game already exist"
+				//		} else if(checkGame.status == "deleted"){
+				//			gameService.editGame()
+			}
+			else if(categories.isEmpty()) {
+				flash.message = "You must select at least one category"
+			} else {
+				gameService.addGame(params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.platformId, categories, session.user.id, screenshots)
+				flash.success = "You have successfully added the game!"
+			}
+		} else{
+			flash.message = "Invalid input"
 		}
 		redirect(action:"gameManagement", params:[categoryName:params.currentCategory])
 	}
 	def editGame(){
 		def uncheckedCategory = params.list('formerCategory') - params.list('newCategory')
 		def checkedCategory = params.list('newCategory')
+		def formerCategory = GameCategory.getAll(params.list('formerCategory'))
 		def categories = GameCategory.getAll(checkedCategory)
 		def removeCat = GameCategory.getAll(uncheckedCategory)
-		if(categories.isEmpty()) {
-			flash.message = "You must select at least one category"
-		} else {
-			gameService.editGame(params.gameId, params.gameTitle, params.gameLogo, params.gamePrice, params.gameDescription, params.releaseDate, params.platformId, categories, removeCat, session.user.id)
+		def checkGame = gameService.listGameInfo(params.gameTitle.trim())
+		def previousTitle = Game.get(params.gameId)
+		def releaseDate = Date.parse("yyyy-MM-dd", params.releaseDate)
+		def screenshots = params.list('screenshots')
+		formerCategory.each{
+			log.println("awer"+it)
 		}
-		redirect(action:"gameProfile", params:[gameTitle:params.gameTitle])
+		if(previousTitle.gameTitle == params.gameTitle.trim()){
+			if(categories.isEmpty()) {
+				flash.error = "You must select at least one category"
+			} else {
+				flash.success ="Game updated successfully!"
+				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
+			}
+		}else if(checkGame != null && checkGame.status != "deleted"){
+			flash.error = "Game title already exist"
+			//		} else if(checkGame.status == "deleted"){
+			//			gameService.editGame()
+		}else if(categories.isEmpty()) {
+			flash.error = "You must select at least one category"
+		} else {
+				flash.success ="Game updated successfully!"
+				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
+		}
+		redirect(action:"gameProfile", params:[gameTitle:params.realGameTitle])
 	}
 
 	def deleteGame(){
 		def currentCategory = params.categoryName
 		gameService.deleteGame(params.gameTitle, session.user.id)
+		flash.success = "Game deleted successfully"
 		redirect(action: "gameManagement", params:[categoryName:currentCategory])
 	}
 
@@ -163,13 +190,16 @@ class GameController {
 		def how = 'asc'
 		def what = 'gameTitle'
 		def platforms = gameService.listPlatform()
+		
+		
 		def currentCategory = params.categoryName
 		def max = params.max ?: 10
 		def offset = params.offset ?: 0
 		def chosenPlatform = params.platform
 		def games = gameService.listGame(currentCategory, chosenPlatform, max, offset, what, how)
-		log.println(games)
-		[currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
+		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
+		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
+		[taskL:taskL, bb:taskList, currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
 	}
 
 	def sortList(){
@@ -189,7 +219,9 @@ class GameController {
 		def chosenPlatform = params.platform
 		def games = gameService.listGame(currentCategory, chosenPlatform, max, offset, what, how)
 		log.println(games)
-		[currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
+		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
+		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
+		[taskL:taskL, bb:taskList,currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
 	}
 	def resetList () {
 		def fooPagination = [max: 3, offset: 0]
@@ -214,7 +246,6 @@ class GameController {
 		def prevMonth = now[Calendar.MONTH]
 		def lastYear=now.updated(year: lYear, date: lDate, month: prevMonth)
 		def dateStrng = lastYear.toTimestamp()
-		
 		if (params.paginate == 'Bar') {
 			def barPagination = [max: params.max, offset: params.offset]
 		  session.barPaginations = barPagination
@@ -224,41 +255,40 @@ class GameController {
 			session.fooPaginations = fooPagination
 		  } 
 	   
-
-		def barList = Game.createCriteria().list(session.barPaginations ?: [max: 10, offset: 0]){
-			 if(chosenPlatform){
-						 createCriteria("platform","p")
-						eq("p.platformName",chosenPlatform)
-					and{
+			def barList = Game.createCriteria().list(session.barPaginations ?: [max: 10, offset: 0]){
+				 if(chosenPlatform){
+							 createCriteria("platform","p")
+							eq("p.platformName",chosenPlatform)
+						and{
+							 eq("status", "okay")
+							  between("releaseDate", dateStrng, dateString)
+						 }
+	
+				 } else{
 						 eq("status", "okay")
-						  between("releaseDate", dateStrng, dateString)
-					 }
-
-			 } else{
-					 eq("status", "okay")
-					 and{
-						 between("releaseDate", dateStrng, dateString)
-					 }
-			 }
-			 
-			 order("releaseDate", "desc")
-		 }
-		 def fooList = Game.createCriteria().list(session.fooPaginations ?: [max: 10, offset: 0]){
-			 if(chosenPlatform){
-				 createCriteria("platform","p")
-				 eq("p.platformName",chosenPlatform)
-				 and{
-					 eq("status", "okay")
-					 def ave= 0.0f
-					 gt("averageRating",ave)
+						 and{
+							 between("releaseDate", dateStrng, dateString)
+						 }
 				 }
-			 }else{
-					 eq("status", "okay")
-					 def ave= 0.0f
-					 gt("averageRating",ave)
+				 
+				 order("releaseDate", "desc")
 			 }
-			 order("averageRating", "desc")
-		 }
+			 def fooList = Game.createCriteria().list(session.fooPaginations ?: [max: 10, offset: 0]){
+				 if(chosenPlatform){
+					 createCriteria("platform","p")
+					 eq("p.platformName",chosenPlatform)
+					 and{
+						 eq("status", "okay")
+						 def ave= 4.5f
+						 gt("averageRating",ave)
+					 }
+				 }else{
+						 eq("status", "okay")
+						 def ave= 4.5f
+						 gt("averageRating",ave)
+				 }
+				 order("averageRating", "desc")
+			 }
 		
 		//This is to stop the paginate using params.offset/max to calculate current step and use the offset/max attributes instead
 		 params.offset = null
@@ -275,6 +305,8 @@ class GameController {
 	}
 	
 	def index() {
+		def reg = params.reg
+		log.println(reg)
 		def platform = gameService.listPlatform()
 		def chosenPlatform =params.platform
 		def now = new Date()
@@ -284,49 +316,52 @@ class GameController {
 		def prevMonth = now[Calendar.MONTH]
 		def lastYear=now.updated(year: lYear, date: lDate, month: prevMonth)
 		def dateStrng = lastYear.toTimestamp()
+		if (params.paginate == 'Bar') {
+			def barPagination = [max: params.max, offset: params.offset]
+		    session.barPagination = barPagination
+		}
+		//log.println("SESSION BAR1 " +session.barPagination.offset)
 		
 		if (params.paginate == 'Foo') {
 			def fooPagination = [max: params.max, offset: params.offset]
 			session.fooPagination = fooPagination
-		  } else if (params.paginate == 'Bar') {
-			def barPagination = [max: params.max, offset: params.offset]
-			session.barPagination = barPagination
-		  }
-
-		def barList = Game.createCriteria().list(session.barPagination ?: [max: 10, offset: 0]){
-			 if(chosenPlatform){
-						 createCriteria("platform","p")
-						eq("p.platformName",chosenPlatform)
-					and{
+	    } 
+		
+		
+			def barList = Game.createCriteria().list(session.barPagination ?: [max: 10, offset: 0]){
+				 if(chosenPlatform){
+							 createCriteria("platform","p")
+							eq("p.platformName",chosenPlatform)
+						and{
+							 eq("status", "okay")
+							  between("releaseDate", dateStrng, dateString)
+						 }
+	
+				 } else{
 						 eq("status", "okay")
-						 between("releaseDate", dateString, dateStrng)
-					 }
-
-			 } else{
-					 eq("status", "okay")
-					 and{
-						 between("releaseDate", dateStrng, dateString)
-					 }
-			 }
-			 
-			 order("releaseDate", "desc")
-		 }
-		 def fooList = Game.createCriteria().list(session.fooPagination ?: [max: 10, offset: 0]){
-			 if(chosenPlatform){
-				 createCriteria("platform","p")
-				 eq("p.platformName",chosenPlatform)
-				 and{
-					 eq("status", "okay")
-					 def ave= 0.0f
-					 gt("averageRating",ave)
+						 and{
+							 between("releaseDate", dateStrng, dateString)
+						 }
 				 }
-			 }else{
-					 eq("status", "okay")
-					 def ave= 0.0f
-					 gt("averageRating",ave)
+				 
+				 order("releaseDate", "desc")
 			 }
-			 order("averageRating", "desc")
-		 }
+			 def fooList = Game.createCriteria().list(session.fooPagination ?: [max: 10, offset: 0]){
+				 if(chosenPlatform){
+					 createCriteria("platform","p")
+					 eq("p.platformName",chosenPlatform)
+					 and{
+						 eq("status", "okay")
+						 def ave= 4.5f
+						 gt("averageRating",ave)
+					 }
+				 }else{
+						 eq("status", "okay")
+						 def ave= 4.5f
+						 gt("averageRating",ave)
+				 }
+				 order("averageRating", "desc")
+			 }
 		
 		//This is to stop the paginate using params.offset/max to calculate current step and use the offset/max attributes instead
 		 params.offset = null
@@ -339,16 +374,49 @@ class GameController {
 		log.println("NOW " +dateString)
 		log.println("LAST YEAR " +dateStrng)
 		
-		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList]
+		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList, reg:reg]
 	}
 
 	def list() {
 		def platform = gameService.listPlatform()
 		def chosenPlatform = params.platform
-		def max = params.max ?: 10
-		def offset = params.offset ?: 0
-		def taskLisst = gameService.listGamePlat(chosenPlatform,max,offset)
-		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
+		def taskLisst = gameService.listGamePlat(chosenPlatform,10,0)
+		def taskL = gameService.whatsHot(chosenPlatform,10,0)
+		log.println("tsdk" +taskLisst.totalCount)
+		log.println("sdf" +taskL.totalCount)
+		
+		if (params.paginate == 'Bar') {
+			def barPagination = [max: params.max, offset: params.offset]
+			session.barPagination = barPagination
+		}
+		//log.println("SESSION BAR1 " +session.barPagination.offset)
+		
+		if (params.paginate == 'Foo') {
+			def fooPagination = [max: params.max, offset: params.offset]
+			session.fooPagination = fooPagination
+		}
+		
+		
+			def barList = Game.createCriteria().list(session.barPagination ?: [max: 10, offset: 0]){
+				if ( params.query) {
+					ilike("gameTitle", "%${params.query}%")
+					and { eq("status", "okay")
+					}
+				}
+				
+				order("gameTitle", "asc")
+			}
+			
+			def fooList =  User.createCriteria().list(session.fooPagination ?: [max: 10, offset: 0]){
+				if ( params.query) {
+					ilike("name", "%${params.query}%")
+					and {
+						eq("role", "User")
+						eq("status", "okay")
+					}
+				}
+				order("name", "asc")
+			}
 		
 		def taskList = Game.createCriteria().list(params){
 			if ( params.query) {
@@ -393,6 +461,6 @@ class GameController {
 
 		def total= userList.totalCount + taskList.totalCount
 
-		[ gamess:taskL, bb:taskLisst, chosenPlatform:chosenPlatform, gam:ggg, gamet: ggg.totalCount , uses:uuu, usert: uuu.totalCount ,users:userList, totals:total,  userInstanceTotal: userList.totalCount, games: taskList, taskInstanceTotal: taskList.totalCount]
+		[ fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList, gamess:taskL, bb:taskLisst, chosenPlatform:chosenPlatform, gam:ggg, gamet: ggg.totalCount , uses:uuu, usert: uuu.totalCount ,users:userList, totals:total,  userInstanceTotal: userList.totalCount, games: taskList, taskInstanceTotal: taskList.totalCount]
 	}
 }
