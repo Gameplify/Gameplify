@@ -120,7 +120,7 @@ class GameController {
 				flash.message = "You must select at least one category"
 			} else {
 				gameService.addGame(params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.platformId, categories, session.user.id, screenshots)
-				flash.success = "Game successfully added!"
+				flash.success = "You have successfully added the game!"
 			}
 		} else{
 			flash.message = "Invalid input"
@@ -144,6 +144,7 @@ class GameController {
 			if(categories.isEmpty()) {
 				flash.error = "You must select at least one category"
 			} else {
+				flash.success ="Game updated successfully!"
 				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
 			}
 		}else if(checkGame != null && checkGame.status != "deleted"){
@@ -153,6 +154,7 @@ class GameController {
 		}else if(categories.isEmpty()) {
 			flash.error = "You must select at least one category"
 		} else {
+				flash.success ="Game updated successfully!"
 				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
 		}
 		redirect(action:"gameProfile", params:[gameTitle:params.realGameTitle])
@@ -161,6 +163,7 @@ class GameController {
 	def deleteGame(){
 		def currentCategory = params.categoryName
 		gameService.deleteGame(params.gameTitle, session.user.id)
+		flash.success = "Game deleted successfully"
 		redirect(action: "gameManagement", params:[categoryName:currentCategory])
 	}
 
@@ -250,7 +253,7 @@ class GameController {
 			session.fooPaginations = fooPagination
 		  } 
 	   
-			def barList = Game.createCriteria().list(session.barPaginations ?: [max: 9, offset: 0]){
+			def barList = Game.createCriteria().list(session.barPaginations ?: [max: 10, offset: 0]){
 				 if(chosenPlatform){
 							 createCriteria("platform","p")
 							eq("p.platformName",chosenPlatform)
@@ -268,18 +271,18 @@ class GameController {
 				 
 				 order("releaseDate", "desc")
 			 }
-			 def fooList = Game.createCriteria().list(session.fooPaginations ?: [max: 9, offset: 0]){
+			 def fooList = Game.createCriteria().list(session.fooPaginations ?: [max: 10, offset: 0]){
 				 if(chosenPlatform){
 					 createCriteria("platform","p")
 					 eq("p.platformName",chosenPlatform)
 					 and{
 						 eq("status", "okay")
-						 def ave= 0.0f
+						 def ave= 4.5f
 						 gt("averageRating",ave)
 					 }
 				 }else{
 						 eq("status", "okay")
-						 def ave= 0.0f
+						 def ave= 4.5f
 						 gt("averageRating",ave)
 				 }
 				 order("averageRating", "desc")
@@ -323,7 +326,7 @@ class GameController {
 	    } 
 		
 		
-			def barList = Game.createCriteria().list(session.barPagination ?: [max: 9, offset: 0]){
+			def barList = Game.createCriteria().list(session.barPagination ?: [max: 10, offset: 0]){
 				 if(chosenPlatform){
 							 createCriteria("platform","p")
 							eq("p.platformName",chosenPlatform)
@@ -341,18 +344,18 @@ class GameController {
 				 
 				 order("releaseDate", "desc")
 			 }
-			 def fooList = Game.createCriteria().list(session.fooPagination ?: [max: 9, offset: 0]){
+			 def fooList = Game.createCriteria().list(session.fooPagination ?: [max: 10, offset: 0]){
 				 if(chosenPlatform){
 					 createCriteria("platform","p")
 					 eq("p.platformName",chosenPlatform)
 					 and{
 						 eq("status", "okay")
-						 def ave= 0.0f
+						 def ave= 4.5f
 						 gt("averageRating",ave)
 					 }
 				 }else{
 						 eq("status", "okay")
-						 def ave= 0.0f
+						 def ave= 4.5f
 						 gt("averageRating",ave)
 				 }
 				 order("averageRating", "desc")
@@ -375,8 +378,8 @@ class GameController {
 	def list() {
 		def platform = gameService.listPlatform()
 		def chosenPlatform = params.platform
-		def taskLisst = gameService.listGamePlat(chosenPlatform,9,0)
-		def taskL = gameService.whatsHot(chosenPlatform,9,0)
+		def taskLisst = gameService.listGamePlat(chosenPlatform,10,0)
+		def taskL = gameService.whatsHot(chosenPlatform,10,0)
 		log.println("tsdk" +taskLisst.totalCount)
 		log.println("sdf" +taskL.totalCount)
 		

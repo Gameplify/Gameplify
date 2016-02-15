@@ -142,25 +142,34 @@ $(document).ready(function()  {
 	$("#gameTitle").keyup(function(){
 		
 		var reviewLength = $("#gameDesc").val().trim().length;
-        if ($.trim($('#gameTitle').val()) == "" && reviewLength <=0 ) {
-			document.getElementById("addButton").disabled = true;
-		}else if(reviewLength <=0 ) {
-			document.getElementById("addButton").disabled = true;
-		}else{
-			document.getElementById("addButton").disabled = false;
+		var reviewTitleLength= $("#gameTitle").val().trim().length;
+		if(reviewTitleLength>0){
+	        if ($.trim($('#gameTitle').val()) == "" && reviewLength <=0 ) {
+				document.getElementById("editButton").disabled = true;
+			}else if(reviewLength <=0 ) {
+				document.getElementById("editButton").disabled = true;
+			}else{
+				document.getElementById("editButton").disabled = false;
+			}
+		} else {
+			document.getElementById("editButton").disabled = true;
 		}
 	});
 	
 	$("#gameDesc").keyup(function(){
 
 		var reviewLength = $("#gameTitle").val().trim().length;
-		
-        if ($.trim($('#gameDesc').val()) == "" ) {
-			document.getElementById("addButton").disabled = true;
-		}else if (reviewLength <= 0) {
-			document.getElementById("addButton").disabled = true;
-		}else{
-			document.getElementById("addButton").disabled = false;
+		var reviewDescLength = $("#gameDesc").val().trim().length;
+		if(reviewDescLength>0){
+	        if ($.trim($('#gameDesc').val()) == "" ) {
+				document.getElementById("editButton").disabled = true;
+			}else if (reviewLength <= 0) {
+				document.getElementById("editButton").disabled = true;
+			}else{
+				document.getElementById("editButton").disabled = false;
+			}
+		} else{
+			document.getElementById("editButton").disabled = true;
 		}
 	});
  
