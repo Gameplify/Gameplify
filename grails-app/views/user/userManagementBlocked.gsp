@@ -75,7 +75,7 @@
 						</g:each>
 					</div>
 					<div class="pagination" style="text-align: center;">
-						<g:paginate action="userManagementblocked" max="10" offset="0" total='${blockedCount }'/>
+						<g:paginate action="userManagementBlocked" max="10" offset="0" total='${blockedCount }'/>
 
 					</div>
 				</div>
