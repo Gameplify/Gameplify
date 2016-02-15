@@ -29,7 +29,7 @@
 					<g:hiddenField name="reportId" value="${report.id}" />
 					<g:submitButton class="fluid ui red button" value="BLOCK"
 						name="block"
-						onclick="return confirm('Are you sure you want to block this user?')"></g:submitButton>
+						onclick="return confirm('Are you sure you want to block this person?')"></g:submitButton>
 				</g:form>
 			</div>
 		</div>
@@ -66,7 +66,7 @@
 					<g:hiddenField name="reportId" value="${report.id}" />
 					<g:submitButton class="fluid ui red button" value="UNBLOCK"
 						name="unblock"
-						onclick="return confirm('Are you sure you want to unblock this user?')"></g:submitButton>
+						onclick="return confirm('Are you sure you want to unblock this person?')"></g:submitButton>
 				</g:form>
 			</div>
 		</div>
