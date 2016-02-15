@@ -69,7 +69,7 @@ def avatar_image() {
 
 			
 			if(params.name =~ ".*\\d+.*"){
-				flash.integer= "Name must contains characters only."
+				flash.integer= "Name must contain alpha characters only."
 				count=1
 			}
 			
