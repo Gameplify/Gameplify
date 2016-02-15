@@ -230,6 +230,7 @@ class GameService {
 					)
 			ss.save()
 			game.addToScreenshot(ss)
+//			game.getScreenshot(ss)
 		}
 
 		game.save(flush:true)
@@ -247,6 +248,7 @@ class GameService {
 	}
 	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, formerPlatformId, platformId, categories, removeCat, adminId, screenshots, formerCategory){
 		Game game = Game.get(gameId)
+		log.println(gameTitle)
 		game.gameTitle = gameTitle
 		game.gamePrice = gamePrice.toFloat()
 		game.gameDescription = gameDescription
@@ -255,7 +257,6 @@ class GameService {
 			game.gameLogo = gameLogo
 		}
 		game.save(flush: true)
-
 		Platform newPlatform = Platform.get(platformId)
 		Platform oldPlatform = Platform.get(formerPlatformId)
 		if(newPlatform != oldPlatform){
@@ -277,6 +278,7 @@ class GameService {
 				gameCategory.save(flush:true)
 			}
 		}
+		log.println(screenshots)
 		if(screenshots){
 			screenshots.each {
 				Screenshots slist = new Screenshots(
@@ -287,10 +289,9 @@ class GameService {
 				game.addToScreenshot(slist)
 			}
 		}
+		
 		log.println(categories)
 		log.println(formerCategory)
-		
-
 		userService.addAdminActivity(adminId,"edited " +gameTitle)
 	}
 
