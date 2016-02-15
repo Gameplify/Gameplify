@@ -300,6 +300,8 @@ class GameController {
 	}
 	
 	def index() {
+		def reg = params.reg
+		log.println(reg)
 		def platform = gameService.listPlatform()
 		def chosenPlatform =params.platform
 		def now = new Date()
@@ -367,7 +369,7 @@ class GameController {
 		log.println("NOW " +dateString)
 		log.println("LAST YEAR " +dateStrng)
 		
-		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList]
+		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList, reg:reg]
 	}
 
 	def list() {

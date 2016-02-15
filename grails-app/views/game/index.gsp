@@ -189,8 +189,11 @@
 
 					</div>
 				</div>
-				<g:include controller="user" action="showUserAuthentication" />
-
+				<g:if test="${reg == null}">
+					<g:include controller="user" action="showUserAuthentication" />
+				</g:if><g:else>
+					<g:include controller="user" action="registerTemplate" />
+				</g:else>
 			</div>
 </body>
 </html>
