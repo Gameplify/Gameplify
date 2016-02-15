@@ -219,7 +219,9 @@ class GameController {
 		def chosenPlatform = params.platform
 		def games = gameService.listGame(currentCategory, chosenPlatform, max, offset, what, how)
 		log.println(games)
-		[currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
+		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
+		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
+		[taskL:taskL, bb:taskList,currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
 	}
 	def resetList () {
 		def fooPagination = [max: 3, offset: 0]

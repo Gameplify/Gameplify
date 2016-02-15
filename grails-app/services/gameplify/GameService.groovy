@@ -382,12 +382,12 @@ class GameService {
 					categories.categoryName == currentCategory
 					platform.platformName == chosenPlatform
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+				}.list(sort: 'averageRating', order: "asc", max: max, offset: offset)
 			} else if(!chosenPlatform){
 				games = Game.where {
 					categories.categoryName == currentCategory
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+				}.list(sort: 'averageRating', order: "asc", max: max, offset: offset)
 			}
 		} else {
 			if(chosenPlatform){
@@ -395,12 +395,12 @@ class GameService {
 					categories.categoryName == currentCategory
 					platform.platformName == chosenPlatform
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+				}.list(sort: 'releaseDate', order: "asc", max: max, offset: offset)
 			} else if(!chosenPlatform){
 				games = Game.where {
 					categories.categoryName == currentCategory
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+				}.list(sort: 'releaseDate', order: "asc", max: max, offset: offset)
 			}
 		}
 		log.println("ni sud sa ascend")
@@ -441,12 +441,12 @@ class GameService {
 					categories.categoryName == currentCategory
 					platform.platformName == chosenPlatform
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+				}.list(sort: 'averageRating', order: "desc", max: max, offset: offset)
 			} else if(!chosenPlatform){
 				games = Game.where {
 					categories.categoryName == currentCategory
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+				}.list(sort: 'averageRating', order: "desc", max: max, offset: offset)
 			}
 		} else {
 			if(chosenPlatform){
@@ -454,12 +454,12 @@ class GameService {
 					categories.categoryName == currentCategory
 					platform.platformName == chosenPlatform
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+				}.list(sort: 'releaseDate', order: "desc", max: max, offset: offset)
 			} else if(!chosenPlatform){
 				games = Game.where {
 					categories.categoryName == currentCategory
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+				}.list(sort: 'releaseDate', order: "desc", max: max, offset: offset)
 			}
 		}
 		log.println("ni sud sa descend")
