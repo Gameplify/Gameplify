@@ -113,6 +113,8 @@
 			</div>
 		</div>
 	</g:if>
+	<%-- Comment --%>
+	
 </body>
 </html>
 <script>
