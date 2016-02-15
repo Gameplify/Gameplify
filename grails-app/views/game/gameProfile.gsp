@@ -86,7 +86,7 @@
 												<g:if test="${ss.gameTitle==ga }">
 													<img class="ui tiny centered image"
 														style="width: 25px; height: 25px; padding-right: 0px;"
-														src="${resource(dir: '../../../web-app/images', file: "hot.png")}" />
+														src="${resource(dir: 'images', file: "hot.png")}" />
 												</g:if>
 											</g:if>
 										</g:each>
@@ -113,7 +113,7 @@
 
 										</h5>
 										<h5 class="title">
-											${game.numberOfRaters }
+											Number of raters:${game.numberOfRaters }
 
 										</h5>
 									</div>
@@ -131,7 +131,7 @@
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
 								</h5>
 								<g:if test="${session?.user?.role == "Admin"}">
-									<button class="ui blue button" id="editGame"
+									<button class="ui blue button" id="editGame" name="edit"
 										style="margin-left: 92px;">Edit</button>
 								</g:if>
 								<div class="ui two column stackable grid"
@@ -291,7 +291,8 @@
 															<g:if test="${session?.user?.status != "blocked"}">
 																<g:form class="ui comment form">
 																	<div class="field">
-																		<g:textArea class="textbox" name="comment" required="" maxlength="100"/>
+																		<g:textArea class="textbox" name="comment" required=""
+																			maxlength="100" />
 																		<g:hiddenField name="gameId" value="${game.id}" />
 																		<g:hiddenField name="gameTitle"
 																			value="${game.gameTitle}" />
@@ -300,10 +301,10 @@
 
 																	<g:actionSubmit action="addComment" value=" Comment"
 																		id="commentButton"
- 																		class="ui blue labeled submit icon button" disabled=""/>
+																		class="ui blue labeled submit icon button" disabled="" />
 
 
-																	
+
 																</g:form>
 															</g:if>
 														</g:if>
@@ -325,23 +326,27 @@
 				<div class="ui modal addGame">
 					<i class="close icon"></i>
 					<g:form class="ui equal width form" id="form" style="padding:20px"
-						controller='game' action='editGame'>
+						controller='game' action='editGame' onsubmit="return check()">
 						<img class="ui centered small image" id="image"
 							src="${resource(dir: 'images', file: "$game.gameLogo")}"
 							alt="Game Logo">
-						<g:field type="file" name="gameLogo" accept="image/*"
+						<g:field type="file" name="gameLogo"
+							accept="image/jpeg, image/png, image/jpg"
 							value="${game.gameLogo}" style="margin: 10px;" />
 						<div class="field">
 							<g:hiddenField name="gameId" value="${game.id }"></g:hiddenField>
-							<g:textField placeholder="Game Title*" name="gameTitle"
-								required="" value="${game.gameTitle}" />
+							<g:hiddenField name="realGameTitle" value="${game.gameTitle }" />
+							<g:textField placeholder="Game Title*" id="gameTitle"
+								name="gameTitle" required="" value="${game.gameTitle}" />
 						</div>
 						<div class="fields">
 							<div class="field" style="width: 200px;">
-								<label for="releaseDate">Released On*</label>
-								<g:datePicker name="releaseDate" value="${game.releaseDate}"
-									precision="day"
-									years="${Calendar.instance.get(Calendar.YEAR)..1950}" />
+								<label for="releaseDate">Released On*</label> <input type="date"
+									id="datePicker"
+									value="${formatDate(format:'yyyy-MM-dd',date:game.releaseDate) }"
+									oninput="assDate();" required />
+								<g:hiddenField name="releaseDate" id="releaseDate"
+									value="${game.releaseDate }" />
 							</div>
 							<div class="field">
 								<label for="price">Price*</label>
@@ -350,13 +355,19 @@
 							</div>
 							<div class="field">
 								<label for="platform">Platform</label>
-								<g:select from="${platforms}" class="ui dropdown"
-									name="platformId" optionKey="id" optionValue="platformName" />
+								<g:each in="${platforms}" status="i" var="platform">
+									<g:if test="${platform in game.platform }">
+										<g:hiddenField name="formerPlatformId" value="${platform.id}" />
+									</g:if>
+								</g:each>
+
+								<g:select class="ui dropdown"from="${platforms}" name="platformId" optionKey="id"
+									optionValue="platformName"  value="${game.platform.id }"/>
 							</div>
 						</div>
 						<div class="field">
 							<g:textArea rows="3" name="gameDescription"
-								placeholder="Description*" required=""
+								placeholder="Description*" id="gameDesc" required=""
 								value="${game.gameDescription }" />
 						</div>
 						<div class="field">
@@ -383,21 +394,42 @@
 								</g:each>
 							</div>
 						</div>
+						<div class="field" style="margin-top: 20px;">
+							<label for="screenshot">Screenshot/s</label>
+							<g:field type="file" name="screenshots"
+								accept="image/jpeg, image/png, image/jpg" multiple="multiple"
+								style="margin: 10px;" value="${game?.screenshot }" />
+						</div>
 						<div class="actions" style="text-align: center; margin-top: 30px;">
-							<g:submitButton class="ui button" name="addButton"
-								value="Add Game" style="margin-left: -1.75em;"></g:submitButton>
+							<g:submitButton class="ui button" name="editGame" id="editButton"
+								value="Save Changes" style="margin-left: -1.75em;"></g:submitButton>
 						</div>
 					</g:form>
 				</div>
-
+				<g:if test="${flash.error }">
+					<div class="ui small modal">
+						<div class="ui negative message">
+							<i class="close icon"></i>
+							<div class="header">
+								${flash.error }
+							</div>
+						</div>
+					</div>
+				</g:if>
+				<g:if test="${flash.success }">
+					<div class="ui small modal">
+						<div class="ui positive message">
+							<i class="close icon"></i>
+							<div class="header">
+								${flash.success }
+							</div>
+						</div>
+					</div>
+				</g:if>
 			</div>
 		</div>
 	</div>
-
-
 	<script>
-
-	
 $('.ui.rating')
 .rating('setting', 'onRate', function(value) {
     var rating = value;
@@ -405,18 +437,15 @@ $('.ui.rating')
     ${remoteFunction(controller: 'game' , update: 'updateMe',  action: 'rating', params: '\'rating=\' + rating +  \'&gameId=\' + gameId')}
 });
 
-
-
-i=0;
-w=0;
-x=0;
-
+var i=0;
+var w=0;
+var x=0;
 var Arr= new Array();
 var myArr = new Array();
-size_li=0;
-	
-$('.myList').each(function() {
-    var count = $('> li', this).length;
+var size_li=0;
+
+$('.myList').each(function(){
+	var count = $('> li', this).length;
 
     myArr.push(count); //number of comments per review
     
@@ -426,36 +455,17 @@ $('.myList').each(function() {
    	i++;
 });
 
-  $('.loadMore').click(function () {
-   start=0;
-   val=$('.loadMore').index(this);
-   val2=val;
-
-	end= myArr[val];  
-	while(val>0){
-		val--;
-		start+= myArr[val]; //0 4 8 12 17
-		end+= myArr[val]; //4 8 12 17
-
-	}
-  
-	  if(start<end){
-				start+=Arr[val2];
-				diff=end-start;
-			   	$('.myList li').slice(start, start+3).show();
-		  		if(start+3>=end)
-		  			 $('.loadMore').eq($('.loadMore').index(this)).hide();	
-				if(diff<3)
-					Arr[val2]+=diff;
-				else
-				
-					Arr[val2]+=3;
-			
-	  }
-  	
 	
-    });
- 
+$('.ui.small.modal').modal('show');
+function assDate() {
+	var date1 = document.getElementById("datePicker").value;
+	document.getElementById("releaseDate").value = date1;
+	var date2 = document.getElementById("releaseDate").value;
+	console.log(date1);
+	console.log(date2);
+}
+
 </script>
 </body>
 </html>
+

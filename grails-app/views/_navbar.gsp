@@ -25,7 +25,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="header item"><g:link controller="user" action="userManagement_reports">User</g:link></div>
+	<div class="header item"><g:link controller="user" action="userManagementReports">User</g:link></div>
 </g:if>
 <g:form action="list" method="GET">
 	<div class="ui search">

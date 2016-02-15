@@ -93,8 +93,9 @@ class GameService {
 			sum += it.rating
 			x++
 		}
-		log.println(x)
-		return (sum/x)
+		def ave = sum/x
+		def ret = Math.round(ave * 100) / 100
+		return ret
 	}
 
 	def listGamePlat( chosenPlatform,max,offset){
@@ -114,9 +115,9 @@ class GameService {
 			}.list(sort: 'averageRating', order: 'desc',max: max, offset: offset  )
 		} else if(!chosenPlatform){
 			games = Game.where {
-				 status == "okay"
-				 releaseDate>=dateStrng && releaseDate<=dateString
-		    }.list(sort: 'averageRating', order: 'desc' ,max: max, offset: offset )
+				status == "okay"
+				releaseDate>=dateStrng && releaseDate<=dateString
+			}.list(sort: 'averageRating', order: 'desc' ,max: max, offset: offset )
 		}
 		return games
 	}
@@ -132,17 +133,17 @@ class GameService {
 			games = Game.where {
 				platform.platformName == chosenPlatform
 				status == "okay"
-				averageRating>=1
+				averageRating>=4.5f
 			}.list(sort: 'averageRating', order: 'desc',max: max, offset: offset )
 		} else if(!chosenPlatform){
-			games = Game.where { 
-				status == "okay" 
-				averageRating >=1
+			games = Game.where {
+				status == "okay"
+				averageRating >=4.5f
 			}.list(sort: 'averageRating', order: 'desc',max: max, offset: offset )
 		}
 		return games
 	}
-	
+
 
 	def editReview(newReview, reviewId){
 		Date date = new Date()
@@ -173,7 +174,7 @@ class GameService {
 		game.save(flush:true)
 		user.save(flush:true)
 	}
-	
+
 	def addComment(comment, gameId, userId, reviewId){
 		log.println("ni sud sa service")
 		User user = User.get(userId)
@@ -208,7 +209,7 @@ class GameService {
 	}
 
 
-	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories,adminId){
+	def addGame(gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories,adminId, screenshots){
 		Platform platform = Platform.get(platformId)
 		Game game = new Game(
 				gameTitle:gameTitle,
@@ -222,12 +223,15 @@ class GameService {
 				status:"okay"
 				)
 		game.save(failOnError: true)
-		Screenshots ss = new Screenshots(
-				photo:"ss1.jpg",
-				game:game
-				)
-		ss.save()
-		game.addToScreenshot(ss)
+		screenshots.each{
+			Screenshots ss = new Screenshots(
+					photo:it,
+					game:game
+					)
+			ss.save()
+			game.addToScreenshot(ss)
+		}
+
 		game.save(flush:true)
 		platform.addToGame(game)
 		log.println (categories)
@@ -241,8 +245,7 @@ class GameService {
 		log.println(platform.platformName)
 		userService.addAdminActivity(adminId,"added " +gameTitle)
 	}
-	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, platformId, categories, removeCat, adminId){
-		Platform platform = Platform.get(platformId)
+	def editGame(gameId, gameTitle, gameLogo, gamePrice, gameDescription, releaseDate, formerPlatformId, platformId, categories, removeCat, adminId, screenshots, formerCategory){
 		Game game = Game.get(gameId)
 		game.gameTitle = gameTitle
 		game.gamePrice = gamePrice.toFloat()
@@ -252,23 +255,41 @@ class GameService {
 			game.gameLogo = gameLogo
 		}
 		game.save(flush: true)
-		platform.addToGame(game)
-		log.println (categories)
-		removeCat.each {
-			GameCategory gameCategory = GameCategory.get(it.id)
-			log.println(gameCategory.categoryName)
-			gameCategory.removeFromGames(game)
-			gameCategory.save(flush:true)
-		}
 
-		categories.each {
-			GameCategory gameCategory = GameCategory.get(it.id)
-			log.println(gameCategory.categoryName)
-			gameCategory.addToGames(game)
-			gameCategory.save(flush:true)
+		Platform newPlatform = Platform.get(platformId)
+		Platform oldPlatform = Platform.get(formerPlatformId)
+		if(newPlatform != oldPlatform){
+			oldPlatform.removeFromGame(game)
+			newPlatform.addToGame(game)
+			oldPlatform.save(flush:true)
+			newPlatform.save(flush:true)
 		}
-		platform.save(flush:true)
-		log.println(platform.platformName)
+		if(categories!=formerCategory){
+			log.println("bitch")
+			saveNewCategory(game,categories)
+		}
+		log.println (categories)
+		if(removeCat){
+			removeCat.each {
+				GameCategory gameCategory = GameCategory.get(it.id)
+				log.println(gameCategory.categoryName)
+				gameCategory.removeFromGames(game)
+				gameCategory.save(flush:true)
+			}
+		}
+		if(screenshots){
+			screenshots.each {
+				Screenshots slist = new Screenshots(
+						photo:it,
+						game:game
+						)
+				slist.save(flush:true)
+				game.addToScreenshot(slist)
+			}
+		}
+		log.println(categories)
+		log.println(formerCategory)
+		
 
 		userService.addAdminActivity(adminId,"edited " +gameTitle)
 	}
@@ -361,12 +382,12 @@ class GameService {
 					categories.categoryName == currentCategory
 					platform.platformName == chosenPlatform
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+				}.list(sort: 'averageRating', order: "asc", max: max, offset: offset)
 			} else if(!chosenPlatform){
 				games = Game.where {
 					categories.categoryName == currentCategory
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+				}.list(sort: 'averageRating', order: "asc", max: max, offset: offset)
 			}
 		} else {
 			if(chosenPlatform){
@@ -374,12 +395,12 @@ class GameService {
 					categories.categoryName == currentCategory
 					platform.platformName == chosenPlatform
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+				}.list(sort: 'releaseDate', order: "asc", max: max, offset: offset)
 			} else if(!chosenPlatform){
 				games = Game.where {
 					categories.categoryName == currentCategory
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
+				}.list(sort: 'releaseDate', order: "asc", max: max, offset: offset)
 			}
 		}
 		log.println("ni sud sa ascend")
@@ -420,12 +441,12 @@ class GameService {
 					categories.categoryName == currentCategory
 					platform.platformName == chosenPlatform
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+				}.list(sort: 'averageRating', order: "desc", max: max, offset: offset)
 			} else if(!chosenPlatform){
 				games = Game.where {
 					categories.categoryName == currentCategory
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+				}.list(sort: 'averageRating', order: "desc", max: max, offset: offset)
 			}
 		} else {
 			if(chosenPlatform){
@@ -433,19 +454,26 @@ class GameService {
 					categories.categoryName == currentCategory
 					platform.platformName == chosenPlatform
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+				}.list(sort: 'releaseDate', order: "desc", max: max, offset: offset)
 			} else if(!chosenPlatform){
 				games = Game.where {
 					categories.categoryName == currentCategory
 					status == "okay"
-				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
+				}.list(sort: 'releaseDate', order: "desc", max: max, offset: offset)
 			}
 		}
 		log.println("ni sud sa descend")
 		return games
 	}
 
-
+	def saveNewCategory(game,categories){
+		categories.each {
+			GameCategory newGameCategory = GameCategory.get(it.id)
+			log.println(newGameCategory)
+			newGameCategory.addToGames(game)
+			newGameCategory.save(flush:true)
+		}
+	}
 
 
 	def serviceMethod() {

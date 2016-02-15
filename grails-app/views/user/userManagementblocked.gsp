@@ -31,9 +31,9 @@
 			<div class="row" style="margin-left: 0px;">
 				<div class="ui top attached pointing tabular menu"
 					style="height: auto; width: 770px;">
-					<g:link class="item" id="reports" action="userManagement_reports"> Reports </g:link>
+					<g:link class="item" id="reports" action="userManagementReports"> Reports </g:link>
 					<g:link class="item active" id="blocked"
-						action="userManagement_blocked">
+						action="userManagementBlocked">
 					Blocked
 				</g:link>
 				</div>
@@ -75,8 +75,8 @@
 						</g:each>
 					</div>
 					<div class="pagination" style="text-align: center;">
-						<g:paginate action="userManagement_blocked"
-							total="${blockedCount}"></g:paginate>
+						<g:paginate action="userManagementblocked" max="10" offset="0" total='${blockedCount }'/>
+
 					</div>
 				</div>
 				<div class="ui two row stackable grid" >
@@ -90,8 +90,21 @@
 			</div>
 		</div>
 	</div>
+	<g:if test="${flash.success }">
+		<div class="ui small modal">
+			<div class="ui positive message">
+				<i class="close icon"></i>
+				<div class="header">
+					${flash.success }
+				</div>
+			</div>
+		</div>
+	</g:if>
 	<g:javascript>
 
 	</g:javascript>
 </body>
 </html>
+<script>
+$('.ui.small.modal').modal('show');
+</script>

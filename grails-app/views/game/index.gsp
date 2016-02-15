@@ -36,7 +36,9 @@
 				<div class="ui segment" style="width: 800px; height: auto">
 					<div class="ui three column stackable grid">
 						<div class="column" style="    width: 98.333333%;">
-						<g:if test="${flash.reg}">${flash.reg}</g:if>
+						<g:if test="${flash.reg}">
+									<script>alert("You have successfully registered!")</script>
+								</g:if>
 							<div class="ui grid" style="float: right;margin-top: 0px;">
 								<g:each in="${platform }" var="plat">
 									<g:link action="platform"
@@ -54,7 +56,7 @@
 					<div class="ui two column stackable grid">
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
-								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
+								style="width: 392px;height: 558px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid" style="height:391px;">
 									<div class="rows" style="width: 325px;">
@@ -108,6 +110,7 @@
 
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
 												<g:paginate total="${totalFoos}" max="3" offset="${session.fooPagination?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginate:'Foo']}"/>
+												
 											</div>
 						</div>
 						
@@ -115,7 +118,7 @@
 						
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
-								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
+								style=" width: 392px;height: 558px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid">
 								
@@ -167,6 +170,7 @@
 									</div>
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
 											  <g:paginate total="${totalBars}" max="3" offset="${session.barPagination?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
+										
 											</div>
 
 								
@@ -176,8 +180,11 @@
 
 					</div>
 				</div>
-				<g:include controller="user" action="showUserAuthentication" />
-
+				<g:if test="${reg == null}">
+					<g:include controller="user" action="showUserAuthentication" />
+				</g:if><g:else>
+					<g:include controller="user" action="registerTemplate" />
+				</g:else>
 			</div>
 </body>
 </html>

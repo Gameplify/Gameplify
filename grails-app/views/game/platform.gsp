@@ -55,7 +55,7 @@
 					<div class="ui two column stackable grid">
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
-								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
+								style=" width: 392px;height: 558px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid" style="height:391px;">
 									<div class="rows" style="width: 325px;">
@@ -109,6 +109,7 @@
 
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
 												<g:paginate total="${totalFoos}" max="3" offset="${session.fooPaginations?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginates:'Foo']}"/>
+												
 											</div>
 						</div>
 						
@@ -116,7 +117,7 @@
 						
 						<div class="column" style="width: 378px;">
 							<div class="ui segment"
-								style="overflow-x: hidden; overflow-y: auto; width: 392px; height: 436px; padding-left: 30px;">
+								style="width: 392px;height: 558px; padding-left: 30px;">
 
 								<div class="ui three column stackable grid">
 								
@@ -168,6 +169,7 @@
 									</div>
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
 											  <g:paginate total="${totalBars}" max="3" offset="${session.barPaginations?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
+											
 											</div>
 
 								

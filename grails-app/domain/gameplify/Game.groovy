@@ -13,6 +13,9 @@ class Game{
 	String toString(){
 		"${gameTitle}"
 	}
+	static mapping = {
+		gameDescription type:"text"
+	}
 	
 	static hasMany = [categories: GameCategory , screenshot: Screenshots , platform:Platform, reviews:Review, comment:Comment,rating:Rating]
 	static belongsTo = [GameCategory ,Platform]  
