@@ -108,12 +108,8 @@
 								</div>
 
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
-												<g:if test="${totalFoos<=9}">
 												<g:paginate total="${totalFoos}" max="3" offset="${session.fooPaginations?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginates:'Foo']}"/>
-												</g:if>
-												<g:else>
-												<g:paginate total="9" max="3" offset="${session.fooPaginations?.offset}"  params="${[chosenPlatform:"${chosenPlatform}",paginates:'Foo']}"/>
-												</g:else>
+												
 											</div>
 						</div>
 						
@@ -172,12 +168,8 @@
 									</div>
 									</div>
 											<div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
-											 <g:if test="${totalBars<=9}">
 											  <g:paginate total="${totalBars}" max="3" offset="${session.barPaginations?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
-											</g:if>
-											<g:else>
-											<g:paginate total="9" max="3" offset="${session.barPaginations?.offset}" params="${[chosenPlatform:"${chosenPlatform}",paginate:'Bar']}"/>
-											</g:else>
+											
 											</div>
 
 								

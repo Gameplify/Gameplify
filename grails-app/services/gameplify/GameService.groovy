@@ -133,12 +133,12 @@ class GameService {
 			games = Game.where {
 				platform.platformName == chosenPlatform
 				status == "okay"
-				averageRating>=1
+				averageRating>=4.5f
 			}.list(sort: 'averageRating', order: 'desc',max: max, offset: offset )
 		} else if(!chosenPlatform){
 			games = Game.where {
 				status == "okay"
-				averageRating >=1
+				averageRating >=4.5f
 			}.list(sort: 'averageRating', order: 'desc',max: max, offset: offset )
 		}
 		return games
