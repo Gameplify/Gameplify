@@ -59,6 +59,7 @@ class UserService {
 		user.status = "blocked"
 		Report report = Report.get(reportId)
 		report.status = "blocked"
+		report.date = new Date()
 		report.save(flush:true)
 		user.save(flush:true)
 		addAdminActivity(adminId,"Blocked " +user.username)

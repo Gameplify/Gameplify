@@ -113,7 +113,7 @@
 
 										</h5>
 										<h5 class="title">
-											${game.numberOfRaters }
+											Number of raters:${game.numberOfRaters }
 
 										</h5>
 									</div>
@@ -131,7 +131,7 @@
 									<g:formatDate format="MM-dd-yyyy" date="${game.releaseDate}" />
 								</h5>
 								<g:if test="${session?.user?.role == "Admin"}">
-									<button class="ui blue button" id="editGame"
+									<button class="ui blue button" id="editGame" name="edit"
 										style="margin-left: 92px;">Edit</button>
 								</g:if>
 								<div class="ui two column stackable grid"
@@ -401,8 +401,8 @@
 								style="margin: 10px;" value="${game?.screenshot }" />
 						</div>
 						<div class="actions" style="text-align: center; margin-top: 30px;">
-							<g:submitButton class="ui button" name="addButton" id="addButton"
-								value="Edit Game" style="margin-left: -1.75em;"></g:submitButton>
+							<g:submitButton class="ui button" name="editGame" id="editButton"
+								value="Save Changes" style="margin-left: -1.75em;"></g:submitButton>
 						</div>
 					</g:form>
 				</div>
@@ -412,6 +412,16 @@
 							<i class="close icon"></i>
 							<div class="header">
 								${flash.error }
+							</div>
+						</div>
+					</div>
+				</g:if>
+				<g:if test="${flash.success }">
+					<div class="ui small modal">
+						<div class="ui positive message">
+							<i class="close icon"></i>
+							<div class="header">
+								${flash.success }
 							</div>
 						</div>
 					</div>
@@ -444,24 +454,7 @@ $('.myList').each(function(){
     w+= myArr[i]; 
    	i++;
 });
-$("#gameTitle").keyup(function(){
 
-    if ($.trim($('#gameTitle').val()) == "" && $.trim($('#gameDesc').val()) == "" ) {
-			document.getElementById("addButton").disabled = true;
-		}else{
-			document.getElementById("addButton").disabled = false;
-			
-		}
-	});
-$("#gameDesc").keyup(function(){
-
-    if ($.trim($('#gameTitle').val()) == "" && $.trim($('#gameDesc').val()) == "" ) {
-			document.getElementById("addButton").disabled = true;
-		}else{
-			document.getElementById("addButton").disabled = false;
-			
-		}
-	});
 	
 $('.ui.small.modal').modal('show');
 function assDate() {

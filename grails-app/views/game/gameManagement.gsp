@@ -15,6 +15,7 @@
 	href="${resource(dir:'dist', file:'semantic.css')}">
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'dist', file:'bg.css')}">
+<script src="${resource(dir:'dist/components', file:'semantic.min.js')}"></script>
 
 </head>
 
@@ -35,19 +36,13 @@
 						</h3>
 						<div class="ui grid"
 							style="margin-left: 545px; margin-top: -50px;">
-							<g:if test="${flash.success}">
-								<div class="message"
-									style="margin-top: 25px; width: 200px; position: absolute; margin-left: -300px;">
-									${flash.success }
-								</div>
-							</g:if>
 							<div style="margin-top: 10px;">
-								<button class="ui inverted icon button" id="addGame"
+								<button class="ui inverted icon button" id="addGame" name="addB"
 									style="height: 28px; margin-left: -55px; width: 28px; padding: 0;">
 									<i class="big green add square icon"
 										style="height: 28px; width: 28px;"></i>
 								</button>
-								<button class="ui inverted icon button" id="deleteGame"
+								<button class="ui inverted icon button" id="deleteGame" name="deleteB"
 									style="height: 28px; width: 28px; margin-left: -35px; padding: 0;">
 									<i class="big red trash icon"
 										style="height: 28px; width: 28px;"></i>
@@ -69,59 +64,96 @@
 						</div>
 						</h3>
 					</div>
-					<div class="ui segment" style="width: 770px; height: auto;">
+					<g:if test="${gameCount > 0 }">
+						<div class="ui segment" id="updateThis"
+							style="width: 770px; height: auto;">
+							<div class="ui cards"
+								style="margin-bottom: 20px; margin-left: 50px; margin-right: 50px; margin-top: 20px;">
+								<g:each in="${games}" status="i" var="game">
+									<g:link class="author" action="gameProfile"
+										params="${[gameTitle: "${game.gameTitle}"]}">
+										<div class="ui segment"
+											style="height: 120px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top: 0px;">
+											<img class="ui tiny left floated image"
+												style="width: 70px; height: 70px;"
+												src="${resource(dir: 'images', file: "${game.gameLogo}")}">
+											<div class="ui 3 column stackable grid"
+												style="margin-left: 62px; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
+												<h5 style="padding-left: 10px; margin-bottom: 0px;">
+													${game.gameTitle }
+												</h5>
+												<div class="row"
+													style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
+													<g:each var="category" in="${game.categories}">
+														<a style="margin-bottom: 5px; margin-left: 7px;"> ${category.categoryName }</a>
 
-						<div class="ui cards"
-							style="margin-bottom: 20px; margin-left: 50px; margin-right: 50px; margin-top: 20px;">
-							<g:each in="${games}" status="i" var="game">
-								<g:link action="gameProfile"
-									params="${[gameTitle: "${game.gameTitle}"]}">
-									<div class="ui segment"
-										style="height: 120px; width: 270px; padding-top: 20px; margin-left: 40px; margin-top: 0px;">
-										<img class="ui tiny left floated image"
-											style="width: 70px; height: 70px;"
-											src="${resource(dir: 'images', file: "${game.gameLogo}")}">
-										<div class="ui 3 column stackable grid"
-											style="margin-left: 62px; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
-											<h5 style="padding-left: 10px; margin-bottom: 0px;">
-												${game.gameTitle }
-											</h5>
-											<div class="row"
-												style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
-												<g:each var="category" in="${game.categories}">
-													<a style="margin-bottom: 5px; margin-left: 7px;"> ${category.categoryName }</a>
-
-												</g:each>
+													</g:each>
+												</div>
 											</div>
 										</div>
-									</div>
-								</g:link>
-								<%--
-								<g:form controller="game"action="deleteGame">
-								<g:hiddenField name="gameTitle" value="${game.id}"/>
-								<g:hiddenField name="categoryName" value="${currentCategory}"/>
-								<g:hiddenField name="gameCategory" value="${game.categories}"/>
-								<g:submitButton class class="ui icon button delete" id="delete"
-										style="display: none; padding: 0; margin-top: 4px; margin-left: -267px;" value="" name=""></g:submitButton>
-								</g:form>--%>
-								<g:link action="deleteGame"
-									params="${[gameTitle:"${game.id}",categoryName:currentCategory, gameCategory:"${game.categories}"] }"
-									onclick="return confirm('Are you sure you want to delete this game?')">
-									<button class="ui icon button delete" id="delete"
-										style="display: none; padding: 0; margin-top: 4px; margin-left: -267px;">
-										<i class="small red delete icon"></i>
-									</button>
-								</g:link>
-							</g:each>
+									</g:link>
+									<g:link action="deleteGame"
+										params="${[gameTitle:"${game.id}",categoryName:currentCategory, gameCategory:"${game.categories}"] }"
+										onclick="return confirm('Are you sure you want to delete this game?')">
+										<button class="ui icon button delete" id="delete" name="xB"
+											style="display: none; padding: 0; margin-top: 4px; margin-left: -267px;">
+											<i class="small red delete icon"></i>
+										</button>
+									</g:link>
+								</g:each>
+							</div>
+							<div class="pagination" style="text-align: center;">
+								<g:paginate action="gameManagement" total="${gameCount}"
+									params="${[chosenPlatform:"${chosenPlatform}", categoryName: currentCategory]}"></g:paginate>
+							</div>
 						</div>
-
-						<div class="pagination" style="text-align: center;">
-							<g:paginate action="gameManagement" total="${gameCount}"
-								params="${[chosenPlatform:"${chosenPlatform}", categoryName: currentCategory]}"></g:paginate>
+					</g:if>
+					<g:else>
+						<div class="ui segment" style="width: 770px; height: auto;">
+							<h5>No Results Found</h5>
+						</div>
+					</g:else>
+				</div>
+				<div class="ui two row stackable grid">
+					<div class="column">
+						<div class="row">
+							<g:include controller="user" action="showUserAuthentication" />
+						</div>
+						<div class="segments">
+							<div class="ui left aligned segment"
+								style="margin-left: 40px; margin-top: 20px; height: 100%; width: 87%;">
+								<div style="text-align: left;">
+									<h3>Sort By:</h3>
+								</div>
+								<div id="sort">
+									<div class="segment"
+										style="border: 1px solid lightgray; margin-top: 10px; padding: 5px;">
+										<p>
+											<g:radio name="what" value="gameTitle" onClick="myFunc();"
+												checked="true" />
+											A-Z<br>
+											<g:radio name="what" value="gamePrice" onClick="myFunc();" />
+											Price<br>
+											<g:radio name="what" value="averageRating"
+												onClick="myFunc();" />
+											Rating<br>
+											<g:radio name="what" value="releaseDate" onClick="myFunc();" />
+											Release Date<br>
+										</p>
+									</div>
+									<div class="segment"
+										style="border: 1px solid lightgray; margin-top: 10px; padding: 5px;">
+										<g:radio name="how" value="asc" checked="true"
+											onClick="myFunc();" />
+										Ascending<br>
+										<g:radio name="how" value="desc" onClick="myFunc();" />
+										Descending<br>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<g:include controller="user" action="showUserAuthentication" />
 			</div>
 		</div>
 	</div>
@@ -132,8 +164,8 @@
 			controller='game' action='addGame' onsubmit="return check()">
 			<img class="ui centered small image" id="image" src="#"
 				alt="Game Logo">
-			<g:field type="file" class="superMegaClass" name="gameLogo" id="gameLogo"
-				accept="image/jpeg, image/png, im8age/jpg" required=""
+			<g:field type="file" class="superMegaClass" name="gameLogo"
+				id="gameLogo" accept="image/jpeg, image/png, im8age/jpg" required=""
 				style="    margin: 10px;" />
 			<div class="field">
 				<g:hiddenField name="currentCategory" value="${currentCategory}" />
@@ -201,6 +233,16 @@
 			</div>
 		</div>
 	</g:if>
+	<g:if test="${flash.success}">
+		<div class="ui small modal">
+			<div class="ui positive message">
+				<i class="close icon"></i>
+				<div class="header">
+					${flash.success }
+				</div>
+			</div>
+		</div>
+	</g:if>
 	<script>
 		$(function() {
 			$('#addGame').click(function() {
@@ -218,7 +260,6 @@
 			$('#deleteGame').click(function() {
 				$('.ui.icon.button.delete').toggle();
 			});
-
 
 			$("#gameTitle").keyup(function() {
 
@@ -244,8 +285,8 @@
 					document.getElementById("addButton").disabled = false;
 				}
 			});
-	
-		$('.ui.small.modal').modal('show');
+
+			$('.ui.small.modal').modal('show');
 		});
 
 		function check() {
@@ -262,8 +303,7 @@
 				return false;
 			}
 		}
-
-		<%--var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
+	<%--var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
 			var arrInputs = onForm.getElementsByClassName("superMegaClass");
 			for (var i = 0; i < arrInputs.length; i++) {
 				var oInput = arrInputs[i];
@@ -295,7 +335,28 @@
 			return true;
 
 		}--%>
-
+		function myFunc(){
+			var categoryName = "${currentCategory}";
+			var what = document.getElementsByName('what');
+			var what_value;
+			for(var i = 0; i < what.length; i++){
+			    if(what[i].checked){
+			    	what_value = what[i].value;
+			    }
+			}
+			var what = document.getElementsByName('how');
+			var how_value;
+			for(var i = 0; i < how.length; i++){
+			    if(how[i].checked){
+			    	how_value = how[i].value;
+			    }
+			}
+			console.log(categoryName)
+			console.log(how_value)
+			console.log(what_value)
+			
+${remoteFunction(controller: 'game', update: 'updateThis', action: 'sortList', params: '\'what=\' + what_value+ \'&how=\' +how_value+  \'&categoryName=\' + categoryName ')}
+			};
 		function assDate() {
 			var date1 = document.getElementById("datePicker").value;
 			document.getElementById("releaseDate").value = date1;

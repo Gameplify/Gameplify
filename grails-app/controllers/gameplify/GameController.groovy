@@ -120,7 +120,7 @@ class GameController {
 				flash.message = "You must select at least one category"
 			} else {
 				gameService.addGame(params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.platformId, categories, session.user.id, screenshots)
-				flash.success = "Game successfully added!"
+				flash.success = "You have successfully added the game!"
 			}
 		} else{
 			flash.message = "Invalid input"
@@ -144,6 +144,7 @@ class GameController {
 			if(categories.isEmpty()) {
 				flash.error = "You must select at least one category"
 			} else {
+				flash.success ="Game updated successfully!"
 				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
 			}
 		}else if(checkGame != null && checkGame.status != "deleted"){
@@ -153,6 +154,7 @@ class GameController {
 		}else if(categories.isEmpty()) {
 			flash.error = "You must select at least one category"
 		} else {
+				flash.success ="Game updated successfully!"
 				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
 		}
 		redirect(action:"gameProfile", params:[gameTitle:params.realGameTitle])
@@ -161,6 +163,7 @@ class GameController {
 	def deleteGame(){
 		def currentCategory = params.categoryName
 		gameService.deleteGame(params.gameTitle, session.user.id)
+		flash.success = "Game deleted successfully"
 		redirect(action: "gameManagement", params:[categoryName:currentCategory])
 	}
 
