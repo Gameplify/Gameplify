@@ -375,7 +375,13 @@ class GameController {
 		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList, reg:reg]
 	}
 
-	
+	def reset(){
+			def fooPagination = [max: 3, offset: 0]
+			session.fooPagination = fooPagination
+			def barPagination = [max: 3, offset: 0]
+			session.barPagination = barPagination
+			redirect( action:"list", params:[query:params.query])
+	}
 	
 	def list() {
 		def platform = gameService.listPlatform()

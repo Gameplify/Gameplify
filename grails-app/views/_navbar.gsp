@@ -27,7 +27,7 @@
 	</div>
 	<div class="header item"><g:link controller="user" action="userManagementReports">User</g:link></div>
 </g:if>
-<g:form action="list" method="GET">
+<g:form action="reset" method="GET">
 	<div class="ui search">
 		<div class="ui icon input" value="${params.query}">
 
