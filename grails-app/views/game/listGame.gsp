@@ -150,11 +150,7 @@
 											checked="true" />
 										A-Z<br>
 										<g:radio name="what" value="gamePrice" onClick="myFunc();" />
-										Price<br>
-										<g:radio name="what" value="averageRating" onClick="myFunc();" />
-										Rating<br>
-										<g:radio name="what" value="releaseDate" onClick="myFunc();" />
-										Release Date<br>
+										Price<br>										
 									</p>
 								</div>
 								<div class="segment"

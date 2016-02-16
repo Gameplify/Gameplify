@@ -37,7 +37,7 @@
                                 	     <g:if test="${taskInstanceTotal >0}">
                                 	      <div class="ui two column stackable grid">
 			                                   			<div class="column" style="width: 378px;" >
-			                                                            <div class="ui segment" style="overflow:scroll; width: 392px;height: 567px; padding-left: 22px;">
+			                                                            <div class="ui segment" style=" width: 392px;height: 580px; padding-left: 22px;">
 																						<h3>Games Found</h3>
 			                                                                            <div class="ui three column stackable grid">
 			                                                                                     <div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;height: 453px;">
@@ -86,28 +86,31 @@
 			                                                                              
 			                                                            </div> 
 			                                                            <div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
-																			<g:paginate total="${totalBars}"  max="3" offset="${session.barPagination?.offset}" params="${[paginate:'Bar']}"/>
+																			<g:paginate  total="${totalBars}"  max="3" offset="${session.barPagination?.offset}" params="${[paginate:'Bar',query:params.query]}"/>
 											  							</div>
 			                                  			</div>
 			                                 			 <div class="column" style="width: 378px;" >
-			                                                            <div class="ui segment" style=" overflow:scroll; width: 378px;height: 567px;padding-left: 22px;left: 14px;">
+			                                                            <div class="ui segment" style=" width: 378px;height: 580px;padding-left: 22px;left: 14px;">
 			                                                                  <h3>Users Found</h3>
 			                                                                             <div class="ui three column stackable grid">
 			                                                                                     <div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">
 																	                                 	 	<g:each in="${fooList}" status="x" var="user">
 																	                                 	 	<g:if test="${(x)<3}">
-																		                                 	<g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${user.id}"]}">                               		
+																		                                 	                          		
 																													 <div class="ui segment" style="   height:104px; width: 270px; padding-top: 14px; margin-left: 0px; margin-top:0px;margin-bottom: 13px;">
+																		                                                  <g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${user.id}"]}">     
 																		                                                   <g:if test="${user.avatar}"><img class="ui tiny left floated image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
 																		                                                    </g:if>
 																		                                                    <g:else>
 																													    <img class="ui tiny left floated image" src="${resource(dir: 'images', file: "nan.jpg")}">
 																													    </g:else>
+																													   
 																													    <h5 style="    padding-left: 10px; margin-top: 0px; margin-bottom: 0px;">${user.name }</h5>
+																													     </g:link>
 																		                                                    <div class="row" style="padding-bottom: 13px;padding-top: 5px;border-top-width: 5px;margin-top: 0px;margin-left: 3px;">
 															                                 								 </div>   
 																		                                              </div> 
-																		                                    </g:link>
+																		                                    
 																		                                    </g:if>
 																		                                   </g:each>
 																                                   </div>
@@ -115,7 +118,7 @@
 																						
 			                                                            </div>      
 			                                                              	       <div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
-																							<g:paginate total="${totalFoos}" max="3" offset="${session.fooPagination?.offset}"  params="${[paginate:'Foo']}"/>
+																							<g:paginate total="${totalFoos}" max="3" offset="${session.fooPagination?.offset}"  params="${[paginate:'Foo',query:params.query]}"/>
 																				   </div>
 			                                     		 </div>
 			                                     		 
@@ -126,20 +129,22 @@
 									   <div class="ui segment"  style="width: 770px; height: auto;">
                                      		<div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">
 			                                 	 	<g:each in="${users}" status="i" var="user">
-			                                 	 	<g:if test="${(i)<10}">
-				                                 	<g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${user.id}"]}">                               		
+			                                 	 	<g:if test="${(i)<10}">				                                                           		
 															 <div class="ui segment" style="  height: 120px; width: 270px; padding-top: 14px;margin-left: 7px; margin-top:0px;">
-				                                                    <g:if test="${user.avatar}">
+				                                                    	<g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${user.id}"]}">   
+				                                                    <g:if test="${user.avatar}">				                                                    	
 				                                                    	<img class="ui tiny left floated image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
-				                                                    </g:if>
+				                                                  
+ </g:if>
 				                                                    <g:else>
 																    	<img class="ui tiny left floated image" src="${resource(dir: 'images', file: "nan.jpg")}">
 																    </g:else>
+																    
 				                                                    <h5 style="    padding-left: 10px; margin-top: 0px; margin-bottom: 0px;">${user.name }</h5>
 				                                                    <div class="row" style="padding-bottom: 13px;padding-top: 5px;border-top-width: 5px;margin-top: 0px;margin-left: 3px;">
 	                                 								 </div>   
-				                                              </div> 
-				                                    </g:link>
+	                                 								</g:link>
+				                                              </div> 				                               
 				                                    </g:if>
 				                                   </g:each>
                                            </div>

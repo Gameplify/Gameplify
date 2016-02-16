@@ -9,7 +9,7 @@
 				<g:if test="${ss.gameTitle==ga }">
 					<img class="ui tiny centered image"
 						style="width: 25px; height: 25px; padding-right: 0px;"
-						src="${resource(dir: 'images', file: "hot.png")}"/>
+						src="${resource(dir: 'images', file: "hot.png")}" />
 				</g:if>
 			</g:if>
 		</g:each>
@@ -35,6 +35,7 @@
 
 	</h5>
 	<h5 class="title">
+		Number of raters:
 		${game.numberOfRaters }
 
 	</h5>

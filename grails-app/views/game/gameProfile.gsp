@@ -113,7 +113,7 @@
 
 										</h5>
 										<h5 class="title">
-											Number of raters:${game.numberOfRaters }
+											Number of raters: ${game.numberOfRaters }
 
 										</h5>
 									</div>
@@ -213,7 +213,7 @@
 														<g:else>
 															<g:if
 																test="${session?.user?.status != "blocked" && session?.user != "${review.user}" 
-																	&& session?.user && "${review.user.role}" != "Admin"}">
+																	&& session?.user && "${review.user.role}" != "Admin"}"> 
 																<div class="reportUser">
 																	<g:remoteLink
 																		url="[controller:'game', action:'report']"
@@ -222,6 +222,7 @@
 																		params="${[type:"${review.review}", userId:"${review.user.id}"]}">Report</g:remoteLink>
 																</div>
 															</g:if>
+														
 
 														</g:else>
 														<ul class="myList">
@@ -253,8 +254,8 @@
 																			${comment.comment }
 																		</div>
 																		<g:if
-																			test="${session?.user?.status != "blocked" && session?.user != "${comment.user}" 
-																	&& session?.user && "${comment.user.role}" != "Admin"}">
+																			test="${session?.user?.status != "blocked" && "${session?.user}" != "${comment.user}" 
+																	&& session?.user && "${comment.user.role}" != "Admin"}"> ${session.user } ${comment.user }
 																			<div class="reportUser">
 																				<g:remoteLink
 																					url="[controller:'game', action:'report']"
@@ -330,7 +331,7 @@
 						<img class="ui centered small image" id="image"
 							src="${resource(dir: 'images', file: "$game.gameLogo")}"
 							alt="Game Logo">
-						<g:field type="file" name="gameLogo"
+						<g:field type="file" name="gameLogo" class="superMegaClass"
 							accept="image/jpeg, image/png, image/jpg"
 							value="${game.gameLogo}" style="margin: 10px;" />
 						<div class="field">
@@ -396,7 +397,7 @@
 						</div>
 						<div class="field" style="margin-top: 20px;">
 							<label for="screenshot">Screenshot/s</label>
-							<g:field type="file" name="screenshots"
+							<g:field type="file" name="screenshots" class="superMegaClass"
 								accept="image/jpeg, image/png, image/jpg" multiple="multiple"
 								style="margin: 10px;" />
 						</div>
