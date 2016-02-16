@@ -180,7 +180,7 @@
 				</div>
 				<div class="field">
 					<label for="price">Price*</label>
-					<g:field type="number" name="gamePrice" min="0" required=""
+					<g:field type="number" name="gamePrice" min="0" step=".01" required=""
 						style="font-size:14px;" />
 				</div>
 				<div class="field">
@@ -337,7 +337,6 @@
 					}
 				}
 			}
-
 		}
 		function myFunc(){
 			var categoryName = "${currentCategory}";

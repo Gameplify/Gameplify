@@ -331,7 +331,7 @@
 						<img class="ui centered small image" id="image"
 							src="${resource(dir: 'images', file: "$game.gameLogo")}"
 							alt="Game Logo">
-						<g:field type="file" name="gameLogo"
+						<g:field type="file" name="gameLogo" class="superMegaClass"
 							accept="image/jpeg, image/png, image/jpg"
 							value="${game.gameLogo}" style="margin: 10px;" />
 						<div class="field">
@@ -352,7 +352,7 @@
 							<div class="field">
 								<label for="price">Price*</label>
 								<g:field type="number" name="gamePrice" required=""
-									value="${game.gamePrice }" style="font-size: 14px;" />
+									value="${game.gamePrice }" step=".01" style="font-size: 14px;" />
 							</div>
 							<div class="field">
 								<label for="platform">Platform</label>
@@ -397,7 +397,7 @@
 						</div>
 						<div class="field" style="margin-top: 20px;">
 							<label for="screenshot">Screenshot/s</label>
-							<g:field type="file" name="screenshots"
+							<g:field type="file" name="screenshots" class="superMegaClass"
 								accept="image/jpeg, image/png, image/jpg" multiple="multiple"
 								style="margin: 10px;" />
 						</div>
