@@ -312,8 +312,8 @@
 				alert("Please select a category");
 				return false;
 			}
-		}
-	<%--var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
+		
+			var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
 			var arrInputs = onForm.getElementsByClassName("superMegaClass");
 			for (var i = 0; i < arrInputs.length; i++) {
 				var oInput = arrInputs[i];
@@ -342,9 +342,7 @@
 				}
 			}
 
-			return true;
-
-		}--%>
+		}
 		function myFunc(){
 			var categoryName = "${currentCategory}";
 			var what = document.getElementsByName('what');
