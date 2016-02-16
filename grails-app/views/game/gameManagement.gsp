@@ -184,7 +184,7 @@
 				</div>
 				<div class="field">
 					<label for="price">Price*</label>
-					<g:field type="number" name="gamePrice" min="0" required=""
+					<g:field type="number" name="gamePrice" min="0" step=".01" required=""
 						style="font-size:14px;" />
 				</div>
 				<div class="field">
@@ -312,8 +312,8 @@
 				alert("Please select a category");
 				return false;
 			}
-		}
-	<%--var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
+		
+			var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
 			var arrInputs = onForm.getElementsByClassName("superMegaClass");
 			for (var i = 0; i < arrInputs.length; i++) {
 				var oInput = arrInputs[i];
@@ -341,10 +341,7 @@
 					}
 				}
 			}
-
-			return true;
-
-		}--%>
+		}
 		function myFunc(){
 			var categoryName = "${currentCategory}";
 			var what = document.getElementsByName('what');

@@ -351,7 +351,7 @@
 							<div class="field">
 								<label for="price">Price*</label>
 								<g:field type="number" name="gamePrice" required=""
-									value="${game.gamePrice }" style="font-size: 14px;" />
+									value="${game.gamePrice }" step=".01" style="font-size: 14px;" />
 							</div>
 							<div class="field">
 								<label for="platform">Platform</label>
