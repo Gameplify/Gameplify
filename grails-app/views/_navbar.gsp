@@ -27,14 +27,14 @@
 	</div>
 	<div class="header item"><g:link controller="user" action="userManagementReports">User</g:link></div>
 </g:if>
-<g:form action="list" method="GET">
+<g:form action="reset" method="GET">
 	<div class="ui search">
 		<div class="ui icon input" value="${params.query}">
 
 			<input name="query" required="" placeholder="Search games..."
 				value="${params.query}" >
 			<button type="submit" style="background-color: #365C8A;
-    color: #ffffff;">
+    color: #ffffff;" >
 				<i class="search icon"></i>
 			</button>
 		</div>
