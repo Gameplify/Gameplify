@@ -86,7 +86,7 @@
 			                                                                              
 			                                                            </div> 
 			                                                            <div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
-																			<g:paginate total="${totalBars}"  max="3" offset="${session.barPagination?.offset}" params="${[paginate:'Bar']}"/>
+																			<g:paginate  total="${totalBars}"  max="3" offset="${session.barPagination?.offset}" params="${[paginate:'Bar',query:params.query]}"/>
 											  							</div>
 			                                  			</div>
 			                                 			 <div class="column" style="width: 378px;" >
@@ -115,7 +115,7 @@
 																						
 			                                                            </div>      
 			                                                              	       <div class="pagination" style="margin-right: 16px;text-align: center;margin-top: 15px;">
-																							<g:paginate total="${totalFoos}" max="3" offset="${session.fooPagination?.offset}"  params="${[paginate:'Foo']}"/>
+																							<g:paginate total="${totalFoos}" max="3" offset="${session.fooPagination?.offset}"  params="${[paginate:'Foo',query:params.query]}"/>
 																				   </div>
 			                                     		 </div>
 			                                     		 
