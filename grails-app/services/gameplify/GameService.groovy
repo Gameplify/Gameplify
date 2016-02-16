@@ -377,34 +377,7 @@ class GameService {
 					status == "okay"
 				}.list(sort: 'gamePrice', order: "asc", max: max, offset: offset)
 			}
-		} else if (what == 'averageRating'){
-			if(chosenPlatform){
-				games = Game.where {
-					categories.categoryName == currentCategory
-					platform.platformName == chosenPlatform
-					status == "okay"
-				}.list(sort: 'averageRating', order: "asc", max: max, offset: offset)
-			} else if(!chosenPlatform){
-				games = Game.where {
-					categories.categoryName == currentCategory
-					status == "okay"
-				}.list(sort: 'averageRating', order: "asc", max: max, offset: offset)
-			}
-		} else {
-			if(chosenPlatform){
-				games = Game.where {
-					categories.categoryName == currentCategory
-					platform.platformName == chosenPlatform
-					status == "okay"
-				}.list(sort: 'releaseDate', order: "asc", max: max, offset: offset)
-			} else if(!chosenPlatform){
-				games = Game.where {
-					categories.categoryName == currentCategory
-					status == "okay"
-				}.list(sort: 'releaseDate', order: "asc", max: max, offset: offset)
-			}
 		}
-		log.println("ni sud sa ascend")
 		return games
 	}
 
@@ -436,34 +409,7 @@ class GameService {
 					status == "okay"
 				}.list(sort: 'gamePrice', order: "desc", max: max, offset: offset)
 			}
-		} else if (what == 'averageRating'){
-			if(chosenPlatform){
-				games = Game.where {
-					categories.categoryName == currentCategory
-					platform.platformName == chosenPlatform
-					status == "okay"
-				}.list(sort: 'averageRating', order: "desc", max: max, offset: offset)
-			} else if(!chosenPlatform){
-				games = Game.where {
-					categories.categoryName == currentCategory
-					status == "okay"
-				}.list(sort: 'averageRating', order: "desc", max: max, offset: offset)
-			}
-		} else {
-			if(chosenPlatform){
-				games = Game.where {
-					categories.categoryName == currentCategory
-					platform.platformName == chosenPlatform
-					status == "okay"
-				}.list(sort: 'releaseDate', order: "desc", max: max, offset: offset)
-			} else if(!chosenPlatform){
-				games = Game.where {
-					categories.categoryName == currentCategory
-					status == "okay"
-				}.list(sort: 'releaseDate', order: "desc", max: max, offset: offset)
-			}
 		}
-		log.println("ni sud sa descend")
 		return games
 	}
 

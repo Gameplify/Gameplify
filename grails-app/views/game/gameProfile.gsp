@@ -213,7 +213,7 @@
 														<g:else>
 															<g:if
 																test="${session?.user?.status != "blocked" && session?.user != "${review.user}" 
-																	&& session?.user && "${review.user.role}" != "Admin"}">
+																	&& session?.user && "${review.user.role}" != "Admin"}"> 
 																<div class="reportUser">
 																	<g:remoteLink
 																		url="[controller:'game', action:'report']"
@@ -222,6 +222,7 @@
 																		params="${[type:"${review.review}", userId:"${review.user.id}"]}">Report</g:remoteLink>
 																</div>
 															</g:if>
+														
 
 														</g:else>
 														<ul class="myList">
@@ -253,8 +254,8 @@
 																			${comment.comment }
 																		</div>
 																		<g:if
-																			test="${session?.user?.status != "blocked" && session?.user != "${comment.user}" 
-																	&& session?.user && "${comment.user.role}" != "Admin"}">
+																			test="${session?.user?.status != "blocked" && "${session?.user}" != "${comment.user}" 
+																	&& session?.user && "${comment.user.role}" != "Admin"}"> ${session.user } ${comment.user }
 																			<div class="reportUser">
 																				<g:remoteLink
 																					url="[controller:'game', action:'report']"
