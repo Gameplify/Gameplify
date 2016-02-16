@@ -39,8 +39,7 @@
 					<div class="row"
 						style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
 						<g:each var="category" in="${game.categories}">
-							<a style="margin-bottom: 5px; margin-left: 7px;"> ${category.categoryName }</a>
-
+							<a style="margin-bottom: 5px; margin-left: 3px;"> ${category.categoryName }</a>
 						</g:each>
 					</div>
 				</div>
@@ -50,3 +49,7 @@
 	</g:each>
 
 </div>
+<div class="pagination" style="text-align: center;">
+								<g:paginate action="listGame" total="${gameCount}"
+									params="${[chosenPlatform:"${chosenPlatform}", categoryName: currentCategory]}"></g:paginate>
+							</div>

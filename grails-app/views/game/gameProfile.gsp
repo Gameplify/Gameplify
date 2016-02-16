@@ -257,7 +257,7 @@
 																			test="${session?.user?.status != "blocked" && "${session?.user}" != "${comment.user}" 
 																	&& session?.user && "${comment.user.role}" != "Admin"}"> ${session.user } ${comment.user }
 																			<div class="reportUser">
-																				<g:remoteLink
+																				<g:remoteLink	
 																					url="[controller:'game', action:'report']"
 																					value="Report"
 																					before="if(!confirm('Are you sure you want to report this user?')) return false"
