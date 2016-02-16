@@ -113,7 +113,7 @@
 
 										</h5>
 										<h5 class="title">
-											Number of raters:${game.numberOfRaters }
+											Number of raters: ${game.numberOfRaters }
 
 										</h5>
 									</div>
