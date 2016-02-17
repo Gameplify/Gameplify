@@ -255,7 +255,7 @@
 																		</div>
 																		<g:if
 																			test="${session?.user?.status != "blocked" && "${session?.user}" != "${comment.user}" 
-																	&& session?.user && "${comment.user.role}" != "Admin"}"> ${session.user } ${comment.user }
+																	&& session?.user && "${comment.user.role}" != "Admin"}"> 
 																			<div class="reportUser">
 																				<g:remoteLink	
 																					url="[controller:'game', action:'report']"
@@ -336,9 +336,9 @@
 							value="${game.gameLogo}" style="margin: 10px;" />
 						<div class="field">
 							<g:hiddenField name="gameId" value="${game.id }"></g:hiddenField>
-							<g:hiddenField name="realGameTitle" value="${game.gameTitle }" />
+							<g:hiddenField name="realGameTitle"	 value="${game.gameTitle }" />
 							<g:textField placeholder="Game Title*" id="gameTitle"
-								name="gameTitle" required="" value="${game.gameTitle}" />
+								name="gameTitle"  value="${game.gameTitle}" />
 						</div>
 						<div class="fields">
 							<div class="field" style="width: 200px;">
@@ -410,7 +410,7 @@
 				<g:if test="${flash.error }">
 					<div class="ui small modal">
 						<div class="ui negative message">
-							<i class="close icon"></i>
+
 							<div class="header">
 								${flash.error }
 							</div>
@@ -420,7 +420,7 @@
 				<g:if test="${flash.success }">
 					<div class="ui small modal">
 						<div class="ui positive message">
-							<i class="close icon"></i>
+
 							<div class="header">
 								${flash.success }
 							</div>
@@ -431,6 +431,9 @@
 		</div>
 	</div>
 	<script>
+
+
+	
 $('.ui.rating')
 .rating('setting', 'onRate', function(value) {
     var rating = value;

@@ -93,7 +93,6 @@
 	<g:if test="${flash.success }">
 		<div class="ui small modal">
 			<div class="ui positive message">
-				<i class="close icon"></i>
 				<div class="header">
 					${flash.success }
 				</div>

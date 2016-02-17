@@ -138,15 +138,15 @@ $(document).ready(function()  {
 			
 		}
 	});
-
 	
 	$("#gameTitle").keyup(function(){
-		
+			console.log("hi");
 		var reviewLength = $("#gameDesc").val().trim().length;
 		var reviewTitleLength= $("#gameTitle").val().trim().length;
 		if(reviewTitleLength>0){
 	        if ($.trim($('#gameTitle').val()) == "" && reviewLength <=0 ) {
 				document.getElementById("editButton").disabled = true;
+				alert("hi");
 			}else if(reviewLength <=0 ) {
 				document.getElementById("editButton").disabled = true;
 			}else{
@@ -158,11 +158,11 @@ $(document).ready(function()  {
 	});
 	
 	$("#gameDesc").keyup(function(){
-
+		Console.log("hi");
 		var reviewLength = $("#gameTitle").val().trim().length;
 		var reviewDescLength = $("#gameDesc").val().trim().length;
 		if(reviewDescLength>0){
-	        if ($.trim($('#gameDesc').val()) == "" ) {
+	        if ($.trim($('#gameDesc').val()) == "") {
 				document.getElementById("editButton").disabled = true;
 			}else if (reviewLength <= 0) {
 				document.getElementById("editButton").disabled = true;

@@ -49,8 +49,8 @@ environments {
 			password = "password"
 			pooled = true
 			driverClassName = "com.mysql.jdbc.Driver"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
-//			url = "jdbc:mysql://localhost:3306/gameplify_db?useUnicode=yes&characterEncoding=UTF-8"
+//            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+			url = "jdbc:mysql://localhost:3306/gameplify_db?useUnicode=yes&characterEncoding=UTF-8"
 			dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
