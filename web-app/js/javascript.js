@@ -141,7 +141,6 @@ $(document).ready(function()  {
 
 	
 	$("#gameTitle").keyup(function(){
-		
 		var reviewLength = $("#gameDesc").val().trim().length;
 		var reviewTitleLength= $("#gameTitle").val().trim().length;
 		if(reviewTitleLength>0){
