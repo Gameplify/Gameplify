@@ -9,7 +9,7 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <!-- Site Properities -->
-<title>Game List</title>
+<title>Register</title>
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'css', file:'semantic.css')}">
 <link rel="stylesheet" type="text/css"
