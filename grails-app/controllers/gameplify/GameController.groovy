@@ -372,7 +372,7 @@ class GameController {
 		log.println("NOW " +dateString)
 		log.println("LAST YEAR " +dateStrng)
 		
-		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList, reg:reg]
+		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList]
 	}
 
 	def reset(){
