@@ -4,7 +4,7 @@
 
 							<div id="register" class="registration">
 								<h5 style="margin-left: 70px;">JOIN NOW</h5>
-								<g:form class="ui tiny form" style="margin-bottom: 19px;"
+								<g:form class="ui tiny form" style="margin-bottom: 20px; height:auto;" 
 									controller='user' action='register'>
 
 								<g:if test="${flash.cnt>0||user}">
@@ -31,6 +31,9 @@
 												</g:if>
 												<g:if test="${flash.user}">
 												${flash.user}
+												</g:if>
+												<g:if test="${flash.emailInv}">
+												${flash.emailInv}
 												</g:if>
 										
 										</div>

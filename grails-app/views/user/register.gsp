@@ -44,9 +44,9 @@
 				<div class="column">
 					<div class="row">
 
-						<div id="register" class="registration">
-							<h5 style="margin-left: 70px;">JOIN NOW</h5>
-							<g:form class="ui tiny form" style="margin-bottom: 19px;"
+						<div id="register" class="registration"  style="height:auto;">
+							<h5 style="margin-left: 120px;">JOIN NOW</h5>
+							<g:form class="ui tiny form" style="margin-bottom: 19px; height:auto;"
 								controller='user' action='register'>
 
 								<g:if test="${flash.cnt>0}">
@@ -69,6 +69,9 @@
 											</g:if>
 											<g:if test="${flash.user}">
 												${flash.user}
+											</g:if>
+												<g:if test="${flash.emailInv}">
+												${flash.emailInv}
 											</g:if>
 
 										</div>
