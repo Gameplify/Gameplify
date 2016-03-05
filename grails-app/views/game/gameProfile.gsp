@@ -113,7 +113,7 @@
 
 										</h5>
 										<h5 class="title">
-											Number of raters:${game.numberOfRaters }
+											Number of raters: ${game.numberOfRaters }
 
 										</h5>
 									</div>
@@ -213,7 +213,7 @@
 														<g:else>
 															<g:if
 																test="${session?.user?.status != "blocked" && session?.user != "${review.user}" 
-																	&& session?.user && "${review.user.role}" != "Admin"}">
+																	&& session?.user && "${review.user.role}" != "Admin"}"> 
 																<div class="reportUser">
 																	<g:remoteLink
 																		url="[controller:'game', action:'report']"
@@ -222,6 +222,7 @@
 																		params="${[type:"${review.review}", userId:"${review.user.id}"]}">Report</g:remoteLink>
 																</div>
 															</g:if>
+														
 
 														</g:else>
 														<ul class="myList">
@@ -253,10 +254,10 @@
 																			${comment.comment }
 																		</div>
 																		<g:if
-																			test="${session?.user?.status != "blocked" && session?.user != "${comment.user}" 
-																	&& session?.user && "${comment.user.role}" != "Admin"}">
+																			test="${session?.user?.status != "blocked" && "${session?.user}" != "${comment.user}" 
+																	&& session?.user && "${comment.user.role}" != "Admin"}"> 
 																			<div class="reportUser">
-																				<g:remoteLink
+																				<g:remoteLink	
 																					url="[controller:'game', action:'report']"
 																					value="Report"
 																					before="if(!confirm('Are you sure you want to report this user?')) return false"
@@ -330,14 +331,14 @@
 						<img class="ui centered small image" id="image"
 							src="${resource(dir: 'images', file: "$game.gameLogo")}"
 							alt="Game Logo">
-						<g:field type="file" name="gameLogo"
+						<g:field type="file" name="gameLogo" class="superMegaClass"
 							accept="image/jpeg, image/png, image/jpg"
 							value="${game.gameLogo}" style="margin: 10px;" />
 						<div class="field">
 							<g:hiddenField name="gameId" value="${game.id }"></g:hiddenField>
-							<g:hiddenField name="realGameTitle" value="${game.gameTitle }" />
+							<g:hiddenField name="realGameTitle"	 value="${game.gameTitle }" />
 							<g:textField placeholder="Game Title*" id="gameTitle"
-								name="gameTitle" required="" value="${game.gameTitle}" />
+								name="gameTitle"  value="${game.gameTitle}" />
 						</div>
 						<div class="fields">
 							<div class="field" style="width: 200px;">
@@ -351,7 +352,7 @@
 							<div class="field">
 								<label for="price">Price*</label>
 								<g:field type="number" name="gamePrice" required=""
-									value="${game.gamePrice }" style="font-size: 14px;" />
+									value="${game.gamePrice }" step=".01" style="font-size: 14px;" />
 							</div>
 							<div class="field">
 								<label for="platform">Platform</label>
@@ -396,9 +397,9 @@
 						</div>
 						<div class="field" style="margin-top: 20px;">
 							<label for="screenshot">Screenshot/s</label>
-							<g:field type="file" name="screenshots"
+							<g:field type="file" name="screenshots" class="superMegaClass"
 								accept="image/jpeg, image/png, image/jpg" multiple="multiple"
-								style="margin: 10px;" value="${game?.screenshot }" />
+								style="margin: 10px;" />
 						</div>
 						<div class="actions" style="text-align: center; margin-top: 30px;">
 							<g:submitButton class="ui button" name="editGame" id="editButton"
@@ -409,7 +410,7 @@
 				<g:if test="${flash.error }">
 					<div class="ui small modal">
 						<div class="ui negative message">
-							<i class="close icon"></i>
+
 							<div class="header">
 								${flash.error }
 							</div>
@@ -419,7 +420,7 @@
 				<g:if test="${flash.success }">
 					<div class="ui small modal">
 						<div class="ui positive message">
-							<i class="close icon"></i>
+
 							<div class="header">
 								${flash.success }
 							</div>
@@ -430,6 +431,9 @@
 		</div>
 	</div>
 	<script>
+
+
+	
 $('.ui.rating')
 .rating('setting', 'onRate', function(value) {
     var rating = value;

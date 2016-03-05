@@ -86,7 +86,7 @@
 												<div class="row"
 													style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
 													<g:each var="category" in="${game.categories}">
-														<a style="margin-bottom: 5px; margin-left: 7px;"> ${category.categoryName }</a>
+														<a style="margin-bottom: 5px; margin-left: 3px;"> ${category.categoryName }</a>
 
 													</g:each>
 												</div>
@@ -135,11 +135,7 @@
 											A-Z<br>
 											<g:radio name="what" value="gamePrice" onClick="myFunc();" />
 											Price<br>
-											<g:radio name="what" value="averageRating"
-												onClick="myFunc();" />
-											Rating<br>
-											<g:radio name="what" value="releaseDate" onClick="myFunc();" />
-											Release Date<br>
+											
 										</p>
 									</div>
 									<div class="segment"
@@ -184,7 +180,7 @@
 				</div>
 				<div class="field">
 					<label for="price">Price*</label>
-					<g:field type="number" name="gamePrice" min="0" required=""
+					<g:field type="number" name="gamePrice" min="0" step=".01" required=""
 						style="font-size:14px;" />
 				</div>
 				<div class="field">
@@ -223,14 +219,11 @@
 					value="Add Game" style="margin-left: -1.75em;" disabled="true"></g:submitButton>
 			</div>
 		</g:form>
-			<g:if test="${flash.success}">
-								<script>alert("Game successfully added!");</script>
-							</g:if>
 	</div>
 	<g:if test="${flash.message}">
 		<div class="ui small modal">
 			<div class="ui negative message">
-				<i class="close icon"></i>
+
 				<div class="header">
 					${flash.message }
 				</div>
@@ -240,7 +233,7 @@
 	<g:if test="${flash.success}">
 		<div class="ui small modal">
 			<div class="ui positive message">
-				<i class="close icon"></i>
+
 				<div class="header">
 					${flash.success }
 				</div>
@@ -265,28 +258,37 @@
 				$('.ui.icon.button.delete').toggle();
 			});
 
-			$("#gameTitle").keyup(function() {
-
+			$("#gameTitle").keyup(function(){
+				
 				var reviewLength = $("#gameDesc").val().trim().length;
-				if ($.trim($('#gameTitle').val()) == "" && reviewLength <= 0) {
-					document.getElementById("addButton").disabled = true;
-				} else if (reviewLength <= 0) {
-					document.getElementById("addButton").disabled = true;
+				var reviewTitleLength= $("#gameTitle").val().trim().length;
+				if(reviewTitleLength>0){
+			        if ($.trim($('#gameTitle').val()) == "" && reviewLength <=0 ) {
+						document.getElementById("addButton").disabled = true;
+					}else if(reviewLength <=0 ) {
+						document.getElementById("addButton").disabled = true;
+					}else{
+						document.getElementById("addButton").disabled = false;
+					}
 				} else {
-					document.getElementById("addButton").disabled = false;
+					document.getElementById("addButton").disabled = true;
 				}
 			});
-
-			$("#gameDesc").keyup(function() {
+			
+			$("#gameDesc").keyup(function(){
 
 				var reviewLength = $("#gameTitle").val().trim().length;
-
-				if ($.trim($('#gameDesc').val()) == "") {
+				var reviewDescLength = $("#gameDesc").val().trim().length;
+				if(reviewDescLength>0){
+			        if ($.trim($('#gameDesc').val()) == "" ) {
+						document.getElementById("addButton").disabled = true;
+					}else if (reviewLength <= 0) {
+						document.getElementById("addButton").disabled = true;
+					}else{
+						document.getElementById("addButton").disabled = false;
+					}
+				} else{
 					document.getElementById("addButton").disabled = true;
-				} else if (reviewLength <= 0) {
-					document.getElementById("addButton").disabled = true;
-				} else {
-					document.getElementById("addButton").disabled = false;
 				}
 			});
 
@@ -306,8 +308,8 @@
 				alert("Please select a category");
 				return false;
 			}
-		}
-	<%--var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
+		
+			var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
 			var arrInputs = onForm.getElementsByClassName("superMegaClass");
 			for (var i = 0; i < arrInputs.length; i++) {
 				var oInput = arrInputs[i];
@@ -335,10 +337,7 @@
 					}
 				}
 			}
-
-			return true;
-
-		}--%>
+		}
 		function myFunc(){
 			var categoryName = "${currentCategory}";
 			var what = document.getElementsByName('what');

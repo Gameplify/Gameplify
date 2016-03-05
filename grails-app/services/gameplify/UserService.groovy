@@ -84,6 +84,7 @@ class UserService {
 
 	def addAdminActivity(adminId, activity){
 		User admin = User.get(adminId)
+		log.println(admin)
 		Date date = new Date()
 		AdminActivity aa = new AdminActivity(
 				admin:admin,
@@ -92,8 +93,9 @@ class UserService {
 				)
 		if(aa.save()){
 			log.println("it fucking worked")
+			log.println(aa)
+			admin.addToAdminActivity(aa)
+			admin.save(failOnError:true)
 		}
-		admin.addToAdminActivity(aa)
-		admin.save(flush:true)
 	}
 }

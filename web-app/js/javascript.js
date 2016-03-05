@@ -138,14 +138,14 @@ $(document).ready(function()  {
 			
 		}
 	});
-
+	
 	$("#gameTitle").keyup(function(){
-		
 		var reviewLength = $("#gameDesc").val().trim().length;
 		var reviewTitleLength= $("#gameTitle").val().trim().length;
 		if(reviewTitleLength>0){
 	        if ($.trim($('#gameTitle').val()) == "" && reviewLength <=0 ) {
 				document.getElementById("editButton").disabled = true;
+				alert("hi");
 			}else if(reviewLength <=0 ) {
 				document.getElementById("editButton").disabled = true;
 			}else{
@@ -157,11 +157,11 @@ $(document).ready(function()  {
 	});
 	
 	$("#gameDesc").keyup(function(){
-
+		Console.log("hi");
 		var reviewLength = $("#gameTitle").val().trim().length;
 		var reviewDescLength = $("#gameDesc").val().trim().length;
 		if(reviewDescLength>0){
-	        if ($.trim($('#gameDesc').val()) == "" ) {
+	        if ($.trim($('#gameDesc').val()) == "") {
 				document.getElementById("editButton").disabled = true;
 			}else if (reviewLength <= 0) {
 				document.getElementById("editButton").disabled = true;
@@ -208,6 +208,34 @@ function checkEdit(){
 		    alert("Please check a checkbox");
 	    	return false;
 	    }
+	    var _validFileExtensions = [".jpg", ".jpeg", ".png"];   
+		var arrInputs = onForm.getElementsByClassName("superMegaClass");
+		for (var i = 0; i < arrInputs.length; i++) {
+			var oInput = arrInputs[i];
+			if (oInput.type == "file") {
+				var sFileName = oInput.value;
+				if (sFileName.length > 0) {
+					var blnValid = false;
+					for (var j = 0; j < _validFileExtensions.length; j++) {
+						var sCurExtension = _validFileExtensions[j];
+						if (sFileName.substr(
+								sFileName.length - sCurExtension.length,
+								sCurExtension.length).toLowerCase() == sCurExtension
+								.toLowerCase()) {
+							blnValid = true;
+							break;
+						}
+					}
+
+					if (!blnValid) {
+						alert("Sorry, " + sFileName
+								+ " is invalid, allowed extensions are: "
+								+ _validFileExtensions.join(", "));
+						return false;
+					}
+				}
+			}
+		}
 	}
 function assDate() {
 	var date1 = document.getElementById("datePicker").value;

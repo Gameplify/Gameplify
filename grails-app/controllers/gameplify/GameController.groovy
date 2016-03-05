@@ -5,7 +5,7 @@ package gameplify
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 class GameController {
 
 	def gameService
@@ -109,6 +109,7 @@ class GameController {
 		def categories = GameCategory.getAll(checkedCategory)
 		def checkGame = gameService.listGameInfo(params.gameTitle.trim())
 		def screenshots = params.list('screenshots')
+//		log.println(screenshots)
 		def releaseDate = Date.parse("yyyy-MM-dd",params.releaseDate)
 		if(params.gameTitle.trim()){
 			if(checkGame != null && checkGame.status != "deleted"){
@@ -137,9 +138,6 @@ class GameController {
 		def previousTitle = Game.get(params.gameId)
 		def releaseDate = Date.parse("yyyy-MM-dd", params.releaseDate)
 		def screenshots = params.list('screenshots')
-		formerCategory.each{
-			log.println("awer"+it)
-		}
 		if(previousTitle.gameTitle == params.gameTitle.trim()){
 			if(categories.isEmpty()) {
 				flash.error = "You must select at least one category"
@@ -157,7 +155,7 @@ class GameController {
 				flash.success ="Game updated successfully!"
 				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
 		}
-		redirect(action:"gameProfile", params:[gameTitle:params.realGameTitle])
+		redirect(action:"gameProfile", params:[gameTitle:params.gameTitle.trim()])
 	}
 
 	def deleteGame(){
@@ -374,9 +372,17 @@ class GameController {
 		log.println("NOW " +dateString)
 		log.println("LAST YEAR " +dateStrng)
 		
-		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList, reg:reg]
+		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList]
 	}
 
+	def reset(){
+			def fooPagination = [max: 3, offset: 0]
+			session.fooPagination = fooPagination
+			def barPagination = [max: 3, offset: 0]
+			session.barPagination = barPagination
+			redirect( action:"list", params:[query:params.query])
+	}
+	
 	def list() {
 		def platform = gameService.listPlatform()
 		def chosenPlatform = params.platform
@@ -417,6 +423,10 @@ class GameController {
 				}
 				order("name", "asc")
 			}
+		
+			//This is to stop the paginate using params.offset/max to calculate current step and use the offset/max attributes instead
+			params.offset = null
+			params.max = null
 		
 		def taskList = Game.createCriteria().list(params){
 			if ( params.query) {

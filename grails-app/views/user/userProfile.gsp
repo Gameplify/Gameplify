@@ -106,11 +106,10 @@
 							style="margin-left: 40px; height: 360px; width: 272px;">
 							<div class="column">
 								<g:if test="${flash.message}">
-								<div class="err">
-									<div class="message" style="display: block">
-									</div>
-										${flash.message}
-									</div>
+								
+								<script>
+									alert("${flash.message}");
+										</script>
 								</g:if>
 								<div style="position: relative">
 									<g:if test="${user.avatar }">

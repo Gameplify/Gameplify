@@ -101,7 +101,7 @@
 												<div class="row"
 													style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
 													<g:each var="category" in="${game.categories}">
-														<a style="margin-bottom: 1px; margin-left: 5px;"> ${category.categoryName }</a>
+														<a style="margin-bottom: 1px; margin-left: 3px;"> ${category.categoryName }</a>
 
 													</g:each>
 												</div>
@@ -150,11 +150,7 @@
 											checked="true" />
 										A-Z<br>
 										<g:radio name="what" value="gamePrice" onClick="myFunc();" />
-										Price<br>
-										<g:radio name="what" value="averageRating" onClick="myFunc();" />
-										Rating<br>
-										<g:radio name="what" value="releaseDate" onClick="myFunc();" />
-										Release Date<br>
+										Price<br>										
 									</p>
 								</div>
 								<div class="segment"

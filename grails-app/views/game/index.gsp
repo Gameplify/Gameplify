@@ -9,7 +9,7 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <!-- Site Properities -->
-<title>Game List</title>
+<title>Gameplify</title>
 
 <link rel="stylesheet" type="text/css"
 	href="${resource(dir:'dist', file:'bg.css')}">
@@ -180,11 +180,9 @@
 
 					</div>
 				</div>
-				<g:if test="${reg == null}">
+
 					<g:include controller="user" action="showUserAuthentication" />
-				</g:if><g:else>
-					<g:include controller="user" action="registerTemplate" />
-				</g:else>
+
 			</div>
 </body>
 </html>
