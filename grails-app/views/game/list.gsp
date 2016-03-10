@@ -130,7 +130,7 @@
                                      		<div class="ui cards" style="margin-bottom: 20px;margin-left: 50px;margin-right: 50px;margin-top: 20px;">
 			                                 	 	<g:each in="${users}" status="i" var="user">
 			                                 	 	<g:if test="${(i)<10}">				                                                           		
-															 <div class="ui segment" style="  height: 120px; width: 270px; padding-top: 14px;margin-left: 7px; margin-top:0px;">
+															 <div class="ui segment" style="  height: 120px; width: 300px; padding-top: 14px;margin-left: 7px; margin-top:0px;">
 				                                                    	<g:link class = "author" controller = "user" action ="userProfile" params="${[userId:"${user.id}"]}">   
 				                                                    <g:if test="${user.avatar}">				                                                    	
 				                                                    	<img class="ui tiny left floated image" src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
@@ -163,7 +163,7 @@
 				                                 	 	<g:each in="${gam}" status="i" var="game">
 				                                 	 	<g:if test="${(i)<10}">
 					                                 	<g:link action="gameProfile" params="${[gameTitle: "${game.gameTitle}"]}"> 
-					                                 	 <div class="ui segment" style="height: 162px;width: 313px; padding-top: 14px;margin-left: 7px; margin-top:0px;">
+					                                 	 <div class="ui segment" style="width: 300px;     height: 127px; padding-top: 14px;margin-left: 7px; margin-top:0px;">
 														                                              		<div class="ui grid" style=" style="float:right;margin-right: 1px;margin-top: 0px;width: 298px;margin-bottom: 7px;om: 4px;">
 																		                                              		 	<g:each in="${gamess}" status="g" var="ss">
 																		                                              		 	<g:if test="${ss.averageRating >0}">
@@ -171,7 +171,7 @@
 																																	<g:set var="ga" value="${game.gameTitle}" />
 																																	<g:if test="${ss.gameTitle==ga }">
 																																		<img class="ui tiny centered image"
-																																		style="width: 25px;height: 25px;padding-right: 0px;margin-right: 0px;margin-left: 0px;left: 281px;"
+																																		style="margin-bottom: -15px;width: 25px;height: 25px;padding-right: 0px;margin-right: 0px;margin-left: 0px;right: -259px;"
 																																		src="${resource(dir: 'images', file: "hot.png")}"/>
 																																	</g:if>
 																																</g:if>
@@ -182,7 +182,7 @@
 																																	<g:set var="da" value="${game.gameTitle}" />
 																																	<g:if test="${aa.gameTitle==da }">
 																																		<img class="ui tiny centered image"
-																																		style="width: 25px;height: 25px;padding-right: 0px;margin-right: 0px;margin-left: 0px;left: 232px;"
+																																		style="margin-bottom: -15px;width: 25px;height: 25px;padding-right: 0px;margin-right: 0px;margin-left: 0px;right: -259px;"
 																																		src="${resource(dir: 'images', file: "neww.png")}"/>
 																																	</g:if>
 																																 </g:if>
