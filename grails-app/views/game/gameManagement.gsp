@@ -298,6 +298,11 @@
 		function check() {
 			var checkboxs = document.getElementsByName("category");
 			var okay = false;
+			var reviewLength = $("#gameTitle").val().trim().length;
+			if(reviewLength>33){
+					alert("Game title should be less than 32 characters");
+					return false;
+				}
 			for (var i = 0, l = checkboxs.length; i < l; i++) {
 				if (checkboxs[i].checked) {
 					okay = true;

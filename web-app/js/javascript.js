@@ -195,7 +195,14 @@ $(document).ready(function()  {
    }
 function checkEdit(){
 		var checkboxs=document.getElementsByName("newCategory");
+		var reviewLength = $("#gameTitle").val().trim().length;
 	    var okay=false;
+	    if(reviewLength>33){
+			alert("Game title should be less than 32 characters");
+			return false;
+		}else{
+			console.log("BOGO");
+		}
 	    for(var i=0,l=checkboxs.length;i<l;i++)
 	    {
 	        if(checkboxs[i].checked)
@@ -246,7 +253,12 @@ function assDate() {
 }
 function check() {
 	var checkboxs = document.getElementsByName("newCategory");
+	var reviewLength = $("#gameTitle").val().trim().length;
 	var okay = false;
+	if(reviewLength>33){
+		alert("Game title should be less than 32 characters");
+		return false;
+	}
 	for (var i = 0, l = checkboxs.length; i < l; i++) {
 		if (checkboxs[i].checked) {
 			okay = true;
