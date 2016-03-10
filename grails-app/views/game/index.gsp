@@ -36,9 +36,7 @@
 				<div class="ui segment" style="width: 800px; height: auto">
 					<div class="ui three column stackable grid">
 						<div class="column" style="    width: 98.333333%;">
-						<g:if test="${flash.reg}">
-									<script>alert("You have successfully registered!")</script>
-								</g:if>
+					
 							<div class="ui grid" style="float: right;margin-top: 0px;">
 								<g:each in="${platform }" var="plat">
 									<g:link action="platform"
@@ -184,5 +182,22 @@
 					<g:include controller="user" action="showUserAuthentication" />
 
 			</div>
+			
+			<g:if test="${flash.reg}">
+		<div class="ui small modal">
+			<div class="ui positive message">
+
+				<div class="header">
+					${flash.reg }
+				</div>
+			</div>
+		</div>
+	</g:if>
+			
 </body>
+<script>
+	$(function(){
+		$('.ui.small.modal').modal('show');
+	});
+</script>
 </html>

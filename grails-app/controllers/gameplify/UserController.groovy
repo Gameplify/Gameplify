@@ -76,10 +76,13 @@ def avatar_image() {
 				flash.integer= "Name must contain alpha characters only."
 				count=1
 			}
-			 if(params.emailAddress!=~ "^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}\$."){
-				 flash.emailInv="Email Address is invalid."
-				 count=1
+	
+			 if(params.emailAddress ==~ /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/ ){
+			
 				 
+			 }else{
+			 flash.emailInv="Email Address is invalid."
+			 count=1
 			 }
 			
 			
