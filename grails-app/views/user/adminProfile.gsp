@@ -48,23 +48,7 @@
 						<h3>Activities</h3>
 						<div id="activityList"
 							style="height: 600px; overflow-x: hidden; overflow-y: auto;">
-							<g:if test="${admin.adminActivity }">
-							<g:each in="${admin.adminActivity}" status="i" var="activity">
-								<div class="ui segment"
-									style="width: 700px; height: auto; margin-top: 10px">
-									<div class="ui grid">
-										<div class="ten wide column">
-											${activity.action }
-										</div>
-										<div class="five wide column">
-											<g:formatDate format="h:mm a MMM d, yyyy"
-												date="${activity.date}" />
-										</div>
-									</div>
-								</div>
-							</g:each>
-							</g:if>
-							<g:else>No Activities</g:else>
+								<g:include controller="user" action="adminActivities" params="${[adminId:"${admin.id}"]}" />
 						</div>
 					</div>
 
