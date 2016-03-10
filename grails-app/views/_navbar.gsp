@@ -1,7 +1,7 @@
 <div class="ui container">
 	<g:link action="resetList" >
-		<div href="#" class="header item">
-			<img class="logo"
+		<div style="padding:0px;"href="#" class="header item">
+			<img class="logo" style="width:60px; padding-top:10px;"
 				src="${resource(dir: 'images', file: 'gameplifylogo.png')}" />
 			GAMEPLIFY
 		</div>

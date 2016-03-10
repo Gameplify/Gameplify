@@ -48,37 +48,38 @@
 			<div class="row" style="margin-left: 0px;">
 
 				<div class="ui segment"
-					style="height: 500px; overflow-x: disabled; overflow-y: auto;">
+					style="height: 500px; overflow-x: hidden; overflow-y: auto;">
 
 					<div class="ui grid" style="width: 800px; padding: 20px;">
 						<h3>Reviews</h3>
 					</div>
 					<g:if test="${user.reviews}">
-					<g:each in="${user.reviews}" status="i" var="review">
+						<g:each in="${user.reviews}" status="i" var="review">
 
-						<div class="ui segment"
-							style="width: 770px; height: auto; margin-top: 10px">
-							<div>
-								<a class="ui red ribbon label"> ${review.game.averageRating}
-								</a>
-							</div>
-							<g:link controller="game" action="gameProfile"
-								params="${[gameTitle:"${review.game.gameTitle}"] }">
+							<div class="ui segment"
+								style="width: 755px; height: auto; margin-top: 10px">
+								<div>
+									<a class="ui red ribbon label"> ${review.game.averageRating}
+									</a>
+								</div>
 								<div class="ui grid">
 									<div class="one wide column"></div>
 
 									<div class="three wide column">
-										<img class="ui centered image"
-											src="${resource(dir: 'images', file: "$review.game.gameLogo")}">
-
+										<g:link controller="game" action="gameProfile"
+											params="${[gameTitle:"${review.game.gameTitle}"] }">
+											<img class="ui centered image"
+												src="${resource(dir: 'images', file: "$review.game.gameLogo")}">
+										</g:link>
 									</div>
 
 									<div class="eleven wide column" style="position: relative;">
 										<h3>
-											<div>
+											<g:link controller="game" action="gameProfile"
+												params="${[gameTitle:"${review.game.gameTitle}"] }">
 												${review.game.gameTitle}
 
-											</div>
+											</g:link>
 										</h3>
 										<span> ${review.review }
 										</span> <span style="bottom: 0; right: 0; position: absolute;"><g:formatDate
@@ -90,10 +91,11 @@
 
 
 								</div>
-						</div>
-						</g:link>
-					</g:each>
-					</g:if><g:else>
+							</div>
+
+						</g:each>
+					</g:if>
+					<g:else>
 						No Reviews
 					</g:else>
 				</div>
@@ -106,15 +108,16 @@
 							style="margin-left: 40px; height: 360px; width: 272px;">
 							<div class="column">
 								<g:if test="${flash.message}">
-								
-								<script>
-									alert("${flash.message}");
-										</script>
+
+									<script>
+									alert("${flash.message}
+										");
+									</script>
 								</g:if>
 								<div style="position: relative">
 									<g:if test="${user.avatar }">
 										<img
-											style=" margin-top:5px; height: 170px; width: 170px; margin: 35px; border: 1px solid lightgray;"
+											style="margin-top: 5px; height: 170px; width: 170px; margin: 35px; border: 1px solid lightgray;"
 											class="ui image"
 											src="${createLink(controller:'user', action:'avatar_image', id:"${user.id}" )}" />
 									</g:if>
@@ -122,7 +125,7 @@
 										<img class="photo" style="border: 1px solid lightgray;"
 											src="${resource(dir: 'images', file: "nan.jpg")}">
 									</g:else>
-									
+
 
 									<div style="position: absolute; bottom: 0; right: 0">
 										<g:if test="${session?.user?.id == user.id}">
@@ -143,7 +146,7 @@
 									<h4 style="text-align: center">
 										${user.name }
 									</h4>
-									<h4 style="margin-top:0px; text-align: center">
+									<h4 style="margin-top: 0px; text-align: center">
 										[${user.username }]
 									</h4>
 									<div style="text-align: center !important;">

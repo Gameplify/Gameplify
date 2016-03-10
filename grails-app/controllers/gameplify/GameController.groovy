@@ -120,7 +120,7 @@ class GameController {
 			else if(categories.isEmpty()) {
 				flash.message = "You must select at least one category"
 			} else {
-				gameService.addGame(params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.platformId, categories, session.user.id, screenshots)
+				gameService.addGame(params.gameTitle.trim().capitalize(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.platformId, categories, session.user.id, screenshots)
 				flash.success = "You have successfully added the game!"
 			}
 		} else{
