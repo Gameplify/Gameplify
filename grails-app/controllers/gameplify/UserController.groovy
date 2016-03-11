@@ -7,7 +7,6 @@ class UserController {
 
 	def userProfile(){
 		def user = userService.findUser(params.userId)
-		log.println(params.userId)
 		if (user.role == "Admin"){
 			redirect(action:"adminProfile" ,params:[adminId:params.userId])
 		}
@@ -191,7 +190,6 @@ def avatar_image() {
 			def max = params.max ?: 10
 			def offset = params.offset ?: 0
 			def reports = userService.listReports(max, offset)
-			log.println(reports.user.id)
 			if(reports){
 				[reports:reports, reportCount:reports.totalCount]
 			}else{
@@ -210,7 +208,6 @@ def avatar_image() {
 			def offset = params.offset ?: 0
 			def blocked = userService.listBlocked(max, offset)
 			if(blocked){
-				log.println("bogo")
 				[block:blocked, blockedCount:blocked.totalCount]
 			}else{
 				flash.error = "No results found"

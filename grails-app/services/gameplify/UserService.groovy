@@ -13,8 +13,6 @@ class UserService {
 	def getAdminActivity(userId){
 		def admin = findUser(userId)
 		def activities = AdminActivity.where{ admin == admin }.list(sort: 'date', order: 'desc')
-		log.println("ni sud sa service")
-		log.println(admin.adminActivity)
 		return activities
 	}
 	def listAdmins(){
@@ -85,7 +83,6 @@ class UserService {
 
 	def addAdminActivity(adminId, activity){
 		User admin = User.get(adminId)
-		log.println(admin)
 		Date date = new Date()
 		AdminActivity aa = new AdminActivity(
 				admin:admin,
@@ -93,8 +90,6 @@ class UserService {
 				action:activity
 				)
 		if(aa.save()){
-			log.println("it fucking worked")
-			log.println(aa)
 			admin.addToAdminActivity(aa)
 			admin.save(failOnError:true)
 		}

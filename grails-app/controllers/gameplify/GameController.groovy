@@ -141,8 +141,6 @@ class GameController {
 			}
 		}else if(checkGame != null && checkGame.status != "deleted"){
 			flash.error = "Game title already exist"
-			//		} else if(checkGame.status == "deleted"){
-			//			gameService.editGame()
 		}else if(categories.isEmpty()) {
 			flash.error = "You must select at least one category"
 		} else {
@@ -210,7 +208,6 @@ class GameController {
 		def offset = params.offset ?: 0
 		def chosenPlatform = params.platform
 		def games = gameService.listGame(currentCategory, chosenPlatform, max, offset, what, how)
-		log.println(games)
 		def taskList = gameService.listGamePlat(chosenPlatform,max,offset)
 		def taskL = gameService.whatsHot(chosenPlatform,max,offset)
 		[taskL:taskL, bb:taskList,currentCategory:currentCategory, games:games, chosenPlatform:chosenPlatform, platforms:platforms, gameCount:games.totalCount]
@@ -285,20 +282,13 @@ class GameController {
 		//This is to stop the paginate using params.offset/max to calculate current step and use the offset/max attributes instead
 		 params.offset = null
 		 params.max = null
-		
-		log.println("SESSION BAR " +session.barPaginations)
-		log.println("SESSION FOO " +session.fooPaginations)
-		log.println("BARL" +barList.totalCount)
-		log.println("FOOL" +fooList.totalCount)
-		log.println("NOW " +dateString)
-		log.println("LAST YEAR " +dateStrng)
+
 		
 		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList]
 	}
 	
 	def index() {
 		def reg = params.reg
-		log.println(reg)
 		def platform = gameService.listPlatform()
 		def chosenPlatform =params.platform
 		def now = new Date()
@@ -312,7 +302,6 @@ class GameController {
 			def barPagination = [max: params.max, offset: params.offset]
 		    session.barPagination = barPagination
 		}
-		//log.println("SESSION BAR1 " +session.barPagination.offset)
 		
 		if (params.paginate == 'Foo') {
 			def fooPagination = [max: params.max, offset: params.offset]
@@ -359,12 +348,6 @@ class GameController {
 		 params.offset = null
 		 params.max = null
 		
-		log.println("SESSION BAR " +session.barPagination)
-		log.println("SESSION FOO " +session.fooPagination)
-		log.println("BARL" +barList.totalCount)
-		log.println("FOOL" +fooList.totalCount)
-		log.println("NOW " +dateString)
-		log.println("LAST YEAR " +dateStrng)
 		
 		 [platform:platform,chosenPlatform:chosenPlatform, fooList: fooList, totalFoos:fooList.totalCount, totalBars:barList.totalCount, barList: barList]
 	}
@@ -382,14 +365,12 @@ class GameController {
 		def chosenPlatform = params.platform
 		def taskLisst = gameService.listGamePlat(chosenPlatform,10,0)
 		def taskL = gameService.whatsHot(chosenPlatform,10,0)
-		log.println("tsdk" +taskLisst.totalCount)
-		log.println("sdf" +taskL.totalCount)
-		
+
 		if (params.paginate == 'Bar') {
 			def barPagination = [max: params.max, offset: params.offset]
 			session.barPagination = barPagination
 		}
-		//log.println("SESSION BAR1 " +session.barPagination.offset)
+
 		
 		if (params.paginate == 'Foo') {
 			def fooPagination = [max: params.max, offset: params.offset]
