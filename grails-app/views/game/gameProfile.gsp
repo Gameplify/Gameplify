@@ -81,7 +81,7 @@
 									<div class="ui grid"
 										style="float: right; margin-right: 1px; margin-top: 0px;">
 										<g:each in="${games}" status="g" var="ss">
-											<g:if test="${ss.averageRating >0}">
+											<g:if test="${ss.averageRating >4.5}">
 												<g:set var="ga" value="${game.gameTitle}" />
 												<g:if test="${ss.gameTitle==ga }">
 													<img class="ui tiny centered image"
