@@ -39,7 +39,11 @@
 
 	<div class="svg-wrapper">
 
-
+<g:if test="${flash.message}">
+									<script>
+									alert("${flash.message}");
+									</script>
+								</g:if>
 
 		<div class="ui two column stackable grid">
 			<div class="row" style="margin-left: 0px;">

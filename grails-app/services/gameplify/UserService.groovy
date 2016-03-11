@@ -43,6 +43,7 @@ class UserService {
 		def reports
 		reports = Report.where {
 			  status == "okay"  
+			  user.status != "blocked"
 			  }.list(max: max, sort:'date' ,order:"desc", offset: offset)
 		return reports
 	}

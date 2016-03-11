@@ -9,11 +9,14 @@ class GameService {
 
 	def userService
 
-
+	def listCategories(){
+		def categories = GameCategory.list()
+		return categories
+	}
 
 	def report(type,userId){
 		def rep = Report.find{user.id == userId}
-		if(rep){
+		if(rep && rep.type == type){
 			def curRep = Report.get(rep.id)
 			numberOfReports:curRep.numberOfReports++
 			status:"okay"

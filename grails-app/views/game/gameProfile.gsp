@@ -193,7 +193,7 @@
 															${review.user.name }
 														</g:link>
 														<div class="metadata">
-															<span class="date"> ${review.date }
+															<span class="date"> <g:formatDate date="${review.date }" type="datetime"/>
 															</span>
 														</div>
 														<div class="text">
@@ -247,7 +247,7 @@
 																		</g:link>
 
 																		<div class="metadata">
-																			<span class="date"> ${comment.date }
+																			<span class="date"> <g:formatDate date="${comment.date }" type="datetime"/>
 																			</span>
 																		</div>
 																		<div class="text">

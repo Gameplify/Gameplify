@@ -9,13 +9,10 @@ import grails.transaction.Transactional
 class GameController {
 
 	def gameService
-	def gameCategoryService
 	def userService
-	static scaffold = true
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def showNavbar(){
-		def categories = gameCategoryService.listGame()
+		def categories = gameService.listCategories()
 		render(template: '../navbar', model:[categories:categories])
 	}
 
@@ -100,7 +97,7 @@ class GameController {
 		def reviews = gameService.listReview(params.gameTitle, currentUser)
 		def comments= gameService.listComment(params.gameTitle, params.reviewId)
 		def platforms = gameService.listPlatform()
-		def categories = gameCategoryService.listGame()
+		def categories = gameService.listCategories()
 		[ games:taskL, bb:taskList, chosenPlatform:chosenPlatform, game:game, reviews:reviews, comments:comments, platforms:platforms, categories:categories, rating:rating]
 	}
 
@@ -109,13 +106,10 @@ class GameController {
 		def categories = GameCategory.getAll(checkedCategory)
 		def checkGame = gameService.listGameInfo(params.gameTitle.trim())
 		def screenshots = params.list('screenshots')
-//		log.println(screenshots)
 		def releaseDate = Date.parse("yyyy-MM-dd",params.releaseDate)
 		if(params.gameTitle.trim()){
 			if(checkGame != null && checkGame.status != "deleted"){
 				flash.message = "Game already exist"
-				//		} else if(checkGame.status == "deleted"){
-				//			gameService.editGame()
 			}
 			else if(categories.isEmpty()) {
 				flash.message = "You must select at least one category"
@@ -143,7 +137,7 @@ class GameController {
 				flash.error = "You must select at least one category"
 			} else {
 				flash.success ="Game updated successfully!"
-				gameService.editGame(params.gameId, params.gameTitle.trim(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
+				gameService.editGame(params.gameId, params.gameTitle.trim().capitalize(), params.gameLogo, params.gamePrice, params.gameDescription, releaseDate, params.formerPlatformId, params.platformId, categories, removeCat, session.user.id,screenshots,formerCategory)
 			}
 		}else if(checkGame != null && checkGame.status != "deleted"){
 			flash.error = "Game title already exist"
@@ -175,7 +169,7 @@ class GameController {
 			def platforms = gameService.listPlatform()
 			def currentCategory = params.categoryName
 			def max = params.max ?: 10
-			def categories = gameCategoryService.listGame()
+			def categories = gameService.listCategories()
 			def offset = params.offset ?: 0
 			def chosenPlatform = params.platform
 			def games = gameService.listGame(currentCategory, chosenPlatform, max, offset,what, how)

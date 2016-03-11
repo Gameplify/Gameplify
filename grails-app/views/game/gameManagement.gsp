@@ -85,9 +85,10 @@
 												</h5>
 												<div class="row"
 													style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
-													<g:each var="category" in="${game.categories}">
+													<g:each var="category" in="${game.categories}" status = "ndx">
+														 <g:if test = "${ndx < 4 }">
 														<a style="margin-bottom: 5px; margin-left: 3px;"> ${category.categoryName }</a>
-
+													</g:if>
 													</g:each>
 												</div>
 											</div>

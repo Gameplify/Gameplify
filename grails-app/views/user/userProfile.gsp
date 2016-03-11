@@ -108,10 +108,8 @@
 							style="margin-left: 40px; height: 360px; width: 272px;">
 							<div class="column">
 								<g:if test="${flash.message}">
-
 									<script>
-									alert("${flash.message}
-										");
+									alert("${flash.message}");
 									</script>
 								</g:if>
 								<div style="position: relative">

@@ -41,7 +41,9 @@ def avatar_image() {
 			  redirect(uri: request.getHeader('referer') )
 			  return
 		}
-			
+			def userId = session.user.id
+		    User u = userService.findUser(userId)
+			session.user = u
 			redirect(uri: request.getHeader('referer') )
 		  }
 

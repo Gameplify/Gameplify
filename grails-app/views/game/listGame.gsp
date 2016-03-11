@@ -61,6 +61,8 @@
 								style="margin-bottom: 20px; margin-left: 50px; margin-right: 50px; margin-top: 20px;">
 
 								<g:each in="${games}" status="i" var="game">
+
+								
 									<g:link action="gameProfile"
 										params="${[gameTitle: "${game.gameTitle}"]}">
 											
@@ -100,9 +102,10 @@
 												</h5>
 												<div class="row"
 													style="padding-bottom: 13px; padding-top: 5px; border-top-width: 5px; margin-top: 0px; margin-left: 3px;">
-													<g:each var="category" in="${game.categories}">
+													<g:each var="category" status ="ndx" in="${game.categories}">
+													 <g:if test = "${ndx < 4 }">
 														<a style="margin-bottom: 1px; margin-left: 3px;"> ${category.categoryName }</a>
-
+													</g:if>
 													</g:each>
 												</div>
 											</div>
