@@ -48,7 +48,7 @@
 																		                                              		<div class="ui grid" style="float:right;margin-right: 1px;margin-top: 0px;width: 298px;margin-bottom: 7px;">
 																		                                              		 	<g:each in="${gamess}" status="r" var="sss">
 																		                                              		 	<g:if test="${r <10}">
-																		                                              		 	<g:if test="${sss.averageRating >0}">
+																		                                              		 	<g:if test="${sss.averageRating >4.5}">
 																																	<g:set var="gaa" value="${game.gameTitle}" />
 																																	<g:if test="${sss.gameTitle==gaa }">
 																																		<img class="ui tiny centered image"
@@ -166,7 +166,7 @@
 					                                 	 <div class="ui segment" style="width: 300px;     height: 127px; padding-top: 14px;margin-left: 7px; margin-top:0px;">
 														                                              		<div class="ui grid" style=" style="float:right;margin-right: 1px;margin-top: 0px;width: 298px;margin-bottom: 7px;om: 4px;">
 																		                                              		 	<g:each in="${gamess}" status="g" var="ss">
-																		                                              		 	<g:if test="${ss.averageRating >0}">
+																		                                              		 	<g:if test="${ss.averageRating >4.5}">
 																		                                              		 	<g:if test="${gg<10}">
 																																	<g:set var="ga" value="${game.gameTitle}" />
 																																	<g:if test="${ss.gameTitle==ga }">
