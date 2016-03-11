@@ -19,7 +19,7 @@
 
 
 </head>
-
+<title>Game Profile</title>
 <body>
 
 	<div class="ui fixed inverted menu">
